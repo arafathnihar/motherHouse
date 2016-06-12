@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: motherHouse_db
-  username: ENV['USER_NAME']
-  password: ENV['PASSWORD']
+  username: root #ENV['USER_NAME']
+  password: root #ENV['PASSWORD']

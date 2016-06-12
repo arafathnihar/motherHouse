@@ -5,3 +5,16 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# Add admin user
+User.create(
+    customId: 'MH0001',
+    name: 'Shivanesan Arafath',
+    contact: '0111234567',
+
+    username: 'shiva',
+    password: Digest::SHA1.hexdigest('abc@123'),
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
