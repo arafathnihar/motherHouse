@@ -1,5 +1,8 @@
 # Mother House
 
+### Reset schema.rb
+delete the schema.rb file in 'motherHouse/db/'
+
 ### Drop existing database
 `rake db:drop:all`
 
