@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'responders', '~> 2.0'
+
 # env file configuration
 gem 'dotenv-rails', :groups => [:development, :test, :default]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
