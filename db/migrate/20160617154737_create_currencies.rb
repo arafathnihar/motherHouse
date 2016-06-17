@@ -1,4 +1,4 @@
-class Currencies < ActiveRecord::Migration
+class CreateCurrencies < ActiveRecord::Migration
   def change
     create_table :currencies do |t|
       # populated via a seeder

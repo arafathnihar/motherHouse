@@ -1,6 +1,6 @@
-class CreateAgents < ActiveRecord::Migration
+class CreateMainAgents < ActiveRecord::Migration
   def change
-    create_table :agents do |t|
+    create_table :main_agents do |t|
       # front ends' view level
       t.string :customId, limit: 12, null: false, unique: true
       t.string :name, null: false
@@ -17,9 +17,9 @@ class CreateAgents < ActiveRecord::Migration
     end
 
     # references (from_table, to_table, options = {})
-    add_foreign_key :agents, :countries, column: :countryId
+    add_foreign_key :main_agents, :countries, column: :countryId
 
-    add_foreign_key :agents, :users, column: :created_by
-    add_foreign_key :agents, :users, column: :updated_by
+    add_foreign_key :main_agents, :users, column: :created_by
+    add_foreign_key :main_agents, :users, column: :updated_by
   end
 end

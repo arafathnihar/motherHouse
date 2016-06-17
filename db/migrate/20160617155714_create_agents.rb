@@ -1,9 +1,9 @@
-class CreateClients < ActiveRecord::Migration
+class CreateAgents < ActiveRecord::Migration
   def change
-    create_table :clients do |t|
+    create_table :agents do |t|
       # front ends' view level
       t.string :customId, limit: 12, null: false, unique: true
-      t.integer :agentId, null: false
+      t.integer :mainAgentId, null: false
       t.string :name, null: false
       t.string :contact, limit: 15, null: true
       t.integer :countryId, null: true
@@ -18,10 +18,11 @@ class CreateClients < ActiveRecord::Migration
     end
 
     # references (from_table, to_table, options = {})
-    add_foreign_key :clients, :countries, column: :countryId
-    add_foreign_key :clients, :agents, column: :agentId
+    add_foreign_key :agents, :main_agents, column: :mainAgentId
 
-    add_foreign_key :clients, :users, column: :created_by
-    add_foreign_key :clients, :users, column: :updated_by
+    add_foreign_key :agents, :countries, column: :countryId
+
+    add_foreign_key :agents, :users, column: :created_by
+    add_foreign_key :agents, :users, column: :updated_by
   end
 end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SubAgentTest < ActiveSupport::TestCase
+class MainAgentTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

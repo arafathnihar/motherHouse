@@ -1,4 +1,4 @@
-class Countries < ActiveRecord::Migration
+class CreateCountries < ActiveRecord::Migration
   def change
     create_table :countries do |t|
       # populated via a seeder
