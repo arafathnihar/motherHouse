@@ -1,0 +1,2 @@
+module ReceivingAgentsHelper
+end
