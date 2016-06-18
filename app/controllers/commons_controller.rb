@@ -3,19 +3,13 @@ class CommonsController < ApplicationController
   respond_to :json
 
   def get_countries
-    @country = Country.all
-    respond_with(@countries) do |format|
-      format.json { render :json => @country.as_json }
-      format.html
-    end
+    @countries = Country.all
+    render json: @countries.as_json, status: :ok
   end
 
   def get_currencies
-    @currency = Currency.all
-    respond_with(@currencies) do |format|
-      format.json { render :json => @currency.as_json }
-      format.html
-    end
+    @currencies = Currency.all
+    render json: @currencies.as_json, status: :ok
   end
 
 end

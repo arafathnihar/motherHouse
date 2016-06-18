@@ -4,11 +4,8 @@ class ReceivingAgentsController < ApplicationController
   respond_to :json
 
   def index
-    @receivingAgent = ReceivingAgent.all
-    respond_with(@receivingAgents) do |format|
-      format.json { render :json => @receivingAgent.as_json }
-      #format.html
-    end
+    @receivingAgents = ReceivingAgent.all
+    render json: @receivingAgents.as_json, status: :ok
   end
 
   def create
@@ -23,7 +20,7 @@ class ReceivingAgentsController < ApplicationController
   end
 
   def show
-    respond_with(@receivingAgent.as_json)
+    render json: @receivingAgent.as_json, status: :ok
   end
 
   def update

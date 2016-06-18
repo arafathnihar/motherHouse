@@ -4,10 +4,7 @@ class MotherhouseController < ApplicationController
 
   def index
     @thispara = MainAgent.all
-    respond_with(@thispara) do |format|
-      format.json { render :json => @thispara.as_json }
-      format.html
-    end
+    render json: @thispara.as_json, status: :ok
   end
 
   def create
@@ -24,7 +21,7 @@ class MotherhouseController < ApplicationController
   end
 
   def show
-    respond_with(@thispara.as_json)
+    render json: @thispara.as_json, status: :ok
   end
 
   def update
