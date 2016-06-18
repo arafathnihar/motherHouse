@@ -27,7 +27,7 @@ class ReceivingAgentsController < ApplicationController
   end
 
   def update
-    if @receivingAgent.update_attributes(data_params)
+    if @receivingAgent.update_attributes(data_params.merge(updated_by: 1, updated_at: Time.now))
       render json: @receivingAgent.as_json, status: :ok
     else
       render json: {receivingAgent: @receivingAgent.errors, status: :unprocessable_entity}
