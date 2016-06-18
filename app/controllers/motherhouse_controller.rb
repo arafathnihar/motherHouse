@@ -10,6 +10,7 @@ class MotherhouseController < ApplicationController
   def create
     @thispara = MainAgent.new(this_params)
 
+    @thispara.customId = custom_id(MainAgent, "MH", 5)
     @thispara.guid = SecureRandom.uuid
     @thispara.created_by = 1
 
@@ -46,6 +47,6 @@ class MotherhouseController < ApplicationController
   end
 
   def this_params
-    params.fetch(:requestdata, {}).permit(:customId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:name, :contact, :countryId)
   end
 end

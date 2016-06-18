@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617155743) do
+ActiveRecord::Schema.define(version: 20160617171418) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "customId",    limit: 12,              null: false
@@ -119,6 +119,13 @@ ActiveRecord::Schema.define(version: 20160617155743) do
   add_index "receiving_agents", ["created_by"], name: "fk_rails_48fbadfcd5", using: :btree
   add_index "receiving_agents", ["mainAgentId"], name: "fk_rails_459e6097f5", using: :btree
   add_index "receiving_agents", ["updated_by"], name: "fk_rails_44a595623d", using: :btree
+
+  create_table "tests", force: :cascade do |t|
+    t.string  "customId",  limit: 12,  null: false
+    t.string  "name",      limit: 255, null: false
+    t.string  "contact",   limit: 15
+    t.integer "countryId", limit: 4
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "customId",   limit: 12,              null: false

@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  helper ApplicationHelper
+
   before_action :get_orders, except: [:index, :create]
   respond_to :html, :json
 
@@ -18,6 +20,7 @@ class OrdersController < ApplicationController
   def create
     @thispara = Receiver.new(params_receivers)
 
+    @thispara.customId = custom_id(Receiver, "RP", 5)
     @thispara.guid = SecureRandom.uuid
     @thispara.created_by = 1
 
@@ -25,6 +28,7 @@ class OrdersController < ApplicationController
     if  @thispara.save
       @thispara2 = Order.new(params_orders)
 
+      @thispara2.customId = custom_id(Order, "OR", 5)
       @thispara2.receiverId = @thispara.id
       @thispara2.guid = SecureRandom.uuid
       @thispara2.created_by = 1
@@ -44,7 +48,9 @@ class OrdersController < ApplicationController
   end
 
   def show
-    respond_with(@thispara.as_json)
+    @thispara2 = Receiver.find(@thispara.receiverId)
+
+    render json: combine_request(@thispara, @thispara2).as_json, status: :ok
   end
 
   def update
@@ -96,7 +102,6 @@ class OrdersController < ApplicationController
   def params_orders
     params.fetch(:requestdata, {})
         .permit(
-            :customId,
             :agentId,
             :receivingAgentId,
             :orderAmount,
