@@ -1,4 +1,5 @@
-class AgentsController < ApplicationController
+class Api::AgentsController < ApplicationController
+
   before_action :get_agent, except: [:index, :create]
   respond_to :html, :json
 

@@ -1,5 +1,4 @@
-class OrdersController < ApplicationController
-  helper ApplicationHelper
+class Api::OrdersController < ApplicationController
 
   before_action :get_orders, except: [:index, :create]
   respond_to :html, :json
