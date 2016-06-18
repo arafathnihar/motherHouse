@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resources :motherhouse
   resources :agents
   resources :receiving_agents
+
+  get 'commons/countries', to: 'commons#get_countries'
+  get 'commons/currencies', to: 'commons#get_currencies'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
