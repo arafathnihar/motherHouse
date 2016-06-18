@@ -1,5 +1,8 @@
 # Mother House
 
+### Reset schema.rb
+before performing a drop database for a fresh migration, delete the schema.rb file in 'motherHouse/db/' (it will be automatically generated on the fresh migration)
+
 ### Drop existing database
 `rake db:drop:all`
 
