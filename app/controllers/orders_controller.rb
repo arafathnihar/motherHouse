@@ -1,4 +1,5 @@
-class OrdersController < ApplicationController
+class Api::OrdersController < ApplicationController
+
   before_action :get_orders, except: [:index, :create]
   respond_to :html, :json
 

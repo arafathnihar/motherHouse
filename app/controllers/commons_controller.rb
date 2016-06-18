@@ -1,4 +1,4 @@
-class CommonsController < ApplicationController
+class Api::CommonsController < ApplicationController
 
   respond_to :json
 

@@ -1,4 +1,5 @@
-class MotherhouseController < ApplicationController
+class Api::MotherhouseController < ApplicationController
+
   before_action :get_motherhouse, except: [:index, :create]
   respond_to :html, :json
 
