@@ -18,6 +18,11 @@ class OrdersController < ApplicationController
 
     if @thispara.save
       render json: @thispara.as_json, status: :ok
+
+      @thispara2 = Receiver.new(this_params)
+
+      @thispara2.guid = SecureRandom.uuid
+      @thispara2.created_by = 1
     else
       render json: {user: @thispara.errors, status: :no_content}
     end
@@ -53,6 +58,21 @@ class OrdersController < ApplicationController
 
   def this_params
     params.fetch(:requestdata, {})
-        .permit(:customId, :agentId, :receivingAgentId, :receiverId, :orderAmount, :orderCurrId, :supplyCurrId, :exchangeRate, :date, :orderStatus)
+        .permit(
+            :customId,
+            :agentId,
+            :receivingAgentId,
+            :receiverId,
+            :orderAmount,
+            :orderCurrId,
+            :supplyCurrId,
+            :exchangeRate,
+            :date,
+            :orderStatus,
+
+            :name,
+            :contact,
+            :countryId
+        )
   end
 end
