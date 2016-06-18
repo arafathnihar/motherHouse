@@ -7,7 +7,7 @@ class ReceivingAgentsController < ApplicationController
     @receivingAgent = ReceivingAgent.all
     respond_with(@receivingAgents) do |format|
       format.json { render :json => @receivingAgent.as_json }
-      #format.html
+      format.html
     end
   end
 
