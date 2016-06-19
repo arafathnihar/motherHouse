@@ -1,5 +1,5 @@
 class MainAgent < ActiveRecord::Base
 
-  validates :name, presence: true
+  validates :name, presence: { message: "name is required" }
 
 end

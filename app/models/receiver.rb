@@ -1,6 +1,5 @@
 class Receiver < ActiveRecord::Base
 
-  validates :name, presence: true
-  validates :created_by, presence: true
+  validates :name, presence: { message: "name is required" }
 
 end

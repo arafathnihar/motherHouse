@@ -37,11 +37,10 @@ class Api::V1::OrdersController < ApplicationController
       else #rescue Exception => exc1
         #roll back
         rollback(@thispara.id)
-
-        render json: {object: @thispara2.errors, status: :no_content}
+        render json: { errors1: @thispara2.errors }, status: :unprocessable_entity
       end
     else #rescue Exception => exc2
-      render json: {object: @thispara.errors, status: :no_content}
+      render json: { errors2: @thispara.errors }, status: :unprocessable_entity
     end
   end
 
@@ -63,7 +62,7 @@ class Api::V1::OrdersController < ApplicationController
       end
 
     else
-      render json: {object: @thispara.errors, status: :unprocessable_entity}
+      render json: { errors: @thispara.errors }, status: :unprocessable_entity
     end
   end
 

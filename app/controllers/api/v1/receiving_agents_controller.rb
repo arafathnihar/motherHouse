@@ -18,7 +18,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
     if @receivingAgent.save
       render json: @receivingAgent.as_json, status: :ok
     else
-      render json: {receivingAgent: @receivingAgent.errors, status: :no_content}
+      render json: { errors: @thispara.errors }, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +30,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
     if @receivingAgent.update_attributes(data_params.merge(updated_by: 1, updated_at: Time.now))
       render json: @receivingAgent.as_json, status: :ok
     else
-      render json: {receivingAgent: @receivingAgent.errors, status: :unprocessable_entity}
+      render json: { errors: @thispara.errors }, status: :unprocessable_entity
     end
   end
 
