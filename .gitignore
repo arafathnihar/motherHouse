@@ -44,4 +44,5 @@ bower.json
 
 .idea/
 /public/client/bower_components
+Gemfile.lock
 
