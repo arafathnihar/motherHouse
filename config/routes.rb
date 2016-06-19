@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
   namespace :api do
+    namespace :v1 do
 
-    resources :motherhouse
-    resources :agents
-    resources :orders
-    resources :receiving_agents
+      resources :motherhouse
+      resources :agents
+      resources :orders
+      resources :receiving_agents
 
-    get 'commons/countries', to: 'commons#get_countries'
-    get 'commons/currencies', to: 'commons#get_currencies'
+      get 'commons/countries', to: 'commons#get_countries'
+      get 'commons/currencies', to: 'commons#get_currencies'
 
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

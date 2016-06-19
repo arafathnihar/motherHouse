@@ -1,4 +1,4 @@
-class Api::OrdersController < ApplicationController
+class Api::V1::OrdersController < ApplicationController
 
   before_action :get_orders, except: [:index, :create]
   respond_to :html, :json
@@ -19,7 +19,6 @@ class Api::OrdersController < ApplicationController
   def create
     @thispara = Receiver.new(params_receivers)
 
-    @thispara.customId = custom_id(Receiver, "RP", 5)
     @thispara.guid = SecureRandom.uuid
     @thispara.created_by = 1
 
@@ -39,10 +38,10 @@ class Api::OrdersController < ApplicationController
         #roll back
         rollback(@thispara.id)
 
-        render json: {user: @thispara2.errors, status: :no_content}
+        render json: {object: @thispara2.errors, status: :no_content}
       end
     else #rescue Exception => exc2
-      render json: {user: @thispara.errors, status: :no_content}
+      render json: {object: @thispara.errors, status: :no_content}
     end
   end
 
@@ -64,7 +63,7 @@ class Api::OrdersController < ApplicationController
       end
 
     else
-      render json: {user: @thispara.errors, status: :unprocessable_entity}
+      render json: {object: @thispara.errors, status: :unprocessable_entity}
     end
   end
 

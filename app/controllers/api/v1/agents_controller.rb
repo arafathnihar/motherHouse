@@ -1,4 +1,4 @@
-class Api::AgentsController < ApplicationController
+class Api::V1::AgentsController < ApplicationController
 
   before_action :get_agent, except: [:index, :create]
   respond_to :html, :json
@@ -18,7 +18,7 @@ class Api::AgentsController < ApplicationController
     if @thispara.save
       render json: @thispara.as_json, status: :ok
     else
-      render json: {user: @thispara.errors, status: :no_content}
+      render json: {object: @thispara.errors, status: :no_content}
     end
   end
 
@@ -30,7 +30,7 @@ class Api::AgentsController < ApplicationController
     if @thispara.update_attributes(this_params.merge(updated_by: 1, updated_at: Time.now))
       render json: @thispara.as_json, status: :ok
     else
-      render json: {user: @thispara.errors, status: :unprocessable_entity}
+      render json: {object: @thispara.errors, status: :unprocessable_entity}
     end
   end
 
