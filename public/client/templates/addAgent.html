@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default" ng-controller="AddAgentCtrl as vm">
+            <div class="panel-heading">
+                {{vm.title}} 
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Agent Number</label>
+                        <input ng-model="vm.agent.customId" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Agent Name</label>
+                        <input ng-model="vm.agent.name" type="text" class="form-control" placeholder="Agent Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Contact Number</label>
+                        <input ng-model="vm.agent.contact" type="text" class="form-control" placeholder="Contact Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Country</label>
+                        <input ng-model="vm.agent.countryId" type="text" class="form-control" placeholder="Country">
+                    </div>
+                    <button ng-click="vm.addAgent()" class="btn btn-primary pull-right">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
