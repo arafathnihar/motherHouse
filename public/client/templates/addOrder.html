@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default" ng-controller="AddOrderCtrl as vm">
+            <div class="panel-heading">
+                Add New Order
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label >Agent Number</label>
+                        <input ng-model="vm.order.agentId" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Receiving Agent</label>
+                        <input ng-model="vm.order.receivingAgentId" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Amount</label>
+                        <input ng-model="vm.order.orderAmount" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >order Currency</label>
+                        <input ng-model="vm.order.orderCurrId" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >supply Currency</label>
+                        <input ng-model="vm.order.supplyCurrId" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Exchange Rate</label>
+                        <input ng-model="vm.order.exchangeRate" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Order Status</label>
+                        <input ng-model="vm.order.orderStatus" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Receiver Name</label>
+                        <input ng-model="vm.order.name" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Receiver Contact Number</label>
+                        <input ng-model="vm.order.contact" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Country</label>
+                        <input ng-model="vm.order.countryId" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Bank</label>
+                        <input ng-model="vm.order.bank" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Branch</label>
+                        <input ng-model="vm.order.branch" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <div class="form-group">
+                        <label >Bank Account Number</label>
+                        <input ng-model="vm.order.accountNumber" type="text" class="form-control" placeholder="Agent Number">
+                    </div>
+                    <button ng-click="vm.addAgent()" class="btn btn-primary pull-right">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

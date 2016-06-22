@@ -59,19 +59,34 @@ myApp.controller('AddAgentCtrl', function(WebService,$state) {
         })
        }       
     }
-    
-    
-    
 
 });
 
+myApp.controller('AddOrderCtrl', function(){
+    var vm = this;
+    vm.order = {
+        agentId : '',
+        receivingAgentId : '',
+        orderAmount : '',
+        orderCurrId : '',
+        supplyCurrId : '',
+        exchangeRate : '',
+        orderStatus : '',
+        name : '',
+        contact : '',
+        countryId : '',
+        bank : '',
+        branch : '',
+        accountNumber : ''
+    };
+});
 myApp.controller('agentListCtrl', function(AgentListService,NgTableParams,WebService,$state) {
     var vm = this;
     var loadAgents = function(){
         var promis = AgentListService.getAgentList();
         promis.then(function(responseData){
             vm.data = responseData.data;
-            vm.tableParams = new NgTableParams({}, { counts: [], data: vm.data });
+            vm.tableParams = new NgTableParams({count: vm.data.length}, { counts: [], data: vm.data });
         });
     } 
     
@@ -92,7 +107,6 @@ myApp.controller('agentListCtrl', function(AgentListService,NgTableParams,WebSer
     }
     
     vm.addNewAgent = function(agetId) {
-        console.log('*************');
         $state.go('addAgent');
     }
 });
@@ -121,17 +135,21 @@ myApp.factory('AgentListService', function($http) {
 myApp.config(function($stateProvider, $urlRouterProvider) {
   //
   // For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/agentList");
+  $urlRouterProvider.otherwise("/addOrder");
   //
   // Now set up the states
   $stateProvider
     .state('addAgent', {
       url: "/addAgent/:agetId",
       params:{agetId:undefined},
-      templateUrl: "/client/templates/addAgent.html/"
+      templateUrl: "/client/templates/addAgent.html"
     })
     .state('agentList', {
       url: "/agentList",
       templateUrl: '/client/templates/agentList.html'
+    })
+    .state('addOrder', {
+      url: "/addOrder",
+      templateUrl: "/client/templates/addOrder.html"
     });
 });

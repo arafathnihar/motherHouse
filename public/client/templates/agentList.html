@@ -25,7 +25,7 @@
                     <td title="'Contact Number'">
                         {{agent.contact}}
                     </td>
-                    <td title="'Country'" filter="{ countryId: 'text'}">
+                    <td title="'Country'" filter="{ country: 'select'}" filter-data="vm.countries">
                         {{agent.countryId}}
                     </td>
                     <td>
