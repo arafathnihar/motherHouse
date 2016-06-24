@@ -1,7 +1,11 @@
 class Api::V1::MotherhouseController < ApplicationController
 
-  before_action :get_motherhouse, except: [:index, :create]
-  respond_to :html, :json
+  http_basic_authenticate_with name: "admin", password: "secret"
+  # before_action :get_motherhouse, except: [:index, :create]
+  respond_to :json
+
+  # before_action :get_motherhouse, except: [:index, :create]
+  # respond_to :html, :json
 
   def index
     @thispara = MainAgent.all
@@ -11,7 +15,7 @@ class Api::V1::MotherhouseController < ApplicationController
   def create
     @thispara = MainAgent.new(this_params)
 
-    @thispara.customId = custom_id(MainAgent, "MH", 5)
+    @thispara.customId = custom_id(MainAgent, "MH", 8)
     @thispara.guid = SecureRandom.uuid
     @thispara.created_by = 1
 

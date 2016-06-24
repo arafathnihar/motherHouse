@@ -6,10 +6,13 @@ Rails.application.routes.draw do
       resources :agents
       resources :orders
       resources :receiving_agents
+
+      get '/countries', to: 'countries#index'
+      get '/currencies', to: 'currencies#index'
       # resources :sessions, only: [:create, :destroy]
 
-      get 'commons/countries', to: 'commons#get_countries'
-      get 'commons/currencies', to: 'commons#get_currencies'
+      # get 'commons/countries', to: 'commons#get_countries'
+      # get 'commons/currencies', to: 'commons#get_currencies'
 
     end
   end
