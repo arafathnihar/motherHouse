@@ -5,6 +5,9 @@ class CreateReceivers < ActiveRecord::Migration
       t.string :name, null: false
       t.string :contact, limit: 15, null: true
       t.integer :countryId, null: true
+      t.string :bankName, null: true
+      t.string :branchName, null: true
+      t.string :bankAcNo, null: true
 
       # database and coding level
       t.string :guid, null: false

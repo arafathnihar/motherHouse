@@ -11,7 +11,7 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
-/tests*
+
 tests*
 test*
 20160617171418_create_tests.rb
