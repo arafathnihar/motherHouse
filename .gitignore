@@ -12,6 +12,9 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 /tests*
+tests*
+test*
+20160617171418_create_tests.rb
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
