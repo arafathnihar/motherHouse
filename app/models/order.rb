@@ -1,13 +1,19 @@
 class Order < ActiveRecord::Base
 
-  validates :agentId, presence: true
-  validates :receivingAgentId, presence: true
-  validates :receiverId, presence: true
-  validates :orderAmount, presence: true
-  validates :orderCurrId, presence: true
-  validates :supplyCurrId, presence: true
-  validates :exchangeRate, presence: true
-  validates :date, presence: true
+  validates :agentId, presence: { message: "agent id is required" }
+  validates :receivingAgentId, presence: { message: "receiving agent id is required" }
+  validates :receiverId, presence: { message: "receiver id is required" }
+  validates :orderCurrId, presence: { message: "order currency is required" }
+  validates :supplyCurrId, presence: { message: "exchange currency is required" }
+
+  validates_presence_of :orderAmount, :message => "order amount is required"
+  validates_numericality_of :orderAmount, :allow_nil => true, :greater_than => 0, :message => "order amount should be a number and greater than zero"
+
+  validates_presence_of :exchangeRate, :message => "exchange rate is required"
+  validates_numericality_of :exchangeRate, :allow_nil => true, :greater_than => 0, :message => "exchange rate should be a number and greater than zero"
+
+  validates_presence_of :date, :message => "date is required"
+  #validates_format_of :date, :allow_nil => true, :message => "date is not in valid format"
 
 end
 

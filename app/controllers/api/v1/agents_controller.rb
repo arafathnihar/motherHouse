@@ -20,7 +20,7 @@ class Api::V1::AgentsController < ApplicationController
     if @thispara.save
       render json: @thispara.as_json, status: :ok
     else
-      render json: {object: @thispara.errors, status: :no_content}
+      render json: { errors: @thispara.errors }, status: :unprocessable_entity
     end
   end
 
@@ -32,7 +32,7 @@ class Api::V1::AgentsController < ApplicationController
     if @thispara.update_attributes(this_params.merge(updated_by: 1, updated_at: Time.now))
       render json: @thispara.as_json, status: :ok
     else
-      render json: {object: @thispara.errors, status: :unprocessable_entity}
+      render json: { errors: @thispara.errors }, status: :unprocessable_entity
     end
   end
 

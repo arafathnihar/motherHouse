@@ -497,3 +497,13 @@ Currency.create([
   {code: 'ZMW', name: 'Zambian Kwacha'},
   {code: 'ZWD', name: 'Zimbabwe Dollar'}
 ])
+
+MainAgent.create(
+    customId: 'MH0001',
+    name: 'Shivanesan Arafath',
+    contact: '0111234567',
+    countryId: 145,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)

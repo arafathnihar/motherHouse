@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel" ng-controller="agentListCtrl as vm">
+            <!--<div class="row">
+                <div class="col-md-2 col-md-offset-10">-->
+                    <button type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create agent</button>
+                <!--</div>
+            </div>-->
+            </br></br>
+            <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="true">
+                <colgroup>
+                    <col width="15%" />
+                    <col width="35%" />
+                    <col width="25%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                </colgroup>
+                <tr ng-repeat="agent in $data">
+                    <td title="'Agent Number'" filter="{ customId: 'text'}">
+                        {{agent.customId}}
+                    </td>
+                    <td title="'Agent Name'" filter="{ name: 'text'}">
+                        {{agent.name}}
+                    </td>
+                    <td title="'Contact Number'">
+                        {{agent.contact}}
+                    </td>
+                    <td title="'Country'" filter="{ countryId: 'text'}">
+                        {{agent.countryId}}
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-sm" ng-click="vm.edit(agent.id)"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button class="btn btn-danger btn-sm" ng-click="vm.delete(agent.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
