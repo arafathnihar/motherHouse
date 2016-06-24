@@ -1,5 +1,6 @@
 class Api::V1::OrdersController < ApplicationController
 
+  # before_action :authenticate
   before_action :get_orders, except: [:index, :create]
   respond_to :html, :json
 
@@ -86,14 +87,6 @@ class Api::V1::OrdersController < ApplicationController
   def get_orders
     @thispara = Order.find(params[:id])
     render json: {status: :not_found} unless @thispara
-  end
-
-  def combine_request(result1, result2)
-    mrg = []
-    mrg.push(result1)
-    mrg.push(result2)
-
-    return mrg
   end
 
   def params_orders

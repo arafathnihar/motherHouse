@@ -10,8 +10,9 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :orderCurrId, null: false # currency of amount to be supplied
       t.integer :supplyCurrId, null: false # currency in which to make the supply
       t.decimal :exchangeRate, null: false # exchange rate of currency to be supplied
-      t.datetime :date, null: false # date of order
+      t.datetime :orderDate, null: false
       t.integer :orderStatus, null: false, default: 1 # order status # default, not supplied
+      t.datetime :settledDate, null: false
 
       # database and coding level
       t.string :guid, null: false

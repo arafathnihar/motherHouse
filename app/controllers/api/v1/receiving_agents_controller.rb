@@ -4,7 +4,16 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   respond_to :json
 
   def index
-    @receivingAgents = ReceivingAgent.all
+    # array = []
+    @receivingAgents = ReceivingAgent.eager_load(:countries).all
+
+    # @receivingAgents.each do |item|
+    #   # @country = Country.find(item.receiverId)
+    #
+    #   # array.push(combine_request(item, @country))
+    #   array.push(item.Country.name)
+    # end
+
     render json: @receivingAgents.as_json, status: :ok
   end
 
