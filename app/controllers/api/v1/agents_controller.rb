@@ -6,7 +6,6 @@ class Api::V1::AgentsController < ApplicationController
   def index
     @thispara = Agent.all
 
-
     render json: @thispara.as_json, status: :ok
   end
 
