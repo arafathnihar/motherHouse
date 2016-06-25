@@ -11,7 +11,6 @@ myApp.controller('AddAgentCtrl', function(WebService, $state) {
     };
 
     if ($state.params.agetId) {
-        console.log('0000000000000');
         vm.title = "Edit Agent"
         var reqestObject = {
             method: 'GET',
@@ -67,7 +66,7 @@ myApp.controller('AddOrderCtrl', function() {
     vm.order = {
         agentId: '',
         receivingAgentId: '',
-        orderAmount: '',
+        orderAmount: 0,
         orderCurrId: '',
         supplyCurrId: '',
         exchangeRate: '',
@@ -77,8 +76,10 @@ myApp.controller('AddOrderCtrl', function() {
         countryId: '',
         bank: '',
         branch: '',
-        accountNumber: ''
+        accountNumber: '',
+        unitPrice: 0
     };
+    
     var datepickerConf = function(obj) {
         obj.today = function() {
             obj.date = new Date();
@@ -113,11 +114,15 @@ myApp.controller('AddOrderCtrl', function() {
 
 
 });
-myApp.controller('agentListCtrl', function(AgentListService, NgTableParams, WebService, $state) {
+myApp.controller('agentListCtrl', function(NgTableParams, WebService, $state) {
     var vm = this;
     var loadAgents = function() {
-        var promis = AgentListService.getAgentList();
-        promis.then(function(responseData) {
+        var reqestObject = {
+            method: 'GET',
+            url: '/api/v1/agents'
+        }
+        var reqest = WebService.callWebService(reqestObject);
+        reqest.then(function(responseData) {
             vm.data = responseData.data;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
         });
@@ -144,8 +149,35 @@ myApp.controller('agentListCtrl', function(AgentListService, NgTableParams, WebS
     }
 });
 
-myApp.controller('orderListCtrl', function(){
-    
+myApp.controller('orderListCtrl', function($state) {
+    var vm = this;
+    var loadAgents = function() {
+        var promis = AgentListService.getAgentList();
+        promis.then(function(responseData) {
+            vm.data = responseData.data;
+            vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
+        });
+    }
+
+    loadAgents();
+    vm.delete = function(agetId) {
+        var reqestObject = {
+            method: 'DELETE',
+            url: '/api/v1/agents/' + agetId
+        }
+        var reqest = WebService.callWebService(reqestObject);
+        reqest.then(function(data) {
+            loadAgents();
+        });
+    }
+
+    vm.edit = function(agetId) {
+        $state.go('addAgent', { 'agetId': agetId });
+    }
+
+    vm.addNewOrder = function(agetId) {
+        $state.go('addOrder');
+    }
 });
 
 myApp.factory('WebService', function($http) {
@@ -156,25 +188,9 @@ myApp.factory('WebService', function($http) {
     }
 });
 
-myApp.factory('AgentListService', function($http) {
-    return {
-
-        getAgentList: function() {
-            return $http({
-                method: 'GET',
-                url: '/api/v1/agents'
-            });
-        }
-    }
-
-});
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
-    //
-    // For any unmatched url, redirect to /state1
     $urlRouterProvider.otherwise("/addOrder");
-    //
-    // Now set up the states
     $stateProvider
         .state('addAgent', {
             url: "/addAgent/:agetId",
