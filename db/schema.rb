@@ -91,6 +91,9 @@ ActiveRecord::Schema.define(version: 20160617155743) do
     t.string   "name",       limit: 255,             null: false
     t.string   "contact",    limit: 15
     t.integer  "countryId",  limit: 4
+    t.string   "bankName",   limit: 255
+    t.string   "branchName", limit: 255
+    t.string   "bankAcNo",   limit: 255
     t.string   "guid",       limit: 255,             null: false
     t.integer  "status",     limit: 4,   default: 1, null: false
     t.integer  "created_by", limit: 4,               null: false
