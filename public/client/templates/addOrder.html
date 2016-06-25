@@ -8,25 +8,16 @@
                 <form>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    <label>Agent Number</label>
-                                    <select class="form-control" ng-model="vm.order.agentNumber">
-                                        <option>CHF</option>
-                                        <option>LKR</option>
-                                        <option>USD</option>
-                                        <option>EUR</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-8">
-                                    <label>Agent Name</label>
-                                    <input ng-model="vm.order.orderAmount" type="number" class="form-control" placeholder="Amount">
-                                </div>
-                            </div>
+                            <label>Agent</label>
+                            <select class="form-control" ng-model="vm.order.agentId">
+                                <option ng-repeat="agent in vm.agents" ng-value="agent.id">{{agent.customId + ' - ' + agent.name}}</option>
+                            </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Receiving Agent</label>
-                            <input ng-model="vm.order.receivingAgentId" type="text" class="form-control" placeholder="Receiving Agent">
+                            <select class="form-control" ng-model="vm.order.receivingAgentId">
+                                <option ng-repeat="receivingAgent in vm.receivingAgents" ng-value="receivingAgent.id">{{receivingAgent.customId + ' - ' + receivingAgent.name}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -34,11 +25,8 @@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label> Order Currency</label>
-                                    <select class="form-control" ng-model="vm.order.orderCr">
-                                        <option>CHF</option>
-                                        <option>LKR</option>
-                                        <option>USD</option>
-                                        <option>EUR</option>
+                                    <select class="form-control" ng-model="vm.order.orderCurrId">
+                                        <option ng-repeat="currency in vm.currencies" ng-value="currency.id">{{currency.code}}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-8">
@@ -49,62 +37,74 @@
                             <div class="row">
                                 <div class="form-group  col-md-4">
                                     <label> Supply Currency</label>
-                                    <select class="form-control" ng-model="vm.order.supplyCr">
-                                        <option>CHF</option>
-                                        <option>LKR</option>
-                                        <option>USD</option>
-                                        <option>EUR</option>
+                                    <select class="form-control" ng-model="vm.order.supplyCurrId">
+                                        <option ng-repeat="currency in vm.currencies" ng-value="currency.id">{{currency.code}}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-8">
-                                    <label>Unit Price</label>
-                                    <input ng-model="vm.order.unitPrice" type="number" class="form-control" placeholder="Unit Price">
+                                    <label>Exchange Rate</label>
+                                    <input ng-model="vm.order.exchangeRate" type="number" class="form-control" placeholder="Exchange Rate">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="form-group col-md-8">
+                                <div class="form-group col-md-12">
                                     <label>Total Amount</label>
                                     <div class="input-group">
-                                        <input value="{{vm.order.orderAmount * vm.order.unitPrice}}" type="number" class="form-control" placeholder="Total Amount" disabled>
-                                        <div class="input-group-addon">{{vm.order.supplyCr}}</div>
+                                        <input value="{{vm.order.orderAmount * vm.order.exchangeRate}}" type="number" class="form-control" placeholder="Total Amount"
+                                        disabled>
+                                        <div class="input-group-addon">&nbsp</div>
                                     </div>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label> Status</label>
-                                    <select class="form-control">
-                                        <option>pending</option>
-                                        <option>settled</option>
-                                        <option>complete</option>                                     
-                                    </select>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label> Order Date</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.order.date" is-open="vm.order.datePopup.opened" datepicker-options="vm.order.dateOptions"
-                                        ng-required="true" close-text="Close" />
-                                        <span class="input-group-btn">
+                                <div ng-hide="false" class="form-group col-md-6">
+                                    <label> Status</label>
+                                    <select class="form-control" ng-model="vm.order.status">
+                                        <option>pending</option>
+                                        <option>supplied</option>
+                                        <option>completed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label> Order Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.order.date" is-open="vm.order.datePopup.opened"
+                                datepicker-options="vm.order.dateOptions" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" ng-click="vm.order.dateOpen()">
                                                 <i class="glyphicon glyphicon-calendar"></i>
                                                 </button>
                                         </span>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label> Order Date</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.settled.date" is-open="vm.settled.datePopup.opened" datepicker-options="vm.settled.dateOptions"
-                                        ng-required="true" close-text="Close" />
-                                        <span class="input-group-btn">
+                            </div>
+                        </div>
+                        <div ng-hide="vm.order.status != 'supplied' && vm.order.status != 'completed'" class="form-group col-md-4">
+                            <label> Supplied Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.settled.date" is-open="vm.settled.datePopup.opened"
+                                datepicker-options="vm.settled.dateOptions" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" ng-click="vm.settled.dateOpen()">
                                                 <i class="glyphicon glyphicon-calendar"></i>
                                                 </button>
                                         </span>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                        <div ng-hide="vm.order.status != 'completed'" class="form-group col-md-4">
+                            <label> Copleted Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.settled.date" is-open="vm.settled.datePopup.opened"
+                                datepicker-options="vm.settled.dateOptions" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="vm.settled.dateOpen()">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                </button>
+                                        </span>
                             </div>
                         </div>
                     </div>
@@ -119,11 +119,9 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>Country</label>
+                            <label>Country</label>
                             <select class="form-control" ng-model="vm.order.countryId">
-                                        <option>Sri Lanka</option>
-                                        <option>Chaina</option>
-                                        <option>India</option>
-                                        <option>Switzerland</option>
+                                <option ng-repeat="country in vm.countries" ng-value="country.id">{{country.name}}</option>
                             </select>
                         </div>
                     </div>

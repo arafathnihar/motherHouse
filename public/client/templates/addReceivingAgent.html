@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default" ng-controller="AddReceivingAgentCtrl as vm">
+            <div class="panel-heading">
+                {{vm.title}}
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label>Receiving Agent Name</label>
+                        <input ng-model="vm.receivingagent.name" type="text" class="form-control" placeholder="Receiving Agent Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number</label>
+                        <input ng-model="vm.receivingagent.contact" type="text" class="form-control" placeholder="Contact Number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Country</label>
+                            <select class="form-control" ng-model="vm.receivingagent.countryId">
+                                        <option ng-repeat="country in vm.countries" ng-value="country.id">{{country.name}}</option>
+                        </select>
+                    </div>
+                    <button ng-click="vm.addReceivingAgent()" class="btn btn-primary pull-right">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
