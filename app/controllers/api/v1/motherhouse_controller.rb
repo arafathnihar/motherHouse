@@ -1,7 +1,6 @@
-class Api::V1::MotherhouseController < ApplicationController
+class Api::V1::MotherhouseController < ApplicationSecureController
 
-  http_basic_authenticate_with name: "admin", password: "secret"
-  # before_action :get_motherhouse, except: [:index, :create]
+  before_action :get_motherhouse, except: [:index, :create]
   respond_to :json
 
   # before_action :get_motherhouse, except: [:index, :create]
@@ -9,6 +8,7 @@ class Api::V1::MotherhouseController < ApplicationController
 
   def index
     @thispara = MainAgent.all
+
     render json: @thispara.as_json, status: :ok
   end
 

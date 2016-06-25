@@ -1,4 +1,4 @@
-class Api::V1::OrdersController < ApplicationController
+class Api::V1::OrdersController < ApplicationSecureController
 
   # before_action :authenticate
   before_action :get_orders, except: [:index, :create]

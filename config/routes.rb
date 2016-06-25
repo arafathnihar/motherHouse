@@ -7,14 +7,14 @@ Rails.application.routes.draw do
       resources :orders
       resources :receiving_agents
 
-      get '/login', to: 'login#index'
-      # resources :sessions, only: [:create, :destroy]
-
+      get '/login', to: 'login#create'
+      get '/logout', to: 'login#delete'
     end
   end
 
   get 'commons/countries', to: 'commons#get_countries'
   get 'commons/currencies', to: 'commons#get_currencies'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

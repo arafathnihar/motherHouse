@@ -1,4 +1,4 @@
-class Api::V1::ReceivingAgentsController < ApplicationController
+class Api::V1::ReceivingAgentsController < ApplicationSecureController
 
   before_action :get_receiving_agent, except: [:index, :create]
   respond_to :json

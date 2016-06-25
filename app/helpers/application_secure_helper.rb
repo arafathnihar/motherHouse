@@ -1,0 +1,2 @@
+module ApplicationSecureHelper
+end

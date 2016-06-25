@@ -1,8 +1,8 @@
-class ApplicationController < ActionController::Base
+class ApplicationSecureController < ActionController::Base
 
   protect_from_forgery with: :null_session
 
-  skip_before_filter  :verify_authenticity_token
+  before_filter :restrict_access # check token in all child classes
 
   def combine_request(result1, result2)
     mrg = []
