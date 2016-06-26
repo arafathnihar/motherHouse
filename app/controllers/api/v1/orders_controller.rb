@@ -99,9 +99,7 @@ class Api::V1::OrdersController < ApplicationController
             :supplyCurrId,
             :exchangeRate,
             :orderDate,
-            :orderStatus,
-            :suppliedDate,
-            :completedDate
+            :orderStatus
         )
   end
 
