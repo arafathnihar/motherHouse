@@ -101,7 +101,7 @@ class Api::V1::OrdersController < ApplicationController
         .permit(
             :name,
             :contact,
-            :country_id
+            :country_id,
             :bankName,
             :branchName,
             :bankAcNo
