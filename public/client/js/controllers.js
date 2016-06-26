@@ -1,9 +1,10 @@
-var myApp = angular.module('motherHouse', ['ui.bootstrap', 'ngTable', 'ui.router']);
+var myApp = angular.module('motherHouseControllers', []);
 
 var agentList;
 var receivingAgentList;
 var countries;
 var currencies;
+var currenciesKeyVal;
 
 myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
     var vm = this;
@@ -93,11 +94,11 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         "mainAgentId": "1"
     };
 
-    if ($state.params.receivingagentId) {
+    if ($state.params.receivingAgentId) {
         vm.title = "Edit Receiving Agent"
         var reqestObject = {
             method: 'GET',
-            url: '/api/v1/receiving_agents/' + $state.params.receivingagentId
+            url: '/api/v1/receiving_agents/' + $state.params.receivingAgentId
         }
         var reqest = WebService.callWebService(reqestObject);
         reqest.then(function(data) {
@@ -142,7 +143,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         }
     }
 });
-myApp.controller('AddOrderCtrl', function(UtilityService,WebService) {
+myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
     var vm = this;
     vm.order = {
         agentId: '',
@@ -151,7 +152,7 @@ myApp.controller('AddOrderCtrl', function(UtilityService,WebService) {
         orderCurrId: '',
         supplyCurrId: '',
         exchangeRate: 0,
-        orderDate:'',
+        orderDate: '',
         orderStatus: 1,
         suppliedDate: '',
         completedDate: '',
@@ -233,22 +234,22 @@ myApp.controller('AddOrderCtrl', function(UtilityService,WebService) {
     } else {
         vm.countries = countries;
     }
-    
-    vm.addOrder = function() {
-            var addOrderReqestObject = {
-                method: 'POST',
-                url: '/api/v1/orders',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: { requestdata: vm.order }
-            }
-            var addOrderReqest = WebService.callWebService(addOrderReqestObject);
 
-            addOrderReqest.then(function(data) {
-                console.log(data)
-            })
+    vm.addOrder = function() {
+        var addOrderReqestObject = {
+            method: 'POST',
+            url: '/api/v1/orders',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: { requestdata: vm.order }
         }
+        var addOrderReqest = WebService.callWebService(addOrderReqestObject);
+
+        addOrderReqest.then(function(data) {
+            console.log(data)
+        })
+    }
 });
 
 myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
@@ -351,86 +352,4 @@ myApp.controller('orderListCtrl', function($state) {
     vm.addNewOrder = function(agetId) {
         $state.go('addOrder');
     }
-});
-
-myApp.factory('UtilityService', function(WebService) {
-    return {
-        getCountries: function() {
-            var countryReqestObject = {
-                method: 'GET',
-                url: '/commons/countries/'
-            }
-            var countryReqest = WebService.callWebService(countryReqestObject).then(function(data) {
-                return data.data;
-            });
-            return countryReqest;
-        },
-        getAgentList: function() {
-            var agentListReqestObject = {
-                method: 'GET',
-                url: '/api/v1/agents'
-            }
-            var agentListReqest = WebService.callWebService(agentListReqestObject).then(function(responseData) {
-                return responseData.data
-            });
-            return agentListReqest;
-        },
-        getCurrencies: function() {
-            var currencyReqestObject = {
-                method: 'GET',
-                url: '/commons/currencies/'
-            }
-            var currencyReqest = WebService.callWebService(currencyReqestObject).then(function(data) {
-                return data.data;
-            });
-            return currencyReqest;
-        },
-        getReceivingAgentList: function() {
-            var receivingAgentListReqestObject = {
-                method: 'GET',
-                url: '/api/v1/receiving_agents'
-            }
-            var receivingAgentListReqest = WebService.callWebService(receivingAgentListReqestObject).then(function(data) {
-                return data.data;
-            });
-            return receivingAgentListReqest
-        }
-    }
-});
-myApp.factory('WebService', function($http) {
-    return {
-        callWebService: function(reqestObject) {
-            return $http(reqestObject);
-        }
-    }
-});
-myApp.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/addOrder");
-    $stateProvider
-        .state('addAgent', {
-            url: "/addAgent/:agetId",
-            params: { agetId: undefined },
-            templateUrl: "/client/templates/addAgent.html"
-        })
-        .state('agentList', {
-            url: "/agentList",
-            templateUrl: '/client/templates/agentList.html'
-        })
-        .state('orderList', {
-            url: "/orderList",
-            templateUrl: '/client/templates/orderList.html'
-        })
-        .state('addOrder', {
-            url: "/addOrder",
-            templateUrl: "/client/templates/addOrder.html"
-        })
-        .state('addReceivingAgent', {
-            url: "/addReceivingAgent/:receivingAgentId",
-            params: { receivingAgentId: undefined },
-            templateUrl: "/client/templates/addReceivingAgent.html"
-        })
-        .state('receivingAgentList', {
-            url: "/receivingAgentList",
-            templateUrl: '/client/templates/receivingAgentList.html'
-        });
 });

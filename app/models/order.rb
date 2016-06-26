@@ -13,8 +13,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :exchangeRate, :message => "exchange rate is required"
   validates_numericality_of :exchangeRate, :allow_nil => true, :greater_than => 0, :message => "exchange rate should be a number and greater than zero"
 
-  validates_presence_of :orderDate, :message => "date is required"
-  #validates_format_of :date, :allow_nil => true, :message => "date is not in valid format"
+  validates_presence_of :orderDate, :message => "order date is required"
 
 end
 

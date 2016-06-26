@@ -102,6 +102,9 @@ class Api::V1::OrdersController < ApplicationController
             :name,
             :contact,
             :country_id
+            :bankName,
+            :branchName,
+            :bankAcNo
         )
   end
 end
