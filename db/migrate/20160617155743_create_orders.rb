@@ -12,8 +12,8 @@ class CreateOrders < ActiveRecord::Migration
       t.decimal :exchangeRate, null: false # exchange rate of currency to be supplied
       t.datetime :orderDate, null: false
       t.integer :orderStatus, null: false, default: 1 # order status # default, not supplied
-      t.datetime :suppliedDate, null: false
-      t.datetime :completedDate, null: false
+      #t.datetime :suppliedDate, null: false
+      #t.datetime :completedDate, null: false
 
       # database and coding level
       t.string :guid, null: false
