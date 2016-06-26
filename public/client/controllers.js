@@ -93,11 +93,11 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         "mainAgentId": "1"
     };
 
-    if ($state.params.receivingagentId) {
+    if ($state.params.receivingAgentId) {
         vm.title = "Edit Receiving Agent"
         var reqestObject = {
             method: 'GET',
-            url: '/api/v1/receiving_agents/' + $state.params.receivingagentId
+            url: '/api/v1/receiving_agents/' + $state.params.receivingAgentId
         }
         var reqest = WebService.callWebService(reqestObject);
         reqest.then(function(data) {

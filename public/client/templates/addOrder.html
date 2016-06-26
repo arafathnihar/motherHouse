@@ -34,8 +34,10 @@
                                     <input ng-model="vm.order.orderAmount" type="number" class="form-control" placeholder="Amount" step="any">
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="row">
-                                <div class="form-group  col-md-4">
+                            <div class="form-group  col-md-4">
                                     <label> Supply Currency</label>
                                     <select class="form-control" ng-model="vm.order.supplyCurrId">
                                         <option ng-repeat="currency in vm.currencies" ng-value="currency.id">{{currency.code}}</option>
@@ -47,9 +49,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="form-group col-md-12">
+                    </div>
+                    <div class="row">
+                                <div class="form-group col-md-6 col-md-offset-3">
                                     <label>Total Amount</label>
                                     <div class="input-group">
                                         <input value="{{vm.order.orderAmount * vm.order.exchangeRate}}" type="number" class="form-control" placeholder="Total Amount"
@@ -58,18 +60,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div ng-hide="false" class="form-group col-md-6">
-                                    <label> Status</label>
-                                    <select class="form-control" ng-model="vm.order.status">
-                                        <option ng-value="1" ng-selected="true">pending</option>
-                                        <option ng-value="2">supplied</option>
-                                        <option ng-value="3">completed</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label> Order Date</label>
