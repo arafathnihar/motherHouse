@@ -41,6 +41,9 @@ myApp.factory('UtilityService', function(WebService) {
                 return data.data;
             });
             return receivingAgentListReqest
+        },
+        getCurrenciesKeyVal: function(array,key){
+            console.log(array,key);
         }
     }
 });

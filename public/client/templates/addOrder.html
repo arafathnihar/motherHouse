@@ -2,7 +2,22 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default" ng-controller="AddOrderCtrl as vm">
             <div class="panel-heading">
-                Add New Order
+                <div class="row">
+                    <div class="col-md-8">
+                        Add New Order
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.order.orderDate" is-open="vm.order.datePopup.opened"
+                            datepicker-options="vm.order.dateOptions" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="vm.order.dateOpen()">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                </button>
+                                        </span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="panel-body">
                 <form>
@@ -37,7 +52,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                            <div class="form-group  col-md-4">
+                                <div class="form-group  col-md-4">
                                     <label> Supply Currency</label>
                                     <select class="form-control" ng-model="vm.order.supplyCurrId">
                                         <option ng-repeat="currency in vm.currencies" ng-value="currency.id">{{currency.code}}</option>
@@ -51,53 +66,17 @@
                         </div>
                     </div>
                     <div class="row">
-                                <div class="form-group col-md-6 col-md-offset-3">
-                                    <label>Total Amount</label>
-                                    <div class="input-group">
-                                        <input value="{{vm.order.orderAmount * vm.order.exchangeRate}}" type="number" class="form-control" placeholder="Total Amount"
-                                        step="any" disabled>
-                                        <div class="input-group-addon">&nbsp</div>
-                                    </div>
-                                </div>
-                            </div>
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label> Order Date</label>
+                        <div class="form-group col-md-6 col-md-offset-3">
+                            <label>Total Amount</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.order.orderDate" is-open="vm.order.datePopup.opened"
-                                datepicker-options="vm.order.dateOptions" ng-required="true" close-text="Close" />
-                                <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="vm.order.dateOpen()">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                                </button>
-                                        </span>
-                            </div>
-                        </div>
-                        <div ng-hide="false" class="form-group col-md-4">
-                            <label> Supplied Date</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.order.suppliedDate" is-open="vm.settled.datePopup.opened"
-                                datepicker-options="vm.settled.dateOptions" ng-required="true" close-text="Close" />
-                                <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="vm.settled.dateOpen()">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                                </button>
-                                        </span>
-                            </div>
-                        </div>
-                        <div ng-hide="false" class="form-group col-md-4">
-                            <label> Completed Date</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.order.completedDate" is-open="vm.completed.datePopup.opened"
-                                datepicker-options="vm.completed.dateOptions" ng-required="true" close-text="Close" />
-                                <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="vm.completed.dateOpen()">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                                </button>
-                                        </span>
+                                <input value="{{vm.order.orderAmount * vm.order.exchangeRate}}" type="number" class="form-control" placeholder="Total Amount"
+                                step="any" disabled>
+                                <div class="input-group-addon">&nbsp</div>
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <i><b>Recipient Details</b></i>
                     <hr>
                     <div class="row">
                         <div class="form-group col-md-4">

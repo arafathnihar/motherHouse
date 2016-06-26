@@ -4,6 +4,7 @@ var agentList;
 var receivingAgentList;
 var countries;
 var currencies;
+var currenciesKeyVal;
 
 myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
     var vm = this;
@@ -18,6 +19,7 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
         countryReqest = UtilityService.getCountries();
         countryReqest.then(function(data) {
             countries = data.data;
+            UtilityService.getCurrenciesKeyVal(countries,'id');
             vm.countries = countries;
         });
     } else {
@@ -142,7 +144,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         }
     }
 });
-myApp.controller('AddOrderCtrl', function(UtilityService,WebService) {
+myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
     var vm = this;
     vm.order = {
         agentId: '',
@@ -151,7 +153,7 @@ myApp.controller('AddOrderCtrl', function(UtilityService,WebService) {
         orderCurrId: '',
         supplyCurrId: '',
         exchangeRate: 0,
-        orderDate:'',
+        orderDate: '',
         orderStatus: 1,
         suppliedDate: '',
         completedDate: '',
@@ -233,22 +235,22 @@ myApp.controller('AddOrderCtrl', function(UtilityService,WebService) {
     } else {
         vm.countries = countries;
     }
-    
-    vm.addOrder = function() {
-            var addOrderReqestObject = {
-                method: 'POST',
-                url: '/api/v1/orders',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: { requestdata: vm.order }
-            }
-            var addOrderReqest = WebService.callWebService(addOrderReqestObject);
 
-            addOrderReqest.then(function(data) {
-                console.log(data)
-            })
+    vm.addOrder = function() {
+        var addOrderReqestObject = {
+            method: 'POST',
+            url: '/api/v1/orders',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: { requestdata: vm.order }
         }
+        var addOrderReqest = WebService.callWebService(addOrderReqestObject);
+
+        addOrderReqest.then(function(data) {
+            console.log(data)
+        })
+    }
 });
 
 myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
