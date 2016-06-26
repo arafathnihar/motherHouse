@@ -6,3 +6,8 @@ body {
 .navbar {
   margin-bottom: 20px;
 }
+
+.widget-clock.blue-light .time {
+  font-family: 'Rationale', sans-serif;
+  font-size: 1.0em;
+}

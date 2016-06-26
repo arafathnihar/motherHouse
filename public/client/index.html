@@ -12,11 +12,12 @@
     <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-
+    <script src="bower_components/angular-ui-clock/dist/angular-clock.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/app.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/angular-ui-clock/dist/angular-clock.css">
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
@@ -28,7 +29,9 @@
             <div class="container-fluid">
 
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Mother House</a>
+                    <!--<a class="navbar-brand" href="#">Mother House</a>-->
+                    </br>
+                    <ds-widget-clock show-digital theme="blue-light" digital-format="'dd-MM-yyyy hh:mm:ss a'"></ds-widget-clock>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
