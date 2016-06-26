@@ -1,5 +1,8 @@
 class MainAgent < ActiveRecord::Base
+  belongs_to :country
+
   has_many :agent
+  has_many :receiving_agent
 
   validates :customId, presence: { message: "main agent id is required" }
   validates_uniqueness_of :customId, :allow_nil => true, :message => "main agent id is already exits"

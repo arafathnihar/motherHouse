@@ -6,7 +6,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   def index
     @receivingAgents = ReceivingAgent.all
     
-    render json: @receivingAgents.as_json, status: :ok
+    render json: @receivingAgents.as_json(include: :country), status: :ok
   end
 
   def create
