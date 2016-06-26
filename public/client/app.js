@@ -142,7 +142,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         }
     }
 });
-myApp.controller('AddOrderCtrl', function(UtilityService) {
+myApp.controller('AddOrderCtrl', function(UtilityService,WebService) {
     var vm = this;
     vm.order = {
         agentId: '',
@@ -151,13 +151,16 @@ myApp.controller('AddOrderCtrl', function(UtilityService) {
         orderCurrId: '',
         supplyCurrId: '',
         exchangeRate: 0,
-        orderStatus: '',
+        orderDate:'',
+        orderStatus: 1,
+        suppliedDate: '',
+        completedDate: '',
         name: '',
         contact: '',
         countryId: '',
-        bank: '',
-        branch: '',
-        accountNumber: ''
+        bankName: '',
+        branchName: '',
+        bankAcNo: ''
     };
     var datepickerConf = function(obj) {
         obj.today = function() {
@@ -187,8 +190,14 @@ myApp.controller('AddOrderCtrl', function(UtilityService) {
     datepickerConf(vm.order);
     vm.settled = {};
     datepickerConf(vm.settled);
+    vm.completed = {};
+    datepickerConf(vm.completed);
     vm.order.today();
     vm.settled.today();
+    vm.completed.today();
+    vm.order.orderDate = new Date();
+    vm.order.suppliedDate = new Date();
+    vm.order.completedDate = new Date();
     if (agentList) {
         vm.agents = agentList;
     } else {
@@ -224,6 +233,22 @@ myApp.controller('AddOrderCtrl', function(UtilityService) {
     } else {
         vm.countries = countries;
     }
+    
+    vm.addOrder = function() {
+            var addOrderReqestObject = {
+                method: 'POST',
+                url: '/api/v1/orders',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { requestdata: vm.order }
+            }
+            var addOrderReqest = WebService.callWebService(addOrderReqestObject);
+
+            addOrderReqest.then(function(data) {
+                console.log(data)
+            })
+        }
 });
 
 myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
@@ -380,7 +405,7 @@ myApp.factory('WebService', function($http) {
     }
 });
 myApp.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/addReceivingAgent");
+    $urlRouterProvider.otherwise("/addOrder");
     $stateProvider
         .state('addAgent', {
             url: "/addAgent/:agetId",

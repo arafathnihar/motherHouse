@@ -98,8 +98,10 @@ class Api::V1::OrdersController < ApplicationController
             :orderCurrId,
             :supplyCurrId,
             :exchangeRate,
-            :date,
-            :orderStatus
+            :orderDate,
+            :orderStatus,
+            :suppliedDate,
+            :completedDate
         )
   end
 

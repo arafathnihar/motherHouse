@@ -70,7 +70,8 @@ ActiveRecord::Schema.define(version: 20160617155743) do
     t.decimal  "exchangeRate",                 precision: 10,             null: false
     t.datetime "orderDate",                                               null: false
     t.integer  "orderStatus",      limit: 4,                  default: 1, null: false
-    t.datetime "settledDate",                                             null: false
+    t.datetime "suppliedDate",                                            null: false
+    t.datetime "completedDate",                                           null: false
     t.string   "guid",             limit: 255,                            null: false
     t.integer  "status",           limit: 4,                  default: 1, null: false
     t.integer  "created_by",       limit: 4,                              null: false
