@@ -1,6 +1,8 @@
 class ReceivingAgent < ActiveRecord::Base
+  belongs_to :main_agent
+  belongs_to :country
 
-  #belongs_to :country
+  has_one :order
 
   validates :customId, presence: { message: "receiving agent id is required" }
   validates_uniqueness_of :customId, :allow_nil => true, :message => "receiving agent id is already exits"

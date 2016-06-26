@@ -8,8 +8,9 @@ class Api::V1::AgentsController < ApplicationController
 
     # @data = @thispara.as_json(include: :country)
 
+    @arr = []
     @thispara.each do |record|
-      @arr.puts(record.customId => record.as_json(include: :country))
+      @arr.push(record.customId => record.as_json(include: :country))
     end
 
     render json: @arr, status: :ok

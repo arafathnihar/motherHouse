@@ -1,4 +1,6 @@
 class Receiver < ActiveRecord::Base
+  belongs_to :country
+
   has_one :order
 
   validates :name, presence: { message: "receiver name is required" }
