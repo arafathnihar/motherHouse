@@ -1,4 +1,5 @@
 class Receiver < ActiveRecord::Base
+  has_one :order
 
   validates :name, presence: { message: "name is required" }
   validates_numericality_of :contact, :allow_blank => true, :message => "phone number format is invalid"

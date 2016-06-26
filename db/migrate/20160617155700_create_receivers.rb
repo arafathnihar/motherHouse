@@ -4,7 +4,7 @@ class CreateReceivers < ActiveRecord::Migration
       # front ends' view level
       t.string :name, null: false
       t.string :contact, limit: 15, null: true
-      t.integer :countryId, null: true
+      t.integer :country_id, null: true
       t.string :bankName, null: true
       t.string :branchName, null: true
       t.string :bankAcNo, null: true
@@ -19,7 +19,7 @@ class CreateReceivers < ActiveRecord::Migration
     end
 
     # references (from_table, to_table, options = {})
-    add_foreign_key :receivers, :countries, column: :countryId
+    add_foreign_key :receivers, :countries, column: :country_id
 
     add_foreign_key :receivers, :users, column: :created_by
     add_foreign_key :receivers, :users, column: :updated_by

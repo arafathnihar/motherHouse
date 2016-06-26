@@ -502,7 +502,16 @@ MainAgent.create(
     customId: 'MH0001',
     name: 'Shivanesan Arafath',
     contact: '0111234567',
-    countryId: 145,
+    country_id: 145,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
+
+Agent.create(
+    customId: 'WC0001',
+    main_agent_id: 1,
+    name: 'Walking Customer',
 
     guid: SecureRandom.uuid,
     created_by: 1

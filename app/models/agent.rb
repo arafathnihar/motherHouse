@@ -1,6 +1,8 @@
 class Agent < ActiveRecord::Base
+  belongs_to :main_agent
+  belongs_to :country
 
-  validates :mainAgentId, presence: { message: "main agent id is required" }
+  # validates :mainAgentId, presence: { message: "main agent id is required" }
   validates :customId, presence: { message: "agent id is required" }
   validates :name, presence: { message: "name is required" }
   validates_numericality_of :contact, :allow_blank => true, :message => "phone number format is invalid"

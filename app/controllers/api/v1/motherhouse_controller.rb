@@ -52,6 +52,6 @@ class Api::V1::MotherhouseController < ApplicationController
   end
 
   def this_params
-    params.fetch(:requestdata, {}).permit(:customId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:customId, :name, :contact, :country_id)
   end
 end
