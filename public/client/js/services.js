@@ -43,7 +43,14 @@ myApp.factory('UtilityService', function(WebService) {
             return receivingAgentListReqest
         },
         getCurrenciesKeyVal: function(array,key){
-            console.log(array,key);
+            debugger;
+            var arrayKeyVal = [];
+            array.forEach(function(obj) {
+                var tempkey = obj[key];
+                var objKeyVal = {key:obj};
+                arrayKeyVal.push(objKeyVal);                
+            });
+            console.log(objKeyVal);
         }
     }
 });

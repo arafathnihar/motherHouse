@@ -19,7 +19,6 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
         countryReqest = UtilityService.getCountries();
         countryReqest.then(function(data) {
             countries = data.data;
-            UtilityService.getCurrenciesKeyVal(countries,'id');
             vm.countries = countries;
         });
     } else {
@@ -220,6 +219,7 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
         countryReqest = UtilityService.getCurrencies();
         countryReqest.then(function(data) {
             currencies = data;
+            UtilityService.getCurrenciesKeyVal(currencies,'id');
             vm.currencies = currencies;
         });
     } else {
