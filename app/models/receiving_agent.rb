@@ -3,6 +3,7 @@ class ReceivingAgent < ActiveRecord::Base
   #belongs_to :country
 
   validates :customId, presence: { message: "receiving agent id is required" }
+  validates_uniqueness_of :customId, :allow_nil => true, :message => "receiving agent id is already exits"
   validates :mainAgentId, presence: { message: "main agent id is required" }
   validates :name, presence: { message: "name is required" }
   validates_numericality_of :contact, :allow_blank => true, :message => "phone number format is invalid"
