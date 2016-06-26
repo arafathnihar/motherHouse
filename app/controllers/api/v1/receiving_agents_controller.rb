@@ -44,7 +44,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   private
 
   def data_params
-    params.fetch(:requestdata, {}).permit(:mainAgentId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:customId, :mainAgentId, :name, :contact, :countryId)
   end
 
   def get_receiving_agent

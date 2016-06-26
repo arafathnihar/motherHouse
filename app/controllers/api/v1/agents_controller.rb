@@ -49,6 +49,6 @@ class Api::V1::AgentsController < ApplicationController
   end
 
   def this_params
-    params.fetch(:requestdata, {}).permit(:mainAgentId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:customId, :mainAgentId, :name, :contact, :countryId)
   end
 end
