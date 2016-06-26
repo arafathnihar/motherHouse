@@ -40,8 +40,19 @@ myApp.factory('UtilityService', function(WebService) {
             var receivingAgentListReqest = WebService.callWebService(receivingAgentListReqestObject).then(function(data) {
                 return data.data;
             });
-            return receivingAgentListReqest
+            return receivingAgentListReqest;
+        },
+        getOrderList: function() {
+            var orderListReqestObject = {
+                method: 'GET',
+                url: '/api/v1/orders'
+            }
+            var orderListReqest = WebService.callWebService(orderListReqestObject).then(function(data) {
+                return data.data;
+            });
+            return orderListReqest;
         }
+        
     }
 });
 myApp.factory('WebService', function($http) {
