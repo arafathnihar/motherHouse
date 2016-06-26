@@ -41,15 +41,15 @@ class Api::V1::ReceivingAgentsController < ApplicationController
     render json: {status: :ok}
   end
 
-  private
-
-  def data_params
-    params.fetch(:requestdata, {}).permit(:customId, :mainAgentId, :name, :contact, :countryId)
-  end
-
   def get_receiving_agent
     @receivingAgent = ReceivingAgent.find(params[:id])
     render json: {status: :not_found} unless @receivingAgent
+  end
+
+  private
+
+  def data_params
+    params.fetch(:requestdata, {}).permit(:customId, :main_agent_id, :name, :contact, :country_id)
   end
 
 end

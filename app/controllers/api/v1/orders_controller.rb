@@ -5,16 +5,9 @@ class Api::V1::OrdersController < ApplicationController
   respond_to :html, :json
 
   def index
-    array = []
     @thispara = Order.all
 
-    @thispara.each do |order|
-      @receiver = Receiver.find(order.receiverId)
-
-      array.push(combine_request(order, @receiver))
-    end
-
-    render json: array.as_json, status: :ok
+    render json: @thispara.as_json(include: :receiver), status: :ok
   end
 
   def create
@@ -28,7 +21,7 @@ class Api::V1::OrdersController < ApplicationController
       @thispara2 = Order.new(params_orders)
 
       @thispara2.customId = custom_id(Order, "OR", 5)
-      @thispara2.receiverId = @thispara.id
+      @thispara2.receiver_id = @thispara.id
       @thispara2.guid = SecureRandom.uuid
       @thispara2.created_by = 1
 
@@ -71,7 +64,7 @@ class Api::V1::OrdersController < ApplicationController
     @thispara = Order.find(params[:id])
     @thispara.destroy
 
-    @thispara = Receiver.find(@thispara.receiverId)
+    @thispara = Receiver.find(@thispara.receiver_id)
     @thispara.destroy
 
     render json: {status: :ok}
@@ -92,11 +85,11 @@ class Api::V1::OrdersController < ApplicationController
   def params_orders
     params.fetch(:requestdata, {})
         .permit(
-            :agentId,
-            :receivingAgentId,
+            :agent_id,
+            :receiving_agent_id,
             :orderAmount,
-            :orderCurrId,
-            :supplyCurrId,
+            :order_curr_id,
+            :supply_curr_id,
             :exchangeRate,
             :orderDate,
             :orderStatus
@@ -108,7 +101,10 @@ class Api::V1::OrdersController < ApplicationController
         .permit(
             :name,
             :contact,
-            :countryId
+            :country_id,
+            :bankName,
+            :branchName,
+            :bankAcNo
         )
   end
 end

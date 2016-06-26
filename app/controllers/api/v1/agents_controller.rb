@@ -6,7 +6,13 @@ class Api::V1::AgentsController < ApplicationController
   def index
     @thispara = Agent.all
 
-    render json: @thispara.as_json, status: :ok
+    # @data = @thispara.as_json(include: :country)
+
+    @thispara.each do |record|
+      @arr.puts(record.customId => record.as_json(include: :country))
+    end
+
+    render json: @arr, status: :ok
   end
 
   def create
@@ -49,6 +55,6 @@ class Api::V1::AgentsController < ApplicationController
   end
 
   def this_params
-    params.fetch(:requestdata, {}).permit(:customId, :mainAgentId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:customId, :main_agent_id, :name, :contact, :country_id)
   end
 end
