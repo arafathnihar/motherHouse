@@ -219,7 +219,6 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
         countryReqest = UtilityService.getCurrencies();
         countryReqest.then(function(data) {
             currencies = data;
-            UtilityService.getCurrenciesKeyVal(currencies,'id');
             vm.currencies = currencies;
         });
     } else {

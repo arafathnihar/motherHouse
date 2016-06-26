@@ -41,15 +41,6 @@ myApp.factory('UtilityService', function(WebService) {
                 return data.data;
             });
             return receivingAgentListReqest
-        },
-        getCurrenciesKeyVal: function(array,key){
-            // var arrayKeyVal = [];
-            // array.forEach(function(obj) {
-            //     var tempkey = obj[key];
-            //     var objKeyVal = {key:obj};
-            //     arrayKeyVal.push(objKeyVal);                
-            // });
-            console.log(array);
         }
     }
 });
