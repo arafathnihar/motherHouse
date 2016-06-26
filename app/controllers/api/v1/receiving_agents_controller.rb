@@ -12,7 +12,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   def create
     @receivingAgent = ReceivingAgent.new(data_params)
 
-    @receivingAgent.customId = custom_id(ReceivingAgent, "RA", 5)
+    #@receivingAgent.customId = custom_id(ReceivingAgent, "RA", 5)
     @receivingAgent.guid = SecureRandom.uuid
     @receivingAgent.created_by = 1
 
@@ -44,7 +44,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   private
 
   def data_params
-    params.fetch(:requestdata, {}).permit(:mainAgentId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:customId, :mainAgentId, :name, :contact, :countryId)
   end
 
   def get_receiving_agent

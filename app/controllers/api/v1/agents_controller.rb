@@ -12,7 +12,7 @@ class Api::V1::AgentsController < ApplicationController
   def create
     @thispara = Agent.new(this_params)
 
-    @thispara.customId = custom_id(Agent, "AG", 5)
+    #@thispara.customId = custom_id(Agent, "AG", 5)
     @thispara.guid = SecureRandom.uuid
     @thispara.created_by = 1
 
@@ -49,6 +49,6 @@ class Api::V1::AgentsController < ApplicationController
   end
 
   def this_params
-    params.fetch(:requestdata, {}).permit(:mainAgentId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:customId, :mainAgentId, :name, :contact, :countryId)
   end
 end
