@@ -1,6 +1,6 @@
 class ReceivingAgent < ActiveRecord::Base
 
-  belongs_to :country
+  #belongs_to :country
 
   validates :customId, presence: { message: "receiving agent id is required" }
   validates :mainAgentId, presence: { message: "main agent id is required" }

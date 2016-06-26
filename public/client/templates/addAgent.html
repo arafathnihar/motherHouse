@@ -7,20 +7,18 @@
             <div class="panel-body">
                 <form>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Agent Number</label>
-                        <input ng-model="vm.agent.customId" type="text" class="form-control" placeholder="Agent Number">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Agent Name</label>
+                        <label >Agent Name</label>
                         <input ng-model="vm.agent.name" type="text" class="form-control" placeholder="Agent Name">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Contact Number</label>
+                        <label >Contact Number</label>
                         <input ng-model="vm.agent.contact" type="text" class="form-control" placeholder="Contact Number">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Country</label>
-                        <input ng-model="vm.agent.countryId" type="text" class="form-control" placeholder="Country">
+                        <label>Country</label>
+                            <select class="form-control" ng-model="vm.agent.countryId">
+                                        <option ng-repeat="country in vm.countries" ng-value="country.id">{{country.name}}</option>
+                        </select>
                     </div>
                     <button ng-click="vm.addAgent()" class="btn btn-primary pull-right">Submit</button>
                 </form>

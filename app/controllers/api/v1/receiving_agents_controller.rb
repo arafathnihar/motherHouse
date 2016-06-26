@@ -4,16 +4,8 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   respond_to :json
 
   def index
-    # array = []
-    @receivingAgents = ReceivingAgent.eager_load(:countries).all
-
-    # @receivingAgents.each do |item|
-    #   # @country = Country.find(item.receiverId)
-    #
-    #   # array.push(combine_request(item, @country))
-    #   array.push(item.Country.name)
-    # end
-
+    @receivingAgents = ReceivingAgent.all
+    
     render json: @receivingAgents.as_json, status: :ok
   end
 
@@ -27,7 +19,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
     if @receivingAgent.save
       render json: @receivingAgent.as_json, status: :ok
     else
-      render json: { errors: @thispara.errors }, status: :unprocessable_entity
+      render json: { errors: @receivingAgent.errors }, status: :unprocessable_entity
     end
   end
 
@@ -39,7 +31,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
     if @receivingAgent.update_attributes(data_params.merge(updated_by: 1, updated_at: Time.now))
       render json: @receivingAgent.as_json, status: :ok
     else
-      render json: { errors: @thispara.errors }, status: :unprocessable_entity
+      render json: { errors: @receivingAgent.errors }, status: :unprocessable_entity
     end
   end
 
@@ -52,7 +44,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   private
 
   def data_params
-    params.fetch(:requestdata, {}).permit(:customId, :mainAgentId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:mainAgentId, :name, :contact, :countryId)
   end
 
   def get_receiving_agent

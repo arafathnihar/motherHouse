@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="panel" ng-controller="agentListCtrl as vm">
-                    <button type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create agent</button>
+        <div class="panel" ng-controller="orderListCtrl as vm">
+                    <button type="button" class="btn btn-success" ng-click="vm.addNewOrder()">Create Order</button>
             </br></br>
             <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="true">
                 <colgroup>
-                    <col width="15%" />
-                    <col width="35%" />
-                    <col width="25%" />
-                    <col width="15%" />
-                    <col width="10%" />
+                    <col width="15%"/>
+                    <col width="35%"/>
+                    <col width="25%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
                 </colgroup>
                 <tr ng-repeat="agent in $data">
                     <td title="'Agent Number'" filter="{ customId: 'text'}">
