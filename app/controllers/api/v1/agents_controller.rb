@@ -8,12 +8,12 @@ class Api::V1::AgentsController < ApplicationController
 
     # @data = @thispara.as_json(include: :country)
 
-    @arr = []
-    @thispara.each do |record|
-      @arr.push(record.customId => record.as_json(include: :country))
-    end
+    # @arr = []
+    # @thispara.each do |record|
+    #   @arr.push(record.customId => record.as_json(include: :country))
+    # end
 
-    render json: @arr, status: :ok
+    render json: @thispara.as_json(include: :country), status: :ok
   end
 
   def create
