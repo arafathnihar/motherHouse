@@ -27,6 +27,7 @@
                     <td title="'Agent Number'" filter="{ agentId: 'text'}">
                         {{order.agentId}}
                     </td>
+<<<<<<< HEAD
                     <td title="'Receiving Agent Number'" filter="{ receivingAgentId: 'text'}">
                         {{order.receivingAgentId}}
                     </td>
@@ -50,6 +51,10 @@
                     </td>
                     <td title="'Supply Ammount'" filter="{ name: 'text'}">
                         {{order.orderAmount * order.exchangeRate}}
+=======
+                    <td title="'Country'" filter="{ country: 'select'}" filter-data="vm.countries">
+                        {{agent.country_id}}
+>>>>>>> 2654f143bb59815116c2a8011f807725c3a4037a
                     </td>
                     <td>
                         <button class="btn btn-default btn-sm" ng-click="vm.edit(agent.id)"><span class="glyphicon glyphicon-pencil"></span></button>

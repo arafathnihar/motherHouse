@@ -11,9 +11,16 @@
                     <col width="15%" />
                     <col width="10%" />
                 </colgroup>
+<<<<<<< HEAD
                 <tr ng-repeat="(key, agent) in $data">
                     <td title="'Agent Number'" filter="{ customId: 'text'}">
                         {{agent}}
+=======
+                <tr ng-repeat="agent in $data" onload="alert($data)">
+                    <td title="'Agent Number'" filter="{ customId: 'text'}">
+                        <!--{{agent.customId}}-->
+                        <span ng-bind="agent.customId"></span>
+>>>>>>> 2654f143bb59815116c2a8011f807725c3a4037a
                     </td>
                     <td title="'Agent Name'" filter="{ name: 'text'}">
                         {{agent.name}}
@@ -22,7 +29,11 @@
                         {{agent.contact}}
                     </td>
                     <td title="'Country'" filter="{ country: 'select'}" filter-data="vm.countries">
+<<<<<<< HEAD
                         {{agent.country_id}}
+=======
+                        {{agent.country.name}}
+>>>>>>> 2654f143bb59815116c2a8011f807725c3a4037a
                     </td>
                     <td>
                         <button class="btn btn-default btn-sm" ng-click="vm.edit(agent.id)"><span class="glyphicon glyphicon-pencil"></span></button>

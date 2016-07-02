@@ -7,7 +7,7 @@ class Api::V1::OrdersController < ApplicationController
   def index
     @thispara = Order.all
 
-    render json: @thispara.as_json(include: :receiver), status: :ok
+    render json: @thispara.as_json(include: [:receiver, :order_currency, :supply_currency]), status: :ok
   end
 
   def create
@@ -39,9 +39,9 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def show
-    @thispara2 = Receiver.find(@thispara.receiverId)
+    # @thispara2 = Order.find(@thispara.receiverId)
 
-    render json: combine_request(@thispara, @thispara2).as_json, status: :ok
+    render json: @thispara.as_json(include: [:receiver, :currency]), status: :ok
   end
 
   def update

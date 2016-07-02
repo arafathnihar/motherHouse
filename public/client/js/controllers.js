@@ -95,11 +95,11 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         "main_agent_id": "1"
     };
 
-    if ($state.params.receivingAgentId) {
+    if ($state.params.receiving_agent_id) {
         vm.title = "Edit Receiving Agent"
         var reqestObject = {
             method: 'GET',
-            url: '/api/v1/receiving_agents/' + $state.params.receivingAgentId
+            url: '/api/v1/receiving_agents/' + $state.params.receiving_agent_id
         }
         var reqest = WebService.callWebService(reqestObject);
         reqest.then(function(data) {
@@ -272,6 +272,7 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
+            debugger;
         });
     }
 
@@ -307,10 +308,10 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
     }
 
     loadReceivingAgents();
-    vm.delete = function(receivingAgentId) {
+    vm.delete = function(receiving_agent_id) {
         var reqestObject = {
             method: 'DELETE',
-            url: '/api/v1/receiving_agents/' + receivingAgentId
+            url: '/api/v1/receiving_agents/' + receiving_agent_id
         }
         var reqest = WebService.callWebService(reqestObject);
         reqest.then(function(data) {
@@ -318,8 +319,8 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
         });
     }
 
-    vm.edit = function(receivingAgentId) {
-        $state.go('addReceivingAgent', { 'receivingAgentId': receivingAgentId });
+    vm.edit = function(receiving_agent_id) {
+        $state.go('addReceivingAgent', { 'receiving_agent_id': receiving_agent_id });
     }
 
     vm.addReceivingAgent = function(agetId) {

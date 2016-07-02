@@ -2,7 +2,8 @@ class Order < ActiveRecord::Base
   belongs_to :receiver
   belongs_to :agent
   belongs_to :receiving_agent
-  belongs_to :currency
+  belongs_to :order_currency, :class_name => 'Currency', :foreign_key => 'order_curr_id'
+  belongs_to :supply_currency, :class_name => 'Currency', :foreign_key => 'supply_curr_id'
 
   validates :agent_id, presence: { message: "agent id is required" }
   validates :receiving_agent_id, presence: { message: "receiving agent id is required" }

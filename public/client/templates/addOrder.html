@@ -24,13 +24,13 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Agent</label>
-                            <select class="form-control" ng-model="vm.order.agentId">
+                            <select class="form-control" ng-model="vm.order.agent_id">
                                 <option ng-repeat="agent in vm.agents" ng-value="agent.id">{{agent.customId + ' - ' + agent.name}}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Receiving Agent</label>
-                            <select class="form-control" ng-model="vm.order.receivingAgentId">
+                            <select class="form-control" ng-model="vm.order.receiving_agent_id">
                                 <option ng-repeat="receivingAgent in vm.receivingAgents" ng-value="receivingAgent.id">{{receivingAgent.customId + ' - ' + receivingAgent.name}}</option>
                             </select>
                         </div>
@@ -40,7 +40,7 @@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label> Order Currency</label>
-                                    <select class="form-control" ng-model="vm.order.orderCurrId">
+                                    <select class="form-control" ng-model="vm.order.order_curr_id">
                                         <option ng-repeat="currency in vm.currencies" ng-value="currency.id">{{currency.code}}</option>
                                     </select>
                                 </div>
@@ -54,7 +54,7 @@
                             <div class="row">
                                 <div class="form-group  col-md-4">
                                     <label> Supply Currency</label>
-                                    <select class="form-control" ng-model="vm.order.supplyCurrId">
+                                    <select class="form-control" ng-model="vm.order.supply_curr_id">
                                         <option ng-repeat="currency in vm.currencies" ng-value="currency.id">{{currency.code}}</option>
                                     </select>
                                 </div>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>Country</label>
-                            <select class="form-control" ng-model="vm.order.countryId">
+                            <select class="form-control" ng-model="vm.order.country_id">
                                 <option ng-repeat="country in vm.countries" ng-value="country.id">{{country.name}}</option>
                             </select>
                         </div>
