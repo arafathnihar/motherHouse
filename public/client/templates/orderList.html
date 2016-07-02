@@ -1,26 +1,55 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel" ng-controller="orderListCtrl as vm">
-                    <button type="button" class="btn btn-success" ng-click="vm.addNewOrder()">Create Order</button>
-            </br></br>
+            <button type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create agent</button>
+            </br>
+            </br>
             <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="true">
                 <colgroup>
-                    <col width="15%"/>
-                    <col width="35%"/>
-                    <col width="25%"/>
-                    <col width="15%"/>
-                    <col width="10%"/>
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="25%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="35%" />
+                    <col width="25%" />
+                    <col width="15%" />
+                    <col width="10%" />
                 </colgroup>
-                <tr ng-repeat="agent in $data">
-                    <td title="'Agent Number'" filter="{ customId: 'text'}">
-                        {{agent.customId}}
+                <tr ng-repeat="order in $data">
+                    <td title="'Order Number'" filter="{ customId: 'text'}">
+                        {{order.customId}}
                     </td>
-                    <td title="'Agent Name'" filter="{ name: 'text'}">
-                        {{agent.name}}
+                    <td title="'Order Date'" filter="{ orderDate: 'text'}">
+                        {{order.orderDate}}
                     </td>
-                    <td title="'Contact Number'">
-                        {{agent.contact}}
+                    <td title="'Agent Number'" filter="{ agentId: 'text'}">
+                        {{order.agentId}}
                     </td>
+                    <td title="'Receiving Agent Number'" filter="{ receivingAgentId: 'text'}">
+                        {{order.receivingAgentId}}
+                    </td>
+                    <td title="'Recipiant Detalis'">
+                        {{order.name}}
+                        {{order.contact}}
+                        {{order.bankName}}
+                        {{order.branchName}}
+                    </td>
+                    <td title="'Amount'" filter="{ name: 'text'}">
+                        {{order.orderAmount}}
+                    </td>
+                    <td title="'Ordered Currency'" filter="{ name: 'text'}">
+                        {{order.orderCurrId}}
+                    </td>
+                    <td title="'Exchange Rate'" filter="{ name: 'text'}">
+                        {{order.exchangeRate}}
+                    </td>
+                    <td title="'Supply Currency'" filter="{ name: 'text'}">
+                        {{order.supplyCurrId}}
+                    </td>
+                    <td title="'Supply Ammount'" filter="{ name: 'text'}">
+                        {{order.orderAmount * order.exchangeRate}}
                     <td title="'Country'" filter="{ country: 'select'}" filter-data="vm.countries">
                         {{agent.country_id}}
                     </td>

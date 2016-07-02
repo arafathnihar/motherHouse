@@ -2,6 +2,7 @@ var myApp = angular.module('motherHouseControllers', []);
 
 var agentList;
 var receivingAgentList;
+var ordersList;
 var countries;
 var currencies;
 var currenciesKeyVal;
@@ -264,8 +265,10 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
         vm.countries = countries;
     }
     var loadAgents = function() {
+        
         var agents = UtilityService.getAgentList();
         agents.then(function(data) {
+            debugger;
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
@@ -324,33 +327,44 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
         $state.go('addReceivingAgent');
     }
 });
-myApp.controller('orderListCtrl', function($state) {
+myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
     var vm = this;
-    var loadAgents = function() {
-        var promis = AgentListService.getAgentList();
-        promis.then(function(responseData) {
-            vm.data = responseData.data;
+    // if (!countries) {
+    //     countryReqest = UtilityService.getCountries();
+    //     countryReqest.then(function(data) {
+    //         countries = data;
+    //         vm.countries = countries;
+    //     });
+    // } else {
+    //     vm.countries = countries;
+    // }
+    // debugger;
+    var loadOrders = function() {
+        var orders = UtilityService.getOrderList();
+        orders.then(function(data) {
+            ordersList = data;
+            vm.data = ordersList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
         });
     }
 
-    loadAgents();
-    vm.delete = function(agetId) {
+    loadOrders();
+    vm.delete = function(orderId) {
         var reqestObject = {
             method: 'DELETE',
-            url: '/api/v1/agents/' + agetId
+            url: '/api/v1/orders/' + orderId
         }
         var reqest = WebService.callWebService(reqestObject);
         reqest.then(function(data) {
-            loadAgents();
+            loadOrders();
         });
     }
 
-    vm.edit = function(agetId) {
-        $state.go('addAgent', { 'agetId': agetId });
+    vm.edit = function(orderId) {
+        $state.go('addOrder', { 'orderId': orderId });
     }
 
-    vm.addNewOrder = function(agetId) {
+    vm.addNewAgent = function(agetId) {
         $state.go('addOrder');
     }
 });
