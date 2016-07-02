@@ -11,9 +11,9 @@
                     <col width="15%" />
                     <col width="10%" />
                 </colgroup>
-                <tr ng-repeat="agent in $data">
+                <tr ng-repeat="(key, agent) in $data">
                     <td title="'Agent Number'" filter="{ customId: 'text'}">
-                        {{agent.customId}}
+                        {{agent}}
                     </td>
                     <td title="'Agent Name'" filter="{ name: 'text'}">
                         {{agent.name}}
@@ -22,7 +22,7 @@
                         {{agent.contact}}
                     </td>
                     <td title="'Country'" filter="{ country: 'select'}" filter-data="vm.countries">
-                        {{agent.countryId}}
+                        {{agent.country_id}}
                     </td>
                     <td>
                         <button class="btn btn-default btn-sm" ng-click="vm.edit(agent.id)"><span class="glyphicon glyphicon-pencil"></span></button>

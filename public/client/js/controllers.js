@@ -265,8 +265,10 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
         vm.countries = countries;
     }
     var loadAgents = function() {
+        
         var agents = UtilityService.getAgentList();
         agents.then(function(data) {
+            debugger;
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
@@ -339,9 +341,8 @@ myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebSer
     var loadOrders = function() {
         var orders = UtilityService.getOrderList();
         orders.then(function(data) {
-            ordersList = data[0];
+            ordersList = data;
             vm.data = ordersList;
-            console.log(vm.data);
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
         });
     }
