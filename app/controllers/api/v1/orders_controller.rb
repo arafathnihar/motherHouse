@@ -7,7 +7,7 @@ class Api::V1::OrdersController < ApplicationController
   def index
     @thispara = Order.all
 
-    render json: @thispara.as_json(include: [:receiver, :currency, :currency]), status: :ok
+    render json: @thispara.as_json(include: [:receiver, :order_currency, :supply_currency]), status: :ok
   end
 
   def create
