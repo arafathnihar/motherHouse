@@ -144,7 +144,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         }
     }
 });
-myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
+myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
     var vm = this;
     vm.order = {
         agent_id: '',
@@ -164,42 +164,36 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
         branchName: '',
         bankAcNo: ''
     };
+
     var datepickerConf = function(obj) {
-        obj.today = function() {
-            obj.date = new Date();
-        };
+         obj.today = function() {
+             obj.date = new Date();
+         };
 
-        obj.clear = function() {
-            obj.Date = null;
-        };
+         obj.clear = function() {
+             obj.Date = null;
+         };
 
-        obj.dateOptions = {
-            formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            startingDay: 1
-        };
+         obj.dateOptions = {
+             formatYear: 'yy',
+             maxDate: new Date(2020, 5, 22),
+             minDate: new Date(),
+             startingDay: 1
+         };
 
-        obj.dateOpen = function() {
-            obj.datePopup.opened = true;
-        };
+         obj.dateOpen = function() {
+             obj.datePopup.opened = true;
+         };
 
-        obj.datePopup = {
-            opened: false
-        };
+         obj.datePopup = {
+             opened: false
+         };
     };
     vm.order = {};
     datepickerConf(vm.order);
-    vm.settled = {};
-    datepickerConf(vm.settled);
-    vm.completed = {};
-    datepickerConf(vm.completed);
     vm.order.today();
-    vm.settled.today();
-    vm.completed.today();
     vm.order.orderDate = new Date();
-    vm.order.suppliedDate = new Date();
-    vm.order.completedDate = new Date();
+
     if (agentList) {
         vm.agents = agentList;
     } else {
@@ -236,20 +230,61 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
         vm.countries = countries;
     }
 
-    vm.addOrder = function() {
-        var addOrderReqestObject = {
-            method: 'POST',
-            url: '/api/v1/orders',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: { requestdata: vm.order }
+    if($state.params.orderId){
+        debugger;
+        vm.title = "Edit order"
+        var reqestObject = {
+            method: 'GET',
+            url: '/api/v1/orders/' + $state.params.orderId
         }
-        var addOrderReqest = WebService.callWebService(addOrderReqestObject);
+        var reqest = WebService.callWebService(reqestObject);
+        reqest.then(function(data) {
+            var order = data.data;
+            vm.order.id = order.id;
+            vm.order.customId = order.customId;
+            vm.order.orderAmount = order.orderAmount;
+            vm.order.exchangeRate = order.exchangeRate;
+            vm.order.name = order.receiver.name;
+            vm.order.contact = order.receiver.contact;
+            vm.order.bankName = order.receiver.bankName;
+            vm.order.branchName = order.receiver.branchName;
+            vm.order.bankAcNo = order.receiver.bankAcNo;
 
-        addOrderReqest.then(function(data) {
-            console.log(data)
-        })
+
+        });
+        vm.addOrder = function() {
+            var reqestObject = {
+                method: 'PUT',
+                url: '/api/v1/orders/' + vm.order.id,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { requestdata: vm.order }
+            }
+            var reqest = WebService.callWebService(reqestObject);
+
+            reqest.then(function(data) {
+                console.log(data)
+            });
+        }
+    } else{
+        debugger;
+        vm.title = "Add New Order"
+        vm.addOrder = function() {
+            var addOrderReqestObject = {
+                method: 'POST',
+                url: '/api/v1/orders',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { requestdata: vm.order }
+            }
+            var addOrderReqest = WebService.callWebService(addOrderReqestObject);
+
+            addOrderReqest.then(function(data) {
+                console.log(data)
+            })
+        }
     }
 });
 
@@ -323,7 +358,7 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
         $state.go('addReceivingAgent', { 'receiving_agent_id': receiving_agent_id });
     }
 
-    vm.addReceivingAgent = function(agetId) {
+    vm.addReceivingAgent = function(receiving_agent_id) {
         $state.go('addReceivingAgent');
     }
 });
@@ -364,7 +399,7 @@ myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebSer
         $state.go('addOrder', { 'orderId': orderId });
     }
 
-    vm.addNewAgent = function(agetId) {
+    vm.addNewAgent = function(orderId) {
         $state.go('addOrder');
     }
 });

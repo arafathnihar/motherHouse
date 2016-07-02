@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel" ng-controller="orderListCtrl as vm">
-            <button type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create agent</button>
+            <button type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create order</button>
             </br>
             </br>
             <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="true">
@@ -52,8 +52,8 @@
                         {{order.orderAmount * order.exchangeRate}}
                     </td>
                     <td>
-                        <button class="btn btn-default btn-sm" ng-click="vm.edit(agent.id)"><span class="glyphicon glyphicon-pencil"></span></button>
-                        <button class="btn btn-danger btn-sm" ng-click="vm.delete(agent.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="vm.edit(order.id)"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button class="btn btn-danger btn-sm" ng-click="vm.delete(order.id)"><span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
             </table>

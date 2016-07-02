@@ -41,7 +41,7 @@ class Api::V1::OrdersController < ApplicationController
   def show
     # @thispara2 = Order.find(@thispara.receiverId)
 
-    render json: @thispara.as_json(include: [:receiver, :currency]), status: :ok
+    render json: @thispara.as_json(include: [:agent, :receiving_agent, :receiver, :order_currency, :supply_currency]), status: :ok
   end
 
   def update
