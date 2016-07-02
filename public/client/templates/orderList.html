@@ -8,50 +8,48 @@
                 <colgroup>
                     <col width="10%" />
                     <col width="10%" />
-                    <col width="25%" />
                     <col width="15%" />
+                    <col width="15%" />
+                    <!--<col width="10%" />-->
                     <col width="10%" />
-                    <col width="15%" />
-                    <col width="35%" />
-                    <col width="25%" />
-                    <col width="15%" />
+                    <col width="5%" />
                     <col width="10%" />
+                    <col width="5%" />
+                    <col width="20%" />
                 </colgroup>
                 <tr ng-repeat="order in $data">
                     <td title="'Order Number'" filter="{ customId: 'text'}">
                         {{order.customId}}
                     </td>
                     <td title="'Order Date'" filter="{ orderDate: 'text'}">
-                        {{order.orderDate}}
+                        {{order.orderDate | date: 'yyyy-MM-dd'}}
                     </td>
                     <td title="'Agent Number'" filter="{ agentId: 'text'}">
-                        {{order.agentId}}
+                        {{order.agent.customId}}
                     </td>
                     <td title="'Receiving Agent Number'" filter="{ receivingAgentId: 'text'}">
-                        {{order.receivingAgentId}}
+                        {{order.receiving_agent.customId}}
                     </td>
-                    <td title="'Recipiant Detalis'">
-                        {{order.name}}
-                        {{order.contact}}
-                        {{order.bankName}}
-                        {{order.branchName}}
-                    </td>
+                    <!--<td title="'Recipiant Detalis'">-->
+                        <!--{{order.receiver.name}}-->
+                        <!--{{order.receiver.contact}}-->
+                        <!--{{order.receiver.bankName}}-->
+                        <!--{{order.receiver.branchName}}-->
+                    <!--</td>-->
                     <td title="'Amount'" filter="{ name: 'text'}">
                         {{order.orderAmount}}
                     </td>
                     <td title="'Ordered Currency'" filter="{ name: 'text'}">
-                        {{order.orderCurrId}}
+                        {{order.order_currency.code}}
                     </td>
                     <td title="'Exchange Rate'" filter="{ name: 'text'}">
                         {{order.exchangeRate}}
                     </td>
                     <td title="'Supply Currency'" filter="{ name: 'text'}">
-                        {{order.supplyCurrId}}
+                        {{order.supply_currency.code}}
                     </td>
                     <td title="'Supply Ammount'" filter="{ name: 'text'}">
                         {{order.orderAmount * order.exchangeRate}}
-                    <td title="'Country'" filter="{ country: 'select'}" filter-data="vm.countries">
-                        {{agent.country_id}}
                     </td>
                     <td>
                         <button class="btn btn-default btn-sm" ng-click="vm.edit(agent.id)"><span class="glyphicon glyphicon-pencil"></span></button>
