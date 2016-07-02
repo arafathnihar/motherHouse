@@ -17,8 +17,8 @@ myApp.factory('UtilityService', function(WebService) {
                 method: 'GET',
                 url: '/api/v1/agents'
             }
-            var agentListReqest = WebService.callWebService(agentListReqestObject).then(function(responseData) {
-                return responseData.data
+            var agentListReqest = WebService.callWebService(agentListReqestObject).then(function(data) {
+                return data.data
             });
             return agentListReqest;
         },

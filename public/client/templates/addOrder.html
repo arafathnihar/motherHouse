@@ -4,17 +4,17 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-md-8">
-                        Add New Order
+                        {{vm.title}}
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.order.orderDate" is-open="vm.order.datePopup.opened"
                             datepicker-options="vm.order.dateOptions" ng-required="true" close-text="Close" />
                             <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="vm.order.dateOpen()">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                                </button>
-                                        </span>
+                                <button type="button" class="btn btn-default" ng-click="vm.order.dateOpen()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>
