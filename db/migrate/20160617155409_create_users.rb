@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :customId, limit: 12, null: false, unique: true
       t.string :name, null: false
       t.string :contact, limit: 15, null: true
-      t.string :country, limit: 150, null: true
+      t.string :country_id, limit: 150, null: true
 
       # credentials
       t.string :username, limit: 50, null: false, unique: true
@@ -22,6 +22,7 @@ class CreateUsers < ActiveRecord::Migration
 
     # this is a part of users table only
     # references (from_table, to_table, options = {})
+    add_foreign_key :users, :countries, column: :country_id
     add_foreign_key :users, :users, column: :created_by
     add_foreign_key :users, :users, column: :updated_by
   end
