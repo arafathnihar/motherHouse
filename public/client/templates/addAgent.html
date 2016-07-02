@@ -20,9 +20,10 @@
                     </div>
                     <div class="form-group">
                         <label>Country</label>
-                            <select class="form-control" ng-model="vm.agent.country_id">
-                                        <option ng-repeat="country in vm.countries" ng-value="country.id">{{country.name}}</option>
-                        </select>
+                        <select class="form-control" ng-options="item.name for item in vm.countries track by item.id" ng-model="vm.agent.country_id"></select>
+                        <!--<select class="form-control" ng-model="vm.agent.country_id">-->
+                            <!--<option ng-repeat="country in vm.countries" ng-value="country.id">{{country.name}}</option>-->
+                        <!--</select>-->
                     </div>
                     <button ng-click="vm.addAgent()" class="btn btn-primary pull-right">Submit</button>
                 </form>
