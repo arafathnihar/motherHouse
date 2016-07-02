@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :customId, limit: 12, null: false, unique: true
       t.string :name, null: false
       t.string :contact, limit: 15, null: true
-      t.string :country_id, limit: 150, null: true
+      t.integer :country_id, null: true
 
       # credentials
       t.string :username, limit: 50, null: false, unique: true
