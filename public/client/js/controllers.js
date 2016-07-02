@@ -12,8 +12,8 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
         customId: '',
         name: '',
         contact: '',
-        countryId: '',
-        "mainAgentId": "1"
+        country_id: '',
+        "main_agent_id": "1"
     };
     if (!countries) {
         countryReqest = UtilityService.getCountries();
@@ -37,7 +37,7 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
             vm.agent.customId = agent.customId;
             vm.agent.name = agent.name;
             vm.agent.contact = agent.contact;
-            vm.agent.countryId = agent.countryId;
+            vm.agent.country_id = agent.country_id;
         });
         vm.addAgent = function() {
             var updateAgentReqestObject = {
@@ -90,15 +90,15 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         customId: '',
         name: '',
         contact: '',
-        countryId: '',
-        "mainAgentId": "1"
+        country_id: '',
+        "main_agent_id": "1"
     };
 
-    if ($state.params.receivingAgentId) {
+    if ($state.params.receiving_agent_id) {
         vm.title = "Edit Receiving Agent"
         var reqestObject = {
             method: 'GET',
-            url: '/api/v1/receiving_agents/' + $state.params.receivingAgentId
+            url: '/api/v1/receiving_agents/' + $state.params.receiving_agent_id
         }
         var reqest = WebService.callWebService(reqestObject);
         reqest.then(function(data) {
@@ -107,7 +107,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
             vm.receivingagent.customId = receivingagent.customId;
             vm.receivingagent.name = receivingagent.name;
             vm.receivingagent.contact = receivingagent.contact;
-            vm.receivingagent.countryId = receivingagent.countryId;
+            vm.receivingagent.country_id = receivingagent.country_id;
         });
         vm.addReceivingAgent = function() {
             var reqestObject = {
@@ -146,11 +146,11 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
 myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
     var vm = this;
     vm.order = {
-        agentId: '',
-        receivingAgentId: '',
+        agent_id: '',
+        receiving_agent_id: '',
         orderAmount: 0,
-        orderCurrId: '',
-        supplyCurrId: '',
+        order_curr_id: '',
+        supply_curr_id: '',
         exchangeRate: 0,
         orderDate: '',
         orderStatus: 1,
@@ -158,7 +158,7 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
         completedDate: '',
         name: '',
         contact: '',
-        countryId: '',
+        country_id: '',
         bankName: '',
         branchName: '',
         bankAcNo: ''
@@ -269,6 +269,7 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
+            debugger;
         });
     }
 
@@ -304,10 +305,10 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
     }
 
     loadReceivingAgents();
-    vm.delete = function(receivingAgentId) {
+    vm.delete = function(receiving_agent_id) {
         var reqestObject = {
             method: 'DELETE',
-            url: '/api/v1/receiving_agents/' + receivingAgentId
+            url: '/api/v1/receiving_agents/' + receiving_agent_id
         }
         var reqest = WebService.callWebService(reqestObject);
         reqest.then(function(data) {
@@ -315,8 +316,8 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
         });
     }
 
-    vm.edit = function(receivingAgentId) {
-        $state.go('addReceivingAgent', { 'receivingAgentId': receivingAgentId });
+    vm.edit = function(receiving_agent_id) {
+        $state.go('addReceivingAgent', { 'receiving_agent_id': receiving_agent_id });
     }
 
     vm.addReceivingAgent = function(agetId) {

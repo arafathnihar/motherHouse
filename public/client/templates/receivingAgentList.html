@@ -23,8 +23,8 @@
                     <td title="'Contact Number'">
                         {{receivingAgent.contact}}
                     </td>
-                    <td title="'Country'" filter="{ countryId: 'text'}">
-                        {{receivingAgent.countryId}}
+                    <td title="'Country'" filter="{ country_id: 'text'}">
+                        {{receivingAgent.country.name}}
                     </td>
                     <td>
                         <button class="btn btn-default btn-sm" ng-click="vm.edit(receivingAgent.id)"><span class="glyphicon glyphicon-pencil"></span></button>

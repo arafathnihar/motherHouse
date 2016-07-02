@@ -21,8 +21,8 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "/client/templates/addOrder.html"
         })
         .state('addReceivingAgent', {
-            url: "/addReceivingAgent/:receivingAgentId",
-            params: { receivingAgentId: undefined },
+            url: "/addReceivingAgent/:receiving_agent_id",
+            params: { receiving_agent_id: undefined },
             templateUrl: "/client/templates/addReceivingAgent.html"
         })
         .state('receivingAgentList', {
