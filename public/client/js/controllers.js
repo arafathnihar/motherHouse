@@ -19,7 +19,7 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
     if (!countries) {
         countryReqest = UtilityService.getCountries();
         countryReqest.then(function(data) {
-            countries = data.data;
+            countries = data;
             vm.countries = countries;
         });
     } else {
@@ -75,6 +75,7 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
     }
 
 });
+
 myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $state) {
     var vm = this;
 
@@ -144,6 +145,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         }
     }
 });
+
 myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
     var vm = this;
     vm.order = {
@@ -155,8 +157,6 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
         exchangeRate: 0,
         orderDate: '',
         orderStatus: 1,
-        suppliedDate: '',
-        completedDate: '',
         name: '',
         contact: '',
         country_id: '',
@@ -241,15 +241,18 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
         reqest.then(function(data) {
             var order = data.data;
             vm.order.id = order.id;
-            vm.order.customId = order.customId;
+            vm.order.agent_id = order.agent_id;
+            vm.order.receiving_agent_id = order.receiving_agent_id;
             vm.order.orderAmount = order.orderAmount;
+            vm.order.order_curr_id = order.order_curr_id;
+            vm.order.supply_curr_id = order.supply_curr_id;
             vm.order.exchangeRate = order.exchangeRate;
             vm.order.name = order.receiver.name;
             vm.order.contact = order.receiver.contact;
+            vm.order.country_id = order.receiver.country_id;
             vm.order.bankName = order.receiver.bankName;
             vm.order.branchName = order.receiver.branchName;
             vm.order.bankAcNo = order.receiver.bankAcNo;
-
 
         });
         vm.addOrder = function() {
@@ -331,6 +334,7 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
         $state.go('addAgent');
     }
 });
+
 myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
     var vm = this;
     var loadReceivingAgents = function() {
@@ -362,6 +366,7 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
         $state.go('addReceivingAgent');
     }
 });
+
 myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
     var vm = this;
     // if (!countries) {
