@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       resources :agents
       resources :orders
       resources :receiving_agents
+      resources :motheraccount
+      resources :agentaccount
 
       get '/login', to: 'login#index'
       # resources :sessions, only: [:create, :destroy]
