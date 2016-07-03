@@ -231,7 +231,6 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
     }
 
     if($state.params.orderId){
-        debugger;
         vm.title = "Edit order"
         var reqestObject = {
             method: 'GET',
@@ -271,7 +270,6 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
             });
         }
     } else{
-        debugger;
         vm.title = "Add New Order"
         vm.addOrder = function() {
             var addOrderReqestObject = {
