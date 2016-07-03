@@ -2,6 +2,7 @@ var myApp = angular.module('motherHouseControllers', []);
 
 var agentList;
 var receivingAgentList;
+var ordersList;
 var countries;
 var currencies;
 var currenciesKeyVal;
@@ -18,7 +19,7 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
     if (!countries) {
         countryReqest = UtilityService.getCountries();
         countryReqest.then(function(data) {
-            countries = data.data;
+            countries = data;
             vm.countries = countries;
         });
     } else {
@@ -74,6 +75,7 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
     }
 
 });
+
 myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $state) {
     var vm = this;
 
@@ -143,7 +145,8 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         }
     }
 });
-myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
+
+myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
     var vm = this;
     vm.order = {
         agent_id: '',
@@ -154,8 +157,6 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
         exchangeRate: 0,
         orderDate: '',
         orderStatus: 1,
-        suppliedDate: '',
-        completedDate: '',
         name: '',
         contact: '',
         country_id: '',
@@ -163,42 +164,36 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
         branchName: '',
         bankAcNo: ''
     };
+
     var datepickerConf = function(obj) {
-        obj.today = function() {
-            obj.date = new Date();
-        };
+         obj.today = function() {
+             obj.date = new Date();
+         };
 
-        obj.clear = function() {
-            obj.Date = null;
-        };
+         obj.clear = function() {
+             obj.Date = null;
+         };
 
-        obj.dateOptions = {
-            formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            startingDay: 1
-        };
+         obj.dateOptions = {
+             formatYear: 'yy',
+             maxDate: new Date(2020, 5, 22),
+             minDate: new Date(),
+             startingDay: 1
+         };
 
-        obj.dateOpen = function() {
-            obj.datePopup.opened = true;
-        };
+         obj.dateOpen = function() {
+             obj.datePopup.opened = true;
+         };
 
-        obj.datePopup = {
-            opened: false
-        };
+         obj.datePopup = {
+             opened: false
+         };
     };
     vm.order = {};
     datepickerConf(vm.order);
-    vm.settled = {};
-    datepickerConf(vm.settled);
-    vm.completed = {};
-    datepickerConf(vm.completed);
     vm.order.today();
-    vm.settled.today();
-    vm.completed.today();
     vm.order.orderDate = new Date();
-    vm.order.suppliedDate = new Date();
-    vm.order.completedDate = new Date();
+
     if (agentList) {
         vm.agents = agentList;
     } else {
@@ -235,20 +230,62 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService) {
         vm.countries = countries;
     }
 
-    vm.addOrder = function() {
-        var addOrderReqestObject = {
-            method: 'POST',
-            url: '/api/v1/orders',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: { requestdata: vm.order }
+    if($state.params.orderId){
+        vm.title = "Edit order"
+        var reqestObject = {
+            method: 'GET',
+            url: '/api/v1/orders/' + $state.params.orderId
         }
-        var addOrderReqest = WebService.callWebService(addOrderReqestObject);
+        var reqest = WebService.callWebService(reqestObject);
+        reqest.then(function(data) {
+            var order = data.data;
+            vm.order.id = order.id;
+            vm.order.agent_id = order.agent_id;
+            vm.order.receiving_agent_id = order.receiving_agent_id;
+            vm.order.orderAmount = order.orderAmount;
+            vm.order.order_curr_id = order.order_curr_id;
+            vm.order.supply_curr_id = order.supply_curr_id;
+            vm.order.exchangeRate = order.exchangeRate;
+            vm.order.name = order.receiver.name;
+            vm.order.contact = order.receiver.contact;
+            vm.order.country_id = order.receiver.country_id;
+            vm.order.bankName = order.receiver.bankName;
+            vm.order.branchName = order.receiver.branchName;
+            vm.order.bankAcNo = order.receiver.bankAcNo;
 
-        addOrderReqest.then(function(data) {
-            console.log(data)
-        })
+        });
+        vm.addOrder = function() {
+            var reqestObject = {
+                method: 'PUT',
+                url: '/api/v1/orders/' + vm.order.id,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { requestdata: vm.order }
+            }
+            var reqest = WebService.callWebService(reqestObject);
+
+            reqest.then(function(data) {
+                console.log(data)
+            });
+        }
+    } else{
+        vm.title = "Add New Order"
+        vm.addOrder = function() {
+            var addOrderReqestObject = {
+                method: 'POST',
+                url: '/api/v1/orders',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: { requestdata: vm.order }
+            }
+            var addOrderReqest = WebService.callWebService(addOrderReqestObject);
+
+            addOrderReqest.then(function(data) {
+                console.log(data)
+            })
+        }
     }
 });
 
@@ -264,8 +301,10 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
         vm.countries = countries;
     }
     var loadAgents = function() {
+        
         var agents = UtilityService.getAgentList();
         agents.then(function(data) {
+            debugger;
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
@@ -293,6 +332,7 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
         $state.go('addAgent');
     }
 });
+
 myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
     var vm = this;
     var loadReceivingAgents = function() {
@@ -320,37 +360,49 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
         $state.go('addReceivingAgent', { 'receiving_agent_id': receiving_agent_id });
     }
 
-    vm.addReceivingAgent = function(agetId) {
+    vm.addReceivingAgent = function(receiving_agent_id) {
         $state.go('addReceivingAgent');
     }
 });
-myApp.controller('orderListCtrl', function($state) {
+
+myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
     var vm = this;
-    var loadAgents = function() {
-        var promis = AgentListService.getAgentList();
-        promis.then(function(responseData) {
-            vm.data = responseData.data;
+    // if (!countries) {
+    //     countryReqest = UtilityService.getCountries();
+    //     countryReqest.then(function(data) {
+    //         countries = data;
+    //         vm.countries = countries;
+    //     });
+    // } else {
+    //     vm.countries = countries;
+    // }
+    // debugger;
+    var loadOrders = function() {
+        var orders = UtilityService.getOrderList();
+        orders.then(function(data) {
+            ordersList = data;
+            vm.data = ordersList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
         });
     }
 
-    loadAgents();
-    vm.delete = function(agetId) {
+    loadOrders();
+    vm.delete = function(orderId) {
         var reqestObject = {
             method: 'DELETE',
-            url: '/api/v1/agents/' + agetId
+            url: '/api/v1/orders/' + orderId
         }
         var reqest = WebService.callWebService(reqestObject);
         reqest.then(function(data) {
-            loadAgents();
+            loadOrders();
         });
     }
 
-    vm.edit = function(agetId) {
-        $state.go('addAgent', { 'agetId': agetId });
+    vm.edit = function(orderId) {
+        $state.go('addOrder', { 'orderId': orderId });
     }
 
-    vm.addNewOrder = function(agetId) {
+    vm.addNewAgent = function(orderId) {
         $state.go('addOrder');
     }
 });

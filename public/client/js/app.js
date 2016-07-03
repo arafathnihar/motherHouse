@@ -1,4 +1,4 @@
-var myApp = angular.module('motherHouse', ['ui.bootstrap','ui.router','ngTable','motherHouseServices','motherHouseControllers']);
+var myApp = angular.module('motherHouse', ['ds.clock','ui.bootstrap','ui.router','ngTable','motherHouseServices','motherHouseControllers']);
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/addOrder");
@@ -12,13 +12,14 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
             url: "/agentList",
             templateUrl: '/client/templates/agentList.html'
         })
+        .state('addOrder', {
+            url: "/addOrder/:orderId",
+            params: { orderId: undefined },
+            templateUrl: "/client/templates/addOrder.html"
+        })
         .state('orderList', {
             url: "/orderList",
             templateUrl: '/client/templates/orderList.html'
-        })
-        .state('addOrder', {
-            url: "/addOrder",
-            templateUrl: "/client/templates/addOrder.html"
         })
         .state('addReceivingAgent', {
             url: "/addReceivingAgent/:receiving_agent_id",
