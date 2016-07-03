@@ -29,5 +29,9 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
         .state('receivingAgentList', {
             url: "/receivingAgentList",
             templateUrl: '/client/templates/receivingAgentList.html'
+        })
+        .state('addAgentPayment', {
+            url: "/addAgentPayment/",
+            templateUrl: '/client/templates/addAgentPayment.html'
         });
 });

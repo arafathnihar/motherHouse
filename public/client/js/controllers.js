@@ -13,8 +13,7 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
         customId: '',
         name: '',
         contact: '',
-        country_id: '',
-        "main_agent_id": "1"
+        country_id: ''
     };
     if (!countries) {
         countryReqest = UtilityService.getCountries();
@@ -92,8 +91,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
         customId: '',
         name: '',
         contact: '',
-        country_id: '',
-        "main_agent_id": "1"
+        country_id: ''
     };
 
     if ($state.params.receiving_agent_id) {
@@ -405,4 +403,40 @@ myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebSer
     vm.addNewAgent = function(orderId) {
         $state.go('addOrder');
     }
+});
+
+myApp.controller('AddAgentPaymentCtrl', function(WebService, UtilityService, $state) {
+    var vm = this;
+    vm.aPayment = {
+        agent_id: '',
+        drAmount: 0.00,
+        "main_agent_id": "1"
+    };
+
+    if (agentList) {
+        vm.agents = agentList;
+    } else {
+        var agents = UtilityService.getAgentList();
+        agents.then(function(data) {
+            vm.agents = data;
+        });
+    }
+
+    vm.title = "Add Agent Payment"
+    vm.addAgentPayment = function() {
+        var addAgentPaymentRequestObject = {
+            method: 'POST',
+            url: '/api/v1/agentaccount',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: { requestdata: vm.aPayment }
+        }
+        var addAgentPaymentRequest = WebService.callWebService(addAgentPaymentRequestObject);
+
+        addAgentPaymentRequest.then(function(data) {
+            console.log(data)
+        })
+    }
+
 });
