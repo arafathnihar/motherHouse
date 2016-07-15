@@ -5,7 +5,6 @@ var receivingAgentList;
 var ordersList;
 var countries;
 var currencies;
-var currenciesKeyVal;
 
 myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
     var vm = this;
@@ -51,7 +50,11 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
             var updateAgentReqest = WebService.callWebService(updateAgentReqestObject);
 
             updateAgentReqest.then(function(data) {
-                console.log(data)
+                vm.agent.customId = '';
+                vm.agent.name = '';
+                vm.agent.contact = '';
+                vm.agent.country_id = '';
+                $state.go('agentList');
             })
         }
     } else {
@@ -68,7 +71,10 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
             var addAgentReqest = WebService.callWebService(addAgentReqestObject);
 
             addAgentReqest.then(function(data) {
-                console.log(data)
+                vm.agent.customId = '';
+                vm.agent.name = '';
+                vm.agent.contact = '';
+                vm.agent.country_id = '';
             })
         }
     }
@@ -121,7 +127,11 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
             var reqest = WebService.callWebService(reqestObject);
 
             reqest.then(function(data) {
-                console.log(data)
+                vm.receivingagent.customId = '';
+                vm.receivingagent.name = '';
+                vm.receivingagent.contact = '';
+                vm.receivingagent.country_id = '';
+                $state.go('receivingAgentList');
             });
         }
     } else {
@@ -138,7 +148,10 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
             var reqest = WebService.callWebService(reqestObject);
 
             reqest.then(function(data) {
-                console.log(data)
+                vm.receivingagent.customId = '';
+                vm.receivingagent.name = '';
+                vm.receivingagent.contact = '';
+                vm.receivingagent.country_id = '';
             })
         }
     }
@@ -264,7 +277,20 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
             var reqest = WebService.callWebService(reqestObject);
 
             reqest.then(function(data) {
-                console.log(data)
+                vm.order.agent_id = '';
+                vm.order.receiving_agent_id = '';
+                vm.order.orderAmount = '';
+                vm.order.order_curr_id = '';
+                vm.order.supply_curr_id = '';
+                vm.order.exchangeRate = '';
+                vm.order.totalAmount = '';
+                vm.order.name = '';
+                vm.order.contact = '';
+                vm.order.country_id = '';
+                vm.order.bankName = '';
+                vm.order.branchName = '';
+                vm.order.bankAcNo = '';
+                $state.go('orderList');
             });
         }
     } else{
@@ -281,7 +307,19 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
             var addOrderReqest = WebService.callWebService(addOrderReqestObject);
 
             addOrderReqest.then(function(data) {
-                console.log(data)
+                vm.order.agent_id = '';
+                vm.order.receiving_agent_id = '';
+                vm.order.orderAmount = '';
+                vm.order.order_curr_id = '';
+                vm.order.supply_curr_id = '';
+                vm.order.exchangeRate = '';
+                vm.order.totalAmount = '';
+                vm.order.name = '';
+                vm.order.contact = '';
+                vm.order.country_id = '';
+                vm.order.bankName = '';
+                vm.order.branchName = '';
+                vm.order.bankAcNo = '';
             })
         }
     }
@@ -365,16 +403,7 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
 
 myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
     var vm = this;
-    // if (!countries) {
-    //     countryReqest = UtilityService.getCountries();
-    //     countryReqest.then(function(data) {
-    //         countries = data;
-    //         vm.countries = countries;
-    //     });
-    // } else {
-    //     vm.countries = countries;
-    // }
-    // debugger;
+
     var loadOrders = function() {
         var orders = UtilityService.getOrderList();
         orders.then(function(data) {
@@ -409,7 +438,7 @@ myApp.controller('AddAgentPaymentCtrl', function(WebService, UtilityService, $st
     var vm = this;
     vm.aPayment = {
         agent_id: '',
-        drAmount: 0.00,
+        drAmount: 0,
         "main_agent_id": "1"
     };
 
@@ -435,7 +464,7 @@ myApp.controller('AddAgentPaymentCtrl', function(WebService, UtilityService, $st
         var addAgentPaymentRequest = WebService.callWebService(addAgentPaymentRequestObject);
 
         addAgentPaymentRequest.then(function(data) {
-            console.log(data)
+
         })
     }
 
