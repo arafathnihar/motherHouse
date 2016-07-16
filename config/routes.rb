@@ -6,11 +6,16 @@ Rails.application.routes.draw do
       resources :agents
       resources :orders
       resources :receiving_agents
-      resources :motheraccount
-      resources :agentaccount
+
+      get '/agentaccount', to: 'agentaccount#index'
+      post '/agentaccount', to: 'agentaccount#create'
+      delete '/agentaccount/:id', to: 'agentaccount#nullify'
+
+      get '/motheraccount', to: 'motheraccount#index'
+      # post '/motheraccount', to: 'motheraccount#create'
+      delete '/motheraccount/:id', to: 'motheraccount#nullify'
 
       get '/login', to: 'login#index'
-      # resources :sessions, only: [:create, :destroy]
 
     end
   end

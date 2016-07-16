@@ -308,7 +308,6 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
-            debugger;
         });
     }
 

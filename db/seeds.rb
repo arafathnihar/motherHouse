@@ -516,3 +516,16 @@ Agent.create(
     guid: SecureRandom.uuid,
     created_by: 1
 )
+
+# tempory
+
+ReceivingAgent.create(
+    main_agent_id: 1,
+    customId: 'RA0001',
+    name: 'Shivanesan Arafath',
+    contact: '0111234567',
+    country_id: 145,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
