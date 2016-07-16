@@ -30,6 +30,10 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
             url: "/receivingAgentList",
             templateUrl: '/client/templates/receivingAgentList.html'
         })
+        .state('mainAccounts', {
+            url: "/mainAccounts",
+            templateUrl: '/client/templates/mainAccounts.html'
+        })
         .state('addAgentPayment', {
             url: "/addAgentPayment/",
             templateUrl: '/client/templates/addAgentPayment.html'

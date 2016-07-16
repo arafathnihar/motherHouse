@@ -6,6 +6,7 @@ var ordersList;
 var countries;
 var currencies;
 var currenciesKeyVal;
+var mainAccounts;
 
 myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
     var vm = this;
@@ -302,11 +303,11 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
         
         var agents = UtilityService.getAgentList();
         agents.then(function(data) {
-            debugger;
+            // debugger;
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
-            debugger;
+            // debugger;
         });
     }
 
@@ -398,7 +399,7 @@ myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebSer
 
     vm.edit = function(orderId) {
         $state.go('addOrder', { 'orderId': orderId });
-    }
+    };
 
     vm.addNewAgent = function(orderId) {
         $state.go('addOrder');
@@ -440,3 +441,47 @@ myApp.controller('AddAgentPaymentCtrl', function(WebService, UtilityService, $st
     }
 
 });
+
+myApp.controller('MainAccountsCtrl', function(UtilityService, NgTableParams, $state) {
+    var vm = this;
+    vm.test = 'test';
+    var mainAccounts = UtilityService.getMainAccounts();
+    vm.tableParams  = new NgTableParams({}, { counts: [], getData: function(){
+        return mainAccounts.then(function(data){
+            mainAccounts = data.data;
+            vm.data = mainAccounts;
+            return vm.data;
+        });
+    }});
+    var datepickerConf = function(obj) {
+        obj.today = function() {
+            obj.date = new Date();
+        };
+
+        obj.clear = function() {
+            obj.Date = null;
+        };
+
+        obj.dateOptions = {
+            formatYear: 'yy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(),
+            startingDay: 1
+        };
+
+        obj.dateOpen = function() {
+            obj.datePopup.opened = true;
+        };
+
+        obj.datePopup = {
+            opened: false
+        };
+    };
+    vm.filter = {
+        from:{},
+        to:{}
+    };
+    datepickerConf(vm.filter.from);
+    datepickerConf(vm.filter.to);
+});
+

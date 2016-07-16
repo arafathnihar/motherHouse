@@ -11,7 +11,7 @@
                     <col width="15%" />
                     <col width="10%" />
                 </colgroup>
-                <tr ng-repeat="agent in $data" onload="alert($data)">
+                <tr ng-repeat="agent in $data">
                     <td title="'Agent Number'" filter="{ customId: 'text'}">
                         <!--{{agent.customId}}-->
                         <span ng-bind="agent.customId"></span>

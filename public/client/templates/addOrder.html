@@ -61,7 +61,7 @@
                         <div class="form-group col-md-6 col-md-offset-3">
                             <label>Total Amount</label>
                             <div class="input-group">
-                                <input value="{{vm.order.orderAmount * vm.order.exchangeRate}}" type="number" class="form-control" placeholder="Total Amount"
+                                <input value="{{(vm.order.orderAmount * vm.order.exchangeRate) | number}}" type="text" class="form-control" placeholder="Total Amount"
                                 step="any" disabled>
                                 <div class="input-group-addon">&nbsp</div>
                             </div>
