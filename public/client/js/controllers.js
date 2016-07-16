@@ -1,4 +1,4 @@
-var myApp = angular.module('motherHouseControllers', []);
+var myApp = angular.module('motherHouseControllers', ['ngToast']);
 
 var agentList;
 var receivingAgentList;
@@ -8,7 +8,7 @@ var currencies;
 var currenciesKeyVal;
 var mainAccounts;
 
-myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
+myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state, ngToast) {
     var vm = this;
     vm.agent = {
         customId: '',
@@ -17,22 +17,22 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
         country_id: ''
     };
     if (!countries) {
-        countryReqest = UtilityService.getCountries();
-        countryReqest.then(function(data) {
+        countryRequest = UtilityService.getCountries();
+        countryRequest.then(function(data) {
             countries = data;
             vm.countries = countries;
         });
     } else {
         vm.countries = countries;
     }
-    if ($state.params.agetId) {
+    if ($state.params.agentId) {
         vm.title = "Edit Agent"
-        var agentReqestObject = {
+        var agentRequestObject = {
             method: 'GET',
-            url: '/api/v1/agents/' + $state.params.agetId
+            url: '/api/v1/agents/' + $state.params.agentId
         }
-        var agentReqest = WebService.callWebService(agentReqestObject);
-        agentReqest.then(function(data) {
+        var agentRequest = WebService.callWebService(agentRequestObject);
+        agentRequest.then(function(data) {
             var agent = data.data;
             vm.agent.id = agent.id;
             vm.agent.customId = agent.customId;
@@ -41,7 +41,7 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
             vm.agent.country_id = agent.country_id;
         });
         vm.addAgent = function() {
-            var updateAgentReqestObject = {
+            var updateAgentRequestObject = {
                 method: 'PUT',
                 url: '/api/v1/agents/' + vm.agent.id,
                 headers: {
@@ -49,16 +49,22 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
                 },
                 data: { requestdata: vm.agent }
             }
-            var updateAgentReqest = WebService.callWebService(updateAgentReqestObject);
+            var updateAgentRequest = WebService.callWebService(updateAgentRequestObject);
 
-            updateAgentReqest.then(function(data) {
-                console.log(data)
+            updateAgentRequest.then(function(data) {
+                ngToast.create({
+                    className: 'info',
+                    dismissButton: true,
+                    timeout: 5000,
+                    content: 'Agent ' + vm.agent.customId + ' ('+ vm.agent.name +') updated successfully !!!'
+                });
+                $state.go('agentList');
             })
         }
     } else {
         vm.title = "Add New Agent"
         vm.addAgent = function() {
-            var addAgentReqestObject = {
+            var addAgentRequestObject = {
                 method: 'POST',
                 url: '/api/v1/agents',
                 headers: {
@@ -66,22 +72,31 @@ myApp.controller('AddAgentCtrl', function(WebService, UtilityService, $state) {
                 },
                 data: { requestdata: vm.agent }
             }
-            var addAgentReqest = WebService.callWebService(addAgentReqestObject);
+            var addAgentRequest = WebService.callWebService(addAgentRequestObject);
 
-            addAgentReqest.then(function(data) {
-                console.log(data)
+            addAgentRequest.then(function(data) {
+                ngToast.create({
+                    className: 'info',
+                    dismissButton: true,
+                    timeout: 5000,
+                    content: 'Agent added successfully !!!'
+                });
+                vm.agent.customId = '';
+                vm.agent.name = '';
+                vm.agent.contact = '';
+                vm.agent.country_id = '';
             })
         }
     }
 
 });
 
-myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $state) {
+myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $state, ngToast) {
     var vm = this;
 
     if (!countries) {
-        countryReqest = UtilityService.getCountries();
-        countryReqest.then(function(data) {
+        countryRequest = UtilityService.getCountries();
+        countryRequest.then(function(data) {
             countries = data;
             vm.countries = countries;
         });
@@ -97,12 +112,12 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
 
     if ($state.params.receiving_agent_id) {
         vm.title = "Edit Receiving Agent"
-        var reqestObject = {
+        var requestObject = {
             method: 'GET',
             url: '/api/v1/receiving_agents/' + $state.params.receiving_agent_id
         }
-        var reqest = WebService.callWebService(reqestObject);
-        reqest.then(function(data) {
+        var request = WebService.callWebService(requestObject);
+        request.then(function(data) {
             var receivingagent = data.data;
             vm.receivingagent.id = receivingagent.id;
             vm.receivingagent.customId = receivingagent.customId;
@@ -111,7 +126,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
             vm.receivingagent.country_id = receivingagent.country_id;
         });
         vm.addReceivingAgent = function() {
-            var reqestObject = {
+            var requestObject = {
                 method: 'PUT',
                 url: '/api/v1/receiving_agents/' + vm.receivingagent.id,
                 headers: {
@@ -119,16 +134,22 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
                 },
                 data: { requestdata: vm.receivingagent }
             }
-            var reqest = WebService.callWebService(reqestObject);
+            var request = WebService.callWebService(requestObject);
 
-            reqest.then(function(data) {
-                console.log(data)
+            request.then(function(data) {
+                ngToast.create({
+                    className: 'info',
+                    dismissButton: true,
+                    timeout: 5000,
+                    content: 'Receiving Agent ' + vm.receivingagent.customId + ' ('+ vm.receivingagent.name +') updated successfully !!!'
+                });
+                $state.go('receivingAgentList');
             });
         }
     } else {
         vm.title = "Add New Receiving Agent"
         vm.addReceivingAgent = function() {
-            var reqestObject = {
+            var requestObject = {
                 method: 'POST',
                 url: '/api/v1/receiving_agents',
                 headers: {
@@ -136,18 +157,28 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
                 },
                 data: { requestdata: vm.receivingagent }
             }
-            var reqest = WebService.callWebService(reqestObject);
+            var request = WebService.callWebService(requestObject);
 
-            reqest.then(function(data) {
-                console.log(data)
+            request.then(function(data) {
+                ngToast.create({
+                    className: 'info',
+                    dismissButton: true,
+                    timeout: 5000,
+                    content: 'Receiving agent added successfully !!!'
+                });
+                vm.receivingagent.customId = '';
+                vm.receivingagent.name = '';
+                vm.receivingagent.contact = '';
+                vm.receivingagent.country_id = '';
             })
         }
     }
 });
 
-myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
+myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state, ngToast) {
     var vm = this;
     vm.order = {
+        customId: '',
         agent_id: '',
         receiving_agent_id: '',
         orderAmount: 0,
@@ -210,8 +241,8 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
         });
     }
     if (!currencies) {
-        countryReqest = UtilityService.getCurrencies();
-        countryReqest.then(function(data) {
+        countryRequest = UtilityService.getCurrencies();
+        countryRequest.then(function(data) {
             currencies = data;
             vm.currencies = currencies;
         });
@@ -219,8 +250,8 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
         vm.currencies = currencies;
     }
     if (!countries) {
-        countryReqest = UtilityService.getCountries();
-        countryReqest.then(function(data) {
+        countryRequest = UtilityService.getCountries();
+        countryRequest.then(function(data) {
             countries = data;
             vm.countries = countries;
         });
@@ -231,14 +262,15 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
 
     if($state.params.orderId){
         vm.title = "Edit order"
-        var reqestObject = {
+        var requestObject = {
             method: 'GET',
             url: '/api/v1/orders/' + $state.params.orderId
         }
-        var reqest = WebService.callWebService(reqestObject);
-        reqest.then(function(data) {
+        var request = WebService.callWebService(requestObject);
+        request.then(function(data) {
             var order = data.data;
             vm.order.id = order.id;
+            vm.order.customId = order.customId;
             vm.order.agent_id = order.agent_id;
             vm.order.receiving_agent_id = order.receiving_agent_id;
             vm.order.orderAmount = order.orderAmount;
@@ -254,7 +286,7 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
 
         });
         vm.addOrder = function() {
-            var reqestObject = {
+            var requestObject = {
                 method: 'PUT',
                 url: '/api/v1/orders/' + vm.order.id,
                 headers: {
@@ -262,16 +294,22 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
                 },
                 data: { requestdata: vm.order }
             }
-            var reqest = WebService.callWebService(reqestObject);
+            var request = WebService.callWebService(requestObject);
 
-            reqest.then(function(data) {
-                console.log(data)
+            request.then(function(data) {
+                ngToast.create({
+                    className: 'info',
+                    dismissButton: true,
+                    timeout: 5000,
+                    content: 'Order ' + vm.order.customId + ' updated successfully !!!'
+                });
+                $state.go('orderList');
             });
         }
     } else{
         vm.title = "Add New Order"
         vm.addOrder = function() {
-            var addOrderReqestObject = {
+            var addOrderRequestObject = {
                 method: 'POST',
                 url: '/api/v1/orders',
                 headers: {
@@ -279,10 +317,28 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
                 },
                 data: { requestdata: vm.order }
             }
-            var addOrderReqest = WebService.callWebService(addOrderReqestObject);
+            var addOrderRequest = WebService.callWebService(addOrderRequestObject);
 
-            addOrderReqest.then(function(data) {
-                console.log(data)
+            addOrderRequest.then(function(data) {
+                ngToast.create({
+                    className: 'info',
+                    dismissButton: true,
+                    timeout: 5000,
+                    content: 'Order added successfully !!!'
+                });
+                vm.order.agent_id = '';
+                vm.order.receiving_agent_id = '';
+                vm.order.orderAmount = '';
+                vm.order.order_curr_id = '';
+                vm.order.supply_curr_id = '';
+                vm.order.exchangeRate = '';
+                vm.order.totalAmount = '';
+                vm.order.name = '';
+                vm.order.contact = '';
+                vm.order.country_id = '';
+                vm.order.bankName = '';
+                vm.order.branchName = '';
+                vm.order.bankAcNo = '';
             })
         }
     }
@@ -291,8 +347,8 @@ myApp.controller('AddOrderCtrl', function(UtilityService, WebService, $state) {
 myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
     var vm = this;
     if (!countries) {
-        countryReqest = UtilityService.getCountries();
-        countryReqest.then(function(data) {
+        countryRequest = UtilityService.getCountries();
+        countryRequest.then(function(data) {
             countries = data;
             vm.countries = countries;
         });
@@ -303,31 +359,32 @@ myApp.controller('agentListCtrl', function(UtilityService, NgTableParams, WebSer
         
         var agents = UtilityService.getAgentList();
         agents.then(function(data) {
-            // debugger;
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
-            // debugger;
+            agentList = data;
+            vm.data = agentList;
+            vm.tableParams = new NgTableParams({ count: vm.data.length }, { counts: [], data: vm.data });
         });
     }
 
     loadAgents();
-    vm.delete = function(agetId) {
-        var reqestObject = {
+    vm.delete = function(agentId) {
+        var requestObject = {
             method: 'DELETE',
-            url: '/api/v1/agents/' + agetId
+            url: '/api/v1/agents/' + agentId
         }
-        var reqest = WebService.callWebService(reqestObject);
-        reqest.then(function(data) {
+        var request = WebService.callWebService(requestObject);
+        request.then(function(data) {
             loadAgents();
         });
     }
 
-    vm.edit = function(agetId) {
-        $state.go('addAgent', { 'agetId': agetId });
+    vm.edit = function(agentId) {
+        $state.go('addAgent', { 'agentId': agentId });
     }
 
-    vm.addNewAgent = function(agetId) {
+    vm.addNewAgent = function(agentId) {
         $state.go('addAgent');
     }
 });
@@ -345,12 +402,12 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
 
     loadReceivingAgents();
     vm.delete = function(receiving_agent_id) {
-        var reqestObject = {
+        var requestObject = {
             method: 'DELETE',
             url: '/api/v1/receiving_agents/' + receiving_agent_id
         }
-        var reqest = WebService.callWebService(reqestObject);
-        reqest.then(function(data) {
+        var request = WebService.callWebService(requestObject);
+        request.then(function(data) {
             loadReceivingAgents();
         });
     }
@@ -366,16 +423,7 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
 
 myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebService, $state) {
     var vm = this;
-    // if (!countries) {
-    //     countryReqest = UtilityService.getCountries();
-    //     countryReqest.then(function(data) {
-    //         countries = data;
-    //         vm.countries = countries;
-    //     });
-    // } else {
-    //     vm.countries = countries;
-    // }
-    // debugger;
+
     var loadOrders = function() {
         var orders = UtilityService.getOrderList();
         orders.then(function(data) {
@@ -387,12 +435,12 @@ myApp.controller('orderListCtrl', function(UtilityService, NgTableParams, WebSer
 
     loadOrders();
     vm.delete = function(orderId) {
-        var reqestObject = {
+        var requestObject = {
             method: 'DELETE',
             url: '/api/v1/orders/' + orderId
         }
-        var reqest = WebService.callWebService(reqestObject);
-        reqest.then(function(data) {
+        var request = WebService.callWebService(requestObject);
+        request.then(function(data) {
             loadOrders();
         });
     }
@@ -410,7 +458,7 @@ myApp.controller('AddAgentPaymentCtrl', function(WebService, UtilityService, $st
     var vm = this;
     vm.aPayment = {
         agent_id: '',
-        drAmount: 0.00,
+        drAmount: 0,
         "main_agent_id": "1"
     };
 
@@ -436,7 +484,7 @@ myApp.controller('AddAgentPaymentCtrl', function(WebService, UtilityService, $st
         var addAgentPaymentRequest = WebService.callWebService(addAgentPaymentRequestObject);
 
         addAgentPaymentRequest.then(function(data) {
-            console.log(data)
+
         })
     }
 
