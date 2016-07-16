@@ -1,11 +1,11 @@
-var myApp = angular.module('motherHouse', ['ds.clock','ui.bootstrap','ui.router','ngTable','motherHouseServices','motherHouseControllers']);
+var myApp = angular.module('motherHouse', ['ds.clock','ui.bootstrap','ui.router','ngTable','motherHouseServices','motherHouseControllers', 'ngToast']);
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/addOrder");
     $stateProvider
         .state('addAgent', {
-            url: "/addAgent/:agetId",
-            params: { agetId: undefined },
+            url: "/addAgent/:agentId",
+            params: { agentId: undefined },
             templateUrl: "/client/templates/addAgent.html"
         })
         .state('agentList', {
@@ -29,5 +29,13 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
         .state('receivingAgentList', {
             url: "/receivingAgentList",
             templateUrl: '/client/templates/receivingAgentList.html'
+        })
+        .state('mainAccounts', {
+            url: "/mainAccounts",
+            templateUrl: '/client/templates/mainAccounts.html'
+        })
+        .state('addAgentPayment', {
+            url: "/addAgentPayment/",
+            templateUrl: '/client/templates/addAgentPayment.html'
         });
 });

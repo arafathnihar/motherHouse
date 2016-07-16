@@ -51,10 +51,20 @@ myApp.factory('UtilityService', function(WebService) {
                 return data.data;
             });
             return orderListReqest;
+        },
+        getMainAccounts: function() {
+            var mainAccountsReqestObject = {
+                method: 'GET',
+                url: 'https://jsonblob.com/api/5789a4aee4b0dc55a4e4fb6f'
+            }
+            var mainAccountsReqest = WebService.callWebService(mainAccountsReqestObject).then(function(data) {
+                return data;
+            });
+            return mainAccountsReqest;
         }
-        
     }
 });
+
 myApp.factory('WebService', function($http) {
     return {
         callWebService: function(reqestObject) {

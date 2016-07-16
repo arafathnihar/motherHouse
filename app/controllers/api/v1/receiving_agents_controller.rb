@@ -11,7 +11,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
 
   def create
     @receivingAgent = ReceivingAgent.new(data_params)
-
+    @receivingAgent.main_agent_id = 1
     #@receivingAgent.customId = custom_id(ReceivingAgent, "RA", 5)
     @receivingAgent.guid = SecureRandom.uuid
     @receivingAgent.created_by = 1

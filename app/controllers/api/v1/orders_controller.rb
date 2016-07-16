@@ -80,7 +80,7 @@ class Api::V1::OrdersController < ApplicationController
   def update
     if @thispara.update_attributes(params_orders.merge(updated_by: 1, updated_at: Time.now))
 
-      @thispara2 = Receiver.find(@thispara.receiverId)
+      @thispara2 = Receiver.find(@thispara.receiver_id)
 
       if @thispara2.update_attributes(params_receivers.merge(updated_by: 1, updated_at:Time.now))
         render json: combine_request(@thispara, @thispara2).as_json, status: :ok
