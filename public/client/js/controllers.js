@@ -402,7 +402,7 @@ myApp.controller('receivingAgentListCtrl', function(UtilityService, NgTableParam
             url: '/api/v1/receiving_agents/' + receiving_agent_id
         }
         var request = WebService.callWebService(requestObject);
-        reqest.then(function(data) {
+        request.then(function(data) {
             loadReceivingAgents();
         });
     }
