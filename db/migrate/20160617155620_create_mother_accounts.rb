@@ -5,9 +5,9 @@ class CreateMotherAccounts < ActiveRecord::Migration
       t.integer :main_agent_id, null: false
       t.integer :agent_id, null: false
       t.integer :order_id, null: true
-      t.decimal :drAmount, null: true # monitory value of each debit transaction (in CHF)
-      t.decimal :crAmount, null: true # monitory value of each credit transaction (in CHF)
-      t.decimal :cumulation, null: false # cumulation monitory value of each transaction (in CHF)
+      t.decimal :drAmount, null: true, :precision => 16, :scale => 2 # monitory value of each debit transaction (in CHF)
+      t.decimal :crAmount, null: true, :precision => 16, :scale => 2 # monitory value of each credit transaction (in CHF)
+      t.decimal :cumulation, null: false, :precision => 16, :scale => 2 # cumulation monitory value of each transaction (in CHF)
       t.datetime :date, null: false # date of transaction
       t.integer :bDownStatus, null: false, default: 1 # brought down status # default, not bDown
       t.integer :nullify_id, null: true # nullified record
