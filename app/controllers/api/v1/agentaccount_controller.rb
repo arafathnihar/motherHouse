@@ -9,22 +9,24 @@ class Api::V1::AgentaccountController < ApplicationController
     render json: @thispara.as_json(include: [:mother_account, :agent]), status: :ok
   end
 
+  def payments
+    @agentPayments = AgentAccount.where({id: params[:id], isPaid: true})
+
+    render json: @agentPayments.as_json(include: [:mother_account, :agent]), status: :ok
+  end
+
   def create
-    if (AccountService.new().create_agent_ac(this_params))
+    if (AccountService.new().create_agent_ac(this_params, true))
       render json: { message: "Success" }, status: :ok
     else
       render json: { message: "Failed" }, status: :unprocessable_entity
     end
   end
 
-  # def show
-  #   render json: @thispara.as_json, status: :ok
-  # end
-
   def update
     # if @thispara.update_attributes(this_params.merge(updated_by: 1, updated_at: Time.now))
       if (AccountService.new().nullify_agent_ac(params[:id]))
-        if (AccountService.new().create_agent_ac(this_params))
+        if (AccountService.new().create_agent_ac(this_params, true))
           render json: { message: "Success" }, status: :ok
         else
           # rollback

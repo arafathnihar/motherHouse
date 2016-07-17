@@ -10,8 +10,9 @@ class CreateAgentAccounts < ActiveRecord::Migration
       t.datetime :date, null: false # date of transaction
       t.integer :bDownStatus, null: false, default: 1 # brought down status # default, not bDown
       t.integer :nullify_id, null: true # nullified record
-      t.boolean :isNullified, null: false
+      t.boolean :isNullified, null: false, default: false
       t.integer :currency_id, null: true, default: 1
+      t.boolean :isPaid, null: false, default: false
 
       # database and coding level
       t.string :guid, null: false

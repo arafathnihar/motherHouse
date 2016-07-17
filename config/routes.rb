@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :receiving_agents
 
       get '/agentaccount', to: 'agentaccount#index'
+      get '/agentaccount/:id', to: 'agentaccount#payments'
       post '/agentaccount', to: 'agentaccount#create'
       put '/agentaccount/:id', to: 'agentaccount#update'
       delete '/agentaccount/:id', to: 'agentaccount#nullify'
