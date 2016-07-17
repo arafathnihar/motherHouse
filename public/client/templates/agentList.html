@@ -1,6 +1,12 @@
+<style>
+    .alert-dismissible{
+        margin-right: 250px;
+    }
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="panel" ng-controller="agentListCtrl as vm">
+            <toast></toast>
                     <button type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create agent</button>
             </br></br>
             <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="true">

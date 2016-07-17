@@ -17,6 +17,7 @@
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="bower_components/ngToast/dist/ngToast.min.js"></script>
+    <script src="bower_components/angular-block-ui/dist/angular-block-ui.min.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/app.js"></script>
@@ -24,12 +25,13 @@
     <link rel="stylesheet" href="bower_components/angular-ui-clock/dist/angular-clock.css">
     <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css">
     <link rel="stylesheet" href="bower_components/ngToast/dist/ngToast.min.css">
+    <link rel="stylesheet" href="bower_components/angular-block-ui/dist/angular-block-ui.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
 </head>
 
 <body ng-app="motherHouse">
-<toast></toast>
+
 <div class="container">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -60,9 +62,13 @@
             </div>
         </div>
     </nav>
+
     <div ui-view>
+
     </div>
+
 </div>
+
 </body>
 
 </html>
