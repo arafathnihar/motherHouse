@@ -4,30 +4,22 @@ class Api::V1::ReceivingAgentsController < ApplicationSecureController
   respond_to :json
 
   def index
-    # array = []
-    @receivingAgents = ReceivingAgent.eager_load(:countries).all
-
-    # @receivingAgents.each do |item|
-    #   # @country = Country.find(item.receiverId)
-    #
-    #   # array.push(combine_request(item, @country))
-    #   array.push(item.Country.name)
-    # end
-
-    render json: @receivingAgents.as_json, status: :ok
+    @receivingAgents = ReceivingAgent.all
+    
+    render json: @receivingAgents.as_json(include: :country), status: :ok
   end
 
   def create
     @receivingAgent = ReceivingAgent.new(data_params)
-
-    @receivingAgent.customId = custom_id(ReceivingAgent, "RA", 5)
+    @receivingAgent.main_agent_id = 1
+    #@receivingAgent.customId = custom_id(ReceivingAgent, "RA", 5)
     @receivingAgent.guid = SecureRandom.uuid
     @receivingAgent.created_by = 1
 
     if @receivingAgent.save
       render json: @receivingAgent.as_json, status: :ok
     else
-      render json: { errors: @thispara.errors }, status: :unprocessable_entity
+      render json: { errors: @receivingAgent.errors }, status: :unprocessable_entity
     end
   end
 
@@ -39,7 +31,7 @@ class Api::V1::ReceivingAgentsController < ApplicationSecureController
     if @receivingAgent.update_attributes(data_params.merge(updated_by: 1, updated_at: Time.now))
       render json: @receivingAgent.as_json, status: :ok
     else
-      render json: { errors: @thispara.errors }, status: :unprocessable_entity
+      render json: { errors: @receivingAgent.errors }, status: :unprocessable_entity
     end
   end
 
@@ -49,15 +41,15 @@ class Api::V1::ReceivingAgentsController < ApplicationSecureController
     render json: {status: :ok}
   end
 
-  private
-
-  def data_params
-    params.fetch(:requestdata, {}).permit(:customId, :mainAgentId, :name, :contact, :countryId)
-  end
-
   def get_receiving_agent
     @receivingAgent = ReceivingAgent.find(params[:id])
     render json: {status: :not_found} unless @receivingAgent
+  end
+
+  private
+
+  def data_params
+    params.fetch(:requestdata, {}).permit(:customId, :main_agent_id, :name, :contact, :country_id)
   end
 
 end

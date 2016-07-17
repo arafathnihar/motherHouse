@@ -6,13 +6,20 @@ class Api::V1::AgentsController < ApplicationSecureController
   def index
     @thispara = Agent.all
 
-    render json: @thispara.as_json, status: :ok
+    # @data = @thispara.as_json(include: :country)
+
+    # @arr = []
+    # @thispara.each do |record|
+    #   @arr.push(record.customId => record.as_json(include: :country))
+    # end
+
+    render json: @thispara.as_json(include: :country), status: :ok
   end
 
   def create
     @thispara = Agent.new(this_params)
-
-    @thispara.customId = custom_id(Agent, "AG", 5)
+    @thispara.main_agent_id = 1
+    #@thispara.customId = custom_id(Agent, "AG", 5)
     @thispara.guid = SecureRandom.uuid
     @thispara.created_by = 1
 
@@ -49,6 +56,6 @@ class Api::V1::AgentsController < ApplicationSecureController
   end
 
   def this_params
-    params.fetch(:requestdata, {}).permit(:mainAgentId, :name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:customId, :main_agent_id, :name, :contact, :country_id)
   end
 end

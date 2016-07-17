@@ -1,0 +1,84 @@
+<div ng-controller="MainAccountsCtrl as vm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Filter Accounts
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group col-md-2">
+                            <label>Agent</label>
+                            <select class="form-control" ng-model="vm.order.agent_id" ng-options="option.id as option.customId"></select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>From</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.filter.from.date"
+                                       is-open="vm.filter.from.datePopup.opened"
+                                       datepicker-options="vm.filter.from.dateOptions" ng-required="true" close-text="Close"/>
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="vm.filter.from.dateOpen()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>to</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.filter.to.date"
+                                       is-open="vm.filter.to.datePopup.opened"
+                                       datepicker-options="vm.filter.to.dateOptions" ng-required="true" close-text="Close"/>
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="vm.filter.to.dateOpen()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>&nbsp</label>
+                            <div class="input-group">
+                            <button ng-click="vm.addAgent()" class="btn btn-primary pull-right">Filter</button>
+                                </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="false">
+                    <colgroup>
+                        <col width="10%"/>
+                        <col width="40%"/>
+                        <col width="15%"/>
+                        <col width="15%"/>
+                        <col width="20%"/>
+                    </colgroup>
+                    <tr ng-repeat="accounts in $data">
+                        <td title="'Agent Name'" align="center">
+                            {{accounts.date}}
+                        </td>
+                        <td title="'Agent ID'">
+                            {{accounts.agent_id}}
+                        </td>
+                        <td title="'Debit Amount'" align="right">
+                            {{accounts.drAmount}}
+                        </td>
+                        <td title="'Credit Amount'" align="right">
+                            {{accounts.crAmount}}
+                        </td>
+                        <td title="'Cumulation'" align="right">
+                            {{accounts.cumulation | number}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

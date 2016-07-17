@@ -1,11 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel" ng-controller="agentListCtrl as vm">
-            <!--<div class="row">
-                <div class="col-md-2 col-md-offset-10">-->
                     <button type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create agent</button>
-                <!--</div>
-            </div>-->
             </br></br>
             <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="true">
                 <colgroup>
@@ -17,7 +13,8 @@
                 </colgroup>
                 <tr ng-repeat="agent in $data">
                     <td title="'Agent Number'" filter="{ customId: 'text'}">
-                        {{agent.customId}}
+                        <!--{{agent.customId}}-->
+                        <span ng-bind="agent.customId"></span>
                     </td>
                     <td title="'Agent Name'" filter="{ name: 'text'}">
                         {{agent.name}}
@@ -25,8 +22,8 @@
                     <td title="'Contact Number'">
                         {{agent.contact}}
                     </td>
-                    <td title="'Country'" filter="{ countryId: 'text'}">
-                        {{agent.countryId}}
+                    <td title="'Country'" filter="{ country_id: 'text'}">
+                        {{agent.country.name}}
                     </td>
                     <td>
                         <button class="btn btn-default btn-sm" ng-click="vm.edit(agent.id)"><span class="glyphicon glyphicon-pencil"></span></button>

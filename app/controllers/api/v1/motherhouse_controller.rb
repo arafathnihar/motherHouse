@@ -9,13 +9,13 @@ class Api::V1::MotherhouseController < ApplicationSecureController
   def index
     @thispara = MainAgent.all
 
-    render json: @thispara.as_json, status: :ok
+    render json: @thispara.as_json(include: :country), status: :ok
   end
 
   def create
     @thispara = MainAgent.new(this_params)
 
-    @thispara.customId = custom_id(MainAgent, "MH", 8)
+    #@thispara.customId = custom_id(MainAgent, "MH", 8)
     @thispara.guid = SecureRandom.uuid
     @thispara.created_by = 1
 
@@ -52,6 +52,6 @@ class Api::V1::MotherhouseController < ApplicationSecureController
   end
 
   def this_params
-    params.fetch(:requestdata, {}).permit(:name, :contact, :countryId)
+    params.fetch(:requestdata, {}).permit(:customId, :name, :contact, :country_id)
   end
 end
