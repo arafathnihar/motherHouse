@@ -112,7 +112,7 @@ myApp.controller('AddReceivingAgentCtrl', function(UtilityService, WebService, $
 
     if ($state.params.receiving_agent_id) {
         vm.title = "Edit Receiving Agent"
-        var requestObject = {
+        var requestObject = {  
             method: 'GET',
             url: '/api/v1/receiving_agents/' + $state.params.receiving_agent_id
         }

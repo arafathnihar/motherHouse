@@ -12,7 +12,21 @@
                     </div>
                     <div class="form-group">
                         <label>Payment Amount <small>(in CHF)</small></label>
-                        <input ng-model="vm.aPayment.drAmount" type="text" class="form-control" placeholder="Payment Amount" step="any">
+                        <input ng-model="vm.aPayment.drAmount" type="number" class="form-control" placeholder="Payment Amount" step="any">
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Date</label>
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="vm.aPayment.date" is-open="vm.aPayment.datePopup.opened"
+                            datepicker-options="vm.aPayment.dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="vm.order.dateOpen()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label>Collector</label>
+                        <input ng-model="vm.aPayment.collector" type="text" class="form-control" placeholder="Payment Collector">
                     </div>
                     <button ng-click="vm.addAgentPayment()" class="btn btn-primary pull-right">Submit</button>
                 </form>

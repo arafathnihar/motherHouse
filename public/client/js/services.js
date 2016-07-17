@@ -55,7 +55,7 @@ myApp.factory('UtilityService', function(WebService) {
         getMainAccounts: function() {
             var mainAccountsReqestObject = {
                 method: 'GET',
-                url: 'https://jsonblob.com/api/5789a4aee4b0dc55a4e4fb6f'
+                url: '/api/v1/motheraccount'
             }
             var mainAccountsReqest = WebService.callWebService(mainAccountsReqestObject).then(function(data) {
                 return data;
