@@ -117,34 +117,7 @@ myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ng
         branchName: '',
         bankAcNo: ''
     };
-
-    var datepickerConf = function (obj) {
-        obj.today = function () {
-            obj.date = new Date();
-        };
-
-        obj.clear = function () {
-            obj.Date = null;
-        };
-
-        obj.dateOptions = {
-            formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            startingDay: 1
-        };
-
-        obj.dateOpen = function () {
-            obj.datePopup.opened = true;
-        };
-
-        obj.datePopup = {
-            opened: false
-        };
-    };
-    vm.order = {};
-    datepickerConf(vm.order);
-    vm.order.today();
+    vm.order = UtilityService.datepickerConf(vm.order);
     vm.order.orderDate = new Date();
 
     if (agentList) {
@@ -214,8 +187,9 @@ myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ng
         vm.addOrder = function () {
             var addOrderRequest = ApiService.addOrder(vm.order);
 
-            addOrderRequest.then(function () {
-                vm.order = UtilityService.clearForm(vm.order);
+            addOrderRequest.then(function (data) {
+                if(data)
+                    vm.order = UtilityService.clearForm(vm.order);
             })
         }
     }
@@ -315,6 +289,7 @@ myApp.controller('orderListCtrl', function (ApiService, NgTableParams, $state,ng
     };
 
     vm.edit = function (orderId) {
+        console.log(orderId);
         ngToast.dismiss();
         $state.go('addOrder', {'orderId': orderId});
     };
@@ -331,36 +306,12 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
         agent_id: '',
         amount: 0,
         date: '',
-        collector: '',
+        collector_name: '',
         "main_agent_id": "1"
     };
 
-    var datepickerConf = function (obj) {
-        obj.today = function () {
-            obj.date = new Date();
-        };
-
-        obj.clear = function () {
-            obj.Date = null;
-        };
-
-        obj.dateOptions = {
-            formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            startingDay: 1
-        };
-
-        obj.dateOpen = function () {
-            obj.datePopup.opened = true;
-        };
-
-        obj.datePopup = {
-            opened: false
-        };
-    };
     vm.aPayment = {};
-    datepickerConf(vm.aPayment);
+    vm.aPayment = UtilityService.datepickerConf(vm.aPayment);
     vm.aPayment.today();
     vm.aPayment.date = new Date();
 
@@ -375,25 +326,24 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
 
     if ($state.params.paymentId) {
         vm.title = "Edit Payments";
+        console.log($state.params.paymentId);
         var request = ApiService.getAgentPaymentById($state.params.paymentId);
         request.then(function (data) {
-            var payment = data;
-            vm.aPayment.id = payment.id;
-            vm.aPayment.agent_id = payment.agent_id;
-            vm.aPayment.amount = payment.amount;
-            vm.aPayment.collector = payment.collector;
+            vm.aPayment.id = data.id;
+            vm.aPayment.agent_id = data.agent_id;
+            vm.aPayment.amount = data.drAmount;
+            vm.aPayment.collector_name = data.collector;
         });
         vm.addAgentPayment = function () {
             var request = ApiService.updateAgentPayment(vm.aPayment.id, vm.aPayment);
             request.then(function () {
                 ngToast.dismiss();
-                $state.go('');
+                $state.go('agentPaymentList');
             });
         }
     } else {
         vm.title = "Add Agent Payment";
         vm.addAgentPayment = function () {
-            debugger;
             var request = ApiService.addAgentPayment(vm.aPayment);
 
             request.then(function () {
@@ -403,7 +353,6 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
     }
 
 });
-
 
 myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $state,ngToast) {
     var vm = this;
@@ -421,6 +370,7 @@ myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $s
     }
 
     vm.edit = function (paymentId) {
+        debugger;
         ngToast.dismiss();
         $state.go('addAgentPayment', {'paymentId': paymentId});
     };
@@ -430,60 +380,71 @@ myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $s
         $state.go('addAgentPayment');
     };
 
-
-    vm.loadPaymentlist = function () {
-        console.log(vm.payment.agent_id);
-        var payments = ApiService.getAgentPaymentListById(vm.payment.agent_id);
+    vm.loadPaymentList = function () {
+        var payments = ApiService.getAgentPaymentListByAgentId(vm.payment.agent_id);
         payments.then(function (data) {
-            console.log(data);
-            // vm.payment.paymentList = data;
-            // vm.tableParams = new NgTableParams({count: vm.data.length}, {counts: [], data: vm.data});
+            vm.payment.paymentList = data;
+            vm.tableParams = new NgTableParams({count: data.length}, {counts: [], data: data});
+        });
+    };
+
+    vm.delete = function (paymentId) {
+        var request = ApiService.deleteAgentPaymenById(paymentId);
+        request.then(function () {
+            vm.loadPaymentList();
         });
     };
 });
 
-myApp.controller('MainAccountsCtrl', function (ApiService, NgTableParams,ngToast) {
+myApp.controller('MainAccountsCtrl', function (ApiService, NgTableParams,UtilityService) {
     var vm = this;
     vm.test = 'test';
-    var mainAccounts = ApiService.getMainAccounts();
-    vm.tableParams = new NgTableParams({}, {
-        counts: [], getData: function () {
-            return mainAccounts.then(function (data) {
-                mainAccounts = data;
-                vm.data = mainAccounts;
-                return vm.data;
-            });
-        }
-    });
-    var datepickerConf = function (obj) {
-        obj.today = function () {
-            obj.date = new Date();
-        };
 
-        obj.clear = function () {
-            obj.Date = null;
-        };
-
-        obj.dateOptions = {
-            formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            startingDay: 1
-        };
-
-        obj.dateOpen = function () {
-            obj.datePopup.opened = true;
-        };
-
-        obj.datePopup = {
-            opened: false
-        };
-    };
     vm.filter = {
         from: {},
         to: {}
     };
-    datepickerConf(vm.filter.from);
-    datepickerConf(vm.filter.to);
+    vm.updateAccoutsList = function () {
+        var mainAccounts = ApiService.getMainAccountsByDate(UtilityService.yyyymmdd(vm.filter.from.date),UtilityService.yyyymmdd(vm.filter.to.date));
+        vm.tableParams = new NgTableParams({}, {
+            counts: [], getData: function () {
+                return mainAccounts.then(function (data) {
+                    mainAccounts = data;
+                    vm.data = mainAccounts;
+                    return vm.data;
+                });
+            }
+        });
+    };
+    vm.filter.from = UtilityService.datepickerConf(vm.filter.from);
+    vm.filter.to = UtilityService.datepickerConf(vm.filter.to);
 });
 
+myApp.controller('AgentAccountsCtrl', function(ApiService,UtilityService, NgTableParams) {
+    var vm = this;
+    vm.filter = {
+        agentId:'',
+        from:{},
+        to:{}
+    };
+    if (agentList) {
+        vm.agents = agentList;
+    } else {
+        var agents = ApiService.getAgentList();
+        agents.then(function(data) {
+            vm.agents = data;
+        });
+    }
+    vm.updateAccoutsList = function () {
+        var agentAccounts = ApiService.getAgentAccountsByDate(vm.filter.agentId,UtilityService.yyyymmdd(vm.filter.from.date),UtilityService.yyyymmdd(vm.filter.to.date));
+        vm.tableParams  = new NgTableParams({}, { counts: [], getData: function(){
+            return agentAccounts.then(function(data){
+                agentAccounts = data;
+                vm.data = agentAccounts;
+                return vm.data;
+            });
+        }});
+    };
+    vm.filter.from = UtilityService.datepickerConf(vm.filter.from);
+    vm.filter.to = UtilityService.datepickerConf(vm.filter.to);
+});
