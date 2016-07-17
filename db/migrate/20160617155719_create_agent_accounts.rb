@@ -13,6 +13,7 @@ class CreateAgentAccounts < ActiveRecord::Migration
       t.boolean :isNullified, null: false, default: false
       t.integer :currency_id, null: true, default: 1
       t.boolean :isPaid, null: false, default: false
+      t.string :collector, null: true
 
       # database and coding level
       t.string :guid, null: false

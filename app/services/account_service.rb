@@ -12,6 +12,7 @@ class AccountService
     # for cumulation value
     @lastMotherAc = MotherAccount.order(:id).last()
     @lastAgentAc = AgentAccount.where(agent_id: @motherToDelete.agent_id).order(:id).last()
+    @lastMostAgentAc = AgentAccount.order(:id).last()
 
     mother_account_params = {
         main_agent_id:1, agent_id:@motherToDelete.agent_id, drAmount:@motherToDelete.crAmount != nil ? @motherToDelete.crAmount : nil, crAmount:@motherToDelete.drAmount != nil ? @motherToDelete.drAmount : nil,
@@ -24,7 +25,8 @@ class AccountService
       if (@motherToDelete.update_attributes(isNullified:true, nullify_id: @mother.id, updated_by: 1, updated_at: Time.now))
         agent_account_params = {
             agent_id:@motherToDelete.agent_id, mother_ac_id:@mother.id, drAmount:@agentToDelete.crAmount != nil ? @agentToDelete.crAmount : nil, crAmount:@agentToDelete.drAmount != nil ? @agentToDelete.drAmount : nil,
-            cumulation:@agentToDelete.crAmount != nil ? @lastAgentAc.cumulation-@agentToDelete.crAmount : @lastAgentAc.cumulation+@agentToDelete.drAmount,
+            agent_cumulation:@agentToDelete.crAmount != nil ? @lastAgentAc.agent_cumulation-@agentToDelete.crAmount : @lastAgentAc.agent_cumulation+@agentToDelete.drAmount,
+            cumulation:@agentToDelete.crAmount != nil ? @lastMostAgentAc.cumulation-@agentToDelete.crAmount : @lastMostAgentAc.cumulation+@agentToDelete.drAmount,
             date:DateTime.now, nullify_id:@agentToDelete.id, isNullified:true, guid:SecureRandom.uuid, created_by:1
         }
         @agent = AgentAccount.new(agent_account_params)
@@ -62,6 +64,7 @@ class AccountService
   def create_mother_ac(id_agent, id_order, var_order_amount, var_exchange_rate)
     @lastMotherAc = MotherAccount.order(:id).last()
     @lastAgentAc = AgentAccount.where(agent_id: id_agent).order(:id).last()
+    @lastMostAgentAc = AgentAccount.order(:id).last()
 
     # params.fetch(:requestdata, add_account_params)
     mother_account_params = {
@@ -75,7 +78,8 @@ class AccountService
       # save on agent's account
       agent_account_params = {
           agent_id:id_agent, mother_ac_id:@mother.id, drAmount:nil, crAmount:var_order_amount*var_exchange_rate,
-          cumulation:@lastAgentAc != nil ? @lastAgentAc.cumulation+var_order_amount*var_exchange_rate : var_order_amount*var_exchange_rate,
+          agent_cumulation:@lastAgentAc != nil ? @lastAgentAc.agent_cumulation+var_order_amount*var_exchange_rate : var_order_amount*var_exchange_rate,
+          cumulation:@lastMostAgentAc != nil ? @lastMostAgentAc.cumulation+var_order_amount*var_exchange_rate : var_order_amount*var_exchange_rate,
           date:DateTime.now, nullify_id:nil, isNullified:false, guid:SecureRandom.uuid, created_by:1
       }
       @agent = AgentAccount.new(agent_account_params)
@@ -94,6 +98,7 @@ class AccountService
   def create_agent_ac(viewData, paid_by_agent)
     @lastMotherAc = MotherAccount.order(:id).last()
     @lastAgentAc = AgentAccount.where(agent_id: viewData[:agent_id]).order(:id).last()
+    @lastMostAgentAc = AgentAccount.order(:id).last()
 
     mother_account_params = {
         main_agent_id:1, agent_id:viewData[:agent_id], drAmount:nil, crAmount:viewData[:amount],
@@ -106,8 +111,9 @@ class AccountService
       # save on agent's account
       agent_account_params = {
           agent_id:viewData[:agent_id], mother_ac_id:@mother.id, drAmount:viewData[:amount], crAmount:nil,
-          cumulation:@lastAgentAc != nil ? @lastAgentAc.cumulation-viewData[:amount] : viewData[:amount]*(-1),
-          date:DateTime.now, nullify_id:nil, isNullified:false, isPaid:paid_by_agent, guid:SecureRandom.uuid, created_by:1
+          agent_cumulation:@lastAgentAc != nil ? @lastAgentAc.agent_cumulation-viewData[:amount] : viewData[:amount]*(-1),
+          cumulation:@lastMostAgentAc != nil ? @lastMostAgentAc.cumulation-viewData[:amount] : viewData[:amount]*(-1),
+          date:DateTime.now, nullify_id:nil, isNullified:false, isPaid:paid_by_agent, collector:viewData[:collector_name], guid:SecureRandom.uuid, created_by:1
       }
       @agent = AgentAccount.new(agent_account_params)
 
@@ -125,6 +131,7 @@ class AccountService
   def nullify_agent_ac(ac_agent_id)
     @agentToDelete = AgentAccount.find(ac_agent_id)
     @motherToDelete = MotherAccount.find(@agentToDelete.mother_ac_id)
+    @lastMostAgentAc = AgentAccount.order(:id).last()
 
     if (@agentToDelete.isNullified == true || @motherToDelete.isNullified == true || @agentToDelete.crAmount != @motherToDelete.drAmount || @agentToDelete.drAmount != @motherToDelete.crAmount)
       return false
@@ -145,7 +152,8 @@ class AccountService
       if (@motherToDelete.update_attributes(isNullified:true, nullify_id:@mother.id, updated_by:1, updated_at:Time.now))
         agent_account_params = {
             agent_id:@motherToDelete.agent_id, mother_ac_id:@mother.id, drAmount:@agentToDelete.crAmount != nil ? @agentToDelete.crAmount : nil, crAmount:@agentToDelete.drAmount != nil ? @agentToDelete.drAmount : nil,
-            cumulation:@agentToDelete.crAmount != nil ? @lastAgentAc.cumulation-@agentToDelete.crAmount : @lastAgentAc.cumulation+@agentToDelete.drAmount,
+            agent_cumulation:@agentToDelete.crAmount != nil ? @lastAgentAc.agent_cumulation-@agentToDelete.crAmount : @lastAgentAc.agent_cumulation+@agentToDelete.drAmount,
+            cumulation:@agentToDelete.crAmount != nil ? @lastMostAgentAc.cumulation-@agentToDelete.crAmount : @lastMostAgentAc.cumulation+@agentToDelete.drAmount,
             date:DateTime.now, nullify_id:@agentToDelete.id, isNullified:true, guid:SecureRandom.uuid, created_by:1
         }
         @agent = AgentAccount.new(agent_account_params)

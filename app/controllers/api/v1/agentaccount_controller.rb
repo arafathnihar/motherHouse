@@ -63,6 +63,6 @@ class Api::V1::AgentaccountController < ApplicationController
   end
 
   def this_params
-    params.fetch(:requestdata, {}).permit(:agent_id, :amount, :date)
+    params.fetch(:requestdata, {}).permit(:agent_id, :amount, :date, :collector_name)
   end
 end
