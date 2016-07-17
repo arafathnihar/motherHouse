@@ -1,19 +1,12 @@
 class Api::V1::MotheraccountController < ApplicationController
 
-  before_action :get_motheraccount, except: [:index, :nullify]
+  before_action except: [:index, :nullify]
   respond_to :json
 
   def index
     @thispara = MotherAccount.where(status: 1)
 
     render json: @thispara.as_json(include: [:main_agent, :agent]), status: :ok
-  end
-
-  private
-
-  def get_motheraccount
-    @thispara = MotherAccount.find(params[:id])
-    render json: {status: :not_found} unless @thispara
   end
 
 end
