@@ -30,7 +30,7 @@ class Api::V1::AgentaccountController < ApplicationController
   end
 
   def show
-    @thispara = AgentAccount.where(isNullified: false).find(params[:id])
+    @thispara = AgentAccount.where({isNullified: false, agent_id: params[:agentId]}).find(params[:id])
     render json: @thispara.as_json(include: [:mother_account, :agent]), status: :ok
   end
 
