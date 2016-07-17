@@ -50,7 +50,7 @@ myApp.controller('AddAgentCtrl', function (ApiService, $state, UtilityService,ng
 
 });
 
-myApp.controller('AddReceivingAgentCtrl', function (ApiService, $state,ngToast) {
+myApp.controller('AddReceivingAgentCtrl', function (ApiService, $state, UtilityService,ngToast) {
     var vm = this;
     if (!countries) {
         var countryRequest = ApiService.getCountries();
@@ -98,7 +98,7 @@ myApp.controller('AddReceivingAgentCtrl', function (ApiService, $state,ngToast) 
     }
 });
 
-myApp.controller('AddOrderCtrl', function (ApiService, $state,ngToast) {
+myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ngToast) {
     var vm = this;
     vm.order = {
         customId: '',
@@ -325,13 +325,44 @@ myApp.controller('orderListCtrl', function (ApiService, NgTableParams, $state,ng
     }
 });
 
-myApp.controller('AddAgentPaymentCtrl', function (ApiService,ngToast) {
+myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilityService,ngToast) {
     var vm = this;
     vm.aPayment = {
         agent_id: '',
-        drAmount: 0,
+        amount: 0,
+        date: '',
+        collector: '',
         "main_agent_id": "1"
     };
+
+    var datepickerConf = function (obj) {
+        obj.today = function () {
+            obj.date = new Date();
+        };
+
+        obj.clear = function () {
+            obj.Date = null;
+        };
+
+        obj.dateOptions = {
+            formatYear: 'yy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(),
+            startingDay: 1
+        };
+
+        obj.dateOpen = function () {
+            obj.datePopup.opened = true;
+        };
+
+        obj.datePopup = {
+            opened: false
+        };
+    };
+    vm.aPayment = {};
+    datepickerConf(vm.aPayment);
+    vm.aPayment.today();
+    vm.aPayment.date = new Date();
 
     if (agentList) {
         vm.agents = agentList;
@@ -342,14 +373,73 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService,ngToast) {
         });
     }
 
-    vm.title = "Add Agent Payment";
-    vm.addAgentPayment = function () {
-        var addAgentPaymentRequest = ApiService.addAgentPayment(vm.aPayment);
-        addAgentPaymentRequest.then(function (data) {
+    if ($state.params.paymentId) {
+        vm.title = "Edit Payments";
+        var request = ApiService.getAgentPaymentById($state.params.paymentId);
+        request.then(function (data) {
+            var payment = data;
+            vm.aPayment.id = payment.id;
+            vm.aPayment.agent_id = payment.agent_id;
+            vm.aPayment.amount = payment.amount;
+            vm.aPayment.collector = payment.collector;
+        });
+        vm.addAgentPayment = function () {
+            var request = ApiService.updateAgentPayment(vm.aPayment.id, vm.aPayment);
+            request.then(function () {
+                ngToast.dismiss();
+                $state.go('');
+            });
+        }
+    } else {
+        vm.title = "Add Agent Payment";
+        vm.addAgentPayment = function () {
+            debugger;
+            var request = ApiService.addAgentPayment(vm.aPayment);
 
-        })
+            request.then(function () {
+                vm.aPayment = UtilityService.clearForm(vm.aPayment);
+            })
+        }
     }
 
+});
+
+
+myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $state,ngToast) {
+    var vm = this;
+    vm.payment = {
+        agent_id:"",
+        paymentList:""
+    }
+    if (agentList) {
+        vm.agents = agentList;
+    } else {
+        var agents = ApiService.getAgentList();
+        agents.then(function (data) {
+            vm.agents = data;
+        });
+    }
+
+    vm.edit = function (paymentId) {
+        ngToast.dismiss();
+        $state.go('addAgentPayment', {'paymentId': paymentId});
+    };
+
+    vm.addAgentPayment = function () {
+        ngToast.dismiss();
+        $state.go('addAgentPayment');
+    };
+
+
+    vm.loadPaymentlist = function () {
+        console.log(vm.payment.agent_id);
+        var payments = ApiService.getAgentPaymentListById(vm.payment.agent_id);
+        payments.then(function (data) {
+            console.log(data);
+            // vm.payment.paymentList = data;
+            // vm.tableParams = new NgTableParams({count: vm.data.length}, {counts: [], data: vm.data});
+        });
+    };
 });
 
 myApp.controller('MainAccountsCtrl', function (ApiService, NgTableParams,ngToast) {

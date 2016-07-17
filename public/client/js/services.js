@@ -23,7 +23,7 @@ myApp.factory('ApiService', function (WebService, UtilityService) {
             return WebService.callWebService(orderListReqestObject);
         },
         getMainAccounts: function () {
-            var mainAccountsReqestObject = UtilityService.createRequestObject('GET', 'https://jsonblob.com/api/5789a4aee4b0dc55a4e4fb6f');
+            var mainAccountsReqestObject = UtilityService.createRequestObject('GET', '/api/v1/motheraccount');
             return WebService.callWebService(mainAccountsReqestObject);
         },
         getAgentById: function (agentId) {
@@ -75,10 +75,23 @@ myApp.factory('ApiService', function (WebService, UtilityService) {
             return WebService.callWebService(requestObject);
         },
         addAgentPayment: function (payment) {
+            debugger;
             var addAgentPaymentRequestObject = UtilityService.createRequestObject('POST', '/api/v1/agentaccount', payment);
             return WebService.callWebService(addAgentPaymentRequestObject);
 
-        }
+        },
+        updateAgentPayment: function (paymentId, payment) {
+            var requestObject = UtilityService.createRequestObject('PUT', '/api/v1/agentaccount/' + paymentId, payment);
+            return WebService.callWebService(requestObject);
+        },
+        getAgentPaymentById: function (paymentId) {
+            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + paymentId);
+            return WebService.callWebService(requestObject);
+        },
+        getAgentPaymentListById: function (agentId) {
+            var agentPaymentListReqestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + agentId);
+            return WebService.callWebService(agentPaymentListReqestObject);
+        },
     }
 });
 

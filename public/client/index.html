@@ -46,17 +46,28 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a ui-sref="addOrder">Add Order</a></li>
                     <li><a ui-sref="orderList">View Orders</a></li>
-                    <li><a ui-sref="addAgentPayment">Add Payments</a></li>
-                    <li><a ui-sref="agentPaymentList">View Payments</a></li>
-                    <li><a ui-sref="mainAccounts">Accounts</a></li>
+                    <li uib-dropdown>
+                        <a href="#" uib-dropdown-toggle>Payment <span class="caret"></span></a>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li><a ui-sref="addAgentPayment">Add Payments</a></li>
+                            <li><a ui-sref="agentPaymentList">View Payments</a></li>
+                        </ul>
+                    </li>
+                    <li uib-dropdown>
+                        <a href="#" uib-dropdown-toggle>Account <span class="caret"></span></a>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li><a ui-sref="mainAccounts">Motherhouse Account</a></li>
+                            <li><a ui-sref="agentAccounts">Agent Account</a></li>
+                        </ul>
+                    </li>
                     <li uib-dropdown>
                         <a href="#" uib-dropdown-toggle>Agent <span class="caret"></span></a>
-                      <ul class="dropdown-menu" uib-dropdown-menu>
-                        <li><a ui-sref="addAgent">Add Agent</a></li>
-                        <li><a ui-sref="agentList">View Agents</a></li>
-                        <li><a ui-sref="addReceivingAgent">Add Receiving Agent</a></li>
-                        <li><a ui-sref="receivingAgentList">View Receiving Agents</a></li>
-                      </ul>
+                          <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li><a ui-sref="addAgent">Add Agent</a></li>
+                            <li><a ui-sref="agentList">View Agents</a></li>
+                            <li><a ui-sref="addReceivingAgent">Add Receiving Agent</a></li>
+                            <li><a ui-sref="receivingAgentList">View Receiving Agents</a></li>
+                          </ul>
                     </li>
                 </ul>
             </div>

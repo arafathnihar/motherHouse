@@ -35,8 +35,13 @@ myApp.config(function ($stateProvider, $urlRouterProvider, ngToastProvider) {
             url: "/mainAccounts",
             templateUrl: '/client/templates/mainAccounts.html'
         })
+        .state('agentAccounts', {
+            url: "/agentAccounts",
+            templateUrl: '/client/templates/agentAccounts.html'
+        })
         .state('addAgentPayment', {
-            url: "/addAgentPayment/",
+            url: "/addAgentPayment/:paymentId",
+            params: {paymentId: undefined},
             templateUrl: '/client/templates/addAgentPayment.html'
         })
         .state('agentPaymentList', {
