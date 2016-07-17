@@ -1,6 +1,6 @@
 class Api::V1::AgentsController < ApplicationController
 
-  before_action except: [:index, :create]
+  before_action :get_agent, except: [:index, :create]
   respond_to :html, :json
 
   def index

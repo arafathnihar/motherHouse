@@ -1,6 +1,6 @@
 class Api::V1::AgentaccountController < ApplicationController
 
-  before_action except: [:index, :create, :nullify]
+  before_action :get_agentaccount, except: [:index, :create, :nullify]
   respond_to :json
 
   def index
