@@ -22,8 +22,14 @@ myApp.factory('ApiService', function (WebService, UtilityService) {
             var orderListReqestObject = UtilityService.createRequestObject('GET', '/api/v1/orders');
             return WebService.callWebService(orderListReqestObject);
         },
-        getMainAccounts: function () {
-            var mainAccountsReqestObject = UtilityService.createRequestObject('GET', '/api/v1/motheraccount');
+        getMainAccountsByDate: function (fromDate , toDate) {
+            var mainAccountsReqestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + fromDate +'/'+ toDate);
+            // console.log(mainAccountsReqestObject);
+            return WebService.callWebService(mainAccountsReqestObject);
+        },
+        getAgentAccountsByDate: function (agentId,fromDate,toDate) {
+            var mainAccountsReqestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' +agentId+'/'+ fromDate +'/'+ toDate);
+            // console.log(mainAccountsReqestObject);
             return WebService.callWebService(mainAccountsReqestObject);
         },
         getAgentById: function (agentId) {
@@ -150,6 +156,35 @@ myApp.factory('UtilityService', function (ngToast, blockUI) {
                 obj[option] = '';
             });
             return obj;
+        },
+        yyyymmdd: function (date) {
+            return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+        },
+        datepickerConf : function (obj) {
+            obj.today = function () {
+                obj.date = new Date();
+            };
+
+            obj.clear = function () {
+                obj.Date = null;
+            };
+
+            obj.dateOptions = {
+                formatYear: 'yy',
+                maxDate: new Date(2020, 12, 31),
+                minDate: new Date(1980,01,01),
+                startingDay: 1
+            };
+
+            obj.dateOpen = function () {
+                obj.datePopup.opened = true;
+            };
+
+            obj.datePopup = {
+                opened: false
+            };
+            return obj;
         }
+
     }
 });

@@ -10,6 +10,7 @@ class CreateReceivingAgents < ActiveRecord::Migration
 
       # database and coding level
       t.string :guid, null: false
+      t.integer :status, null: false, default: 1 # default: not deleted
       t.integer :created_by, null: false
       t.integer :updated_by, null: true
 
