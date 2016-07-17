@@ -6,10 +6,10 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :agent_id, null: false
       t.integer :receiving_agent_id, null: false
       t.integer :receiver_id, null: false
-      t.decimal :orderAmount, null: false # amount to be supplied
+      t.decimal :orderAmount, null: false, :precision => 16, :scale => 2 # amount to be supplied
       t.integer :order_curr_id, null: false # currency of amount to be supplied
       t.integer :supply_curr_id, null: false # currency in which to make the supply
-      t.decimal :exchangeRate, null: false # exchange rate of currency to be supplied
+      t.decimal :exchangeRate, null: false, :precision => 16, :scale => 2 # exchange rate of currency to be supplied
       t.datetime :orderDate, null: false
       t.integer :orderStatus, null: false, default: 1 # order status # default, not supplied
       #t.datetime :suppliedDate, null: false

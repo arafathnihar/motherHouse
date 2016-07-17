@@ -1,6 +1,6 @@
 class Api::V1::MotherhouseController < ApplicationController
 
-  before_action except: [:index, :create]
+  before_action :get_motherhouse, except: [:index, :create]
   respond_to :json
 
   def index
@@ -40,6 +40,11 @@ class Api::V1::MotherhouseController < ApplicationController
     @thispara = MainAgent.find(params[:id])
     @thispara.update_attributes(status:2, updated_by:1, updated_at:Time.now)
     render json: { message: "Success" }, status: :ok
+  end
+
+  def get_motherhouse
+    @thispara = MainAgent.find(params[:id])
+    render json: {status: :not_found} unless @thispara
   end
 
   def this_params

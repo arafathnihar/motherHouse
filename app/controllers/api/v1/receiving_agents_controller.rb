@@ -1,6 +1,6 @@
 class Api::V1::ReceivingAgentsController < ApplicationController
 
-  before_action except: [:index, :create]
+  before_action :get_receiving_agent, except: [:index, :create]
   respond_to :json
 
   def index
@@ -40,6 +40,11 @@ class Api::V1::ReceivingAgentsController < ApplicationController
     @receivingAgent = ReceivingAgent.find(params[:id])
     @receivingAgent.update_attributes(status:2, updated_by:1, updated_at:Time.now)
     render json: { message: "Success" }, status: :ok
+  end
+
+  def get_receiving_agent
+    @receivingAgent = ReceivingAgent.find(params[:id])
+    render json: {status: :not_found} unless @receivingAgent
   end
 
   def data_params

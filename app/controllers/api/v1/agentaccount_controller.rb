@@ -1,6 +1,6 @@
 class Api::V1::AgentaccountController < ApplicationController
 
-  before_action except: [:index, :create, :nullify]
+  before_action :get_agentaccount, except: [:index, :create, :nullify]
   respond_to :json
 
   def index
@@ -54,6 +54,11 @@ class Api::V1::AgentaccountController < ApplicationController
     else
       render json: { message: "Failed" }, status: :unprocessable_entity
     end
+  end
+
+  def get_agentaccount
+    @thispara = AgentAccount.find(params[:id])
+    render json: {status: :not_found} unless @thispara
   end
 
   def this_params

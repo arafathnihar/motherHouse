@@ -1,6 +1,6 @@
 class Api::V1::AgentsController < ApplicationController
 
-  before_action except: [:index, :create]
+  before_action :get_agent, except: [:index, :create]
   respond_to :html, :json
 
   def index
@@ -39,6 +39,11 @@ class Api::V1::AgentsController < ApplicationController
     @thispara = Agent.find(params[:id])
     @thispara.update_attributes(status:2, updated_by:1, updated_at:Time.now)
     render json: { message: "Success" }, status: :ok
+  end
+
+  def get_agent
+    @thispara = Agent.find(params[:id])
+    render json: {status: :not_found} unless @thispara
   end
 
   def this_params

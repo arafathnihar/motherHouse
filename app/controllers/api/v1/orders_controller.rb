@@ -1,7 +1,7 @@
 class Api::V1::OrdersController < ApplicationController
 
   # before_action :authenticate
-  before_action except: [:index, :create]
+  before_action :get_orders, except: [:index, :create]
   respond_to :json
 
   def index
@@ -104,6 +104,11 @@ class Api::V1::OrdersController < ApplicationController
     else
       render json: @thispara.errors, status: :unprocessable_entity
     end
+  end
+
+  def get_orders
+    @thispara = Order.find(params[:id])
+    render json: {status: :not_found} unless @thispara
   end
 
   def params_orders
