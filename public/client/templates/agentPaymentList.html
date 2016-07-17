@@ -1,0 +1,56 @@
+<div ng-controller="AgentPaymentListCtrl as vm">
+    <div class="row">
+        <div class="col-md-12">
+
+            <button type="button" class="btn btn-success" ng-click="vm.addReceivingAgent()">Add Payments</button>
+
+            </br></br>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Agent Payments
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group col-md-2">
+                            <label>Agent</label>
+                            <select class="form-control" ng-model="vm.payment.agent_id" ng-options="option.id as option.customId + '-' + option.name for option in vm.agents" ng-change="vm.loadPaymentlist()"></select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="true">
+                    <colgroup>
+                        <col width="15%" />
+                        <col width="15%" />
+                        <col width="15%" />
+                        <col width="10%" />
+                    </colgroup>
+                    <tr ng-repeat="aPayment in $data">
+                        <td title="'Agent Number'">
+                            {{aPayment.agent.customId}}
+                        </td>
+                        <td title="'Payment Amount'" filter="{ drAmount: 'text'}">
+                            {{aPayment.drAmount | number}}
+                        </td>
+                        <td title="'Payment Date'" filter="{ date: 'text'}">
+                            {{aPayment.date | date: 'yyyy-MM-dd'}}
+                        </td>
+                        <td title="'Collector Name'" filter="{ collector: 'text'}">
+                            {{aPayment.collector}}
+                        </td>
+                        <td>
+                            <button class="btn btn-default btn-sm" ng-click="vm.edit(aPayment.id)"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button class="btn btn-danger btn-sm" ng-click="vm.delete(aPayment.id)"><span class="glyphicon glyphicon-trash"></span></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

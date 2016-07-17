@@ -1,13 +1,16 @@
-<div ng-controller="MainAccountsCtrl as vm">
+<div ng-controller="AgentAccountsCtrl as vm">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <toast></toast>
                 <div class="panel-heading">
-                    Mother House Account Details
+                    Agent Account Details
                 </div>
                 <div class="panel-body">
                     <form>
+                        <div class="form-group col-md-2">
+                            <label>Agent</label>
+                            <select class="form-control" ng-model="vm.order.agent_id" ng-options="option.id as option.customId"></select>
+                        </div>
                         <div class="form-group col-md-4">
                             <label>From</label>
                             <div class="input-group">
@@ -37,20 +40,18 @@
                         <div class="form-group col-md-2">
                             <label>&nbsp</label>
                             <div class="input-group">
-                            <button ng-click="" class="btn btn-primary pull-right">Filter</button>
-                                </div>
+                                <button ng-click="vm.addAgent()" class="btn btn-primary pull-right">Filter</button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel">
-                <div class="panel-heading">
-
-                </div>
                 <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="false">
                     <colgroup>
                         <col width="10%"/>
@@ -60,11 +61,11 @@
                         <col width="20%"/>
                     </colgroup>
                     <tr ng-repeat="accounts in $data">
-                        <td title="'Date'" align="center">
+                        <td title="'Agent Name'" align="center">
                             {{accounts.date| date: 'yyyy-MM-dd'}}
                         </td>
-                        <td title="'Agent'">
-                            {{accounts.agent.customId + ' - ' + accounts.agent.name}}
+                        <td title="'Agent ID'">
+                            {{accounts.agent_id}}
                         </td>
                         <td title="'Debit Amount'" align="right">
                             {{accounts.drAmount| number}}
