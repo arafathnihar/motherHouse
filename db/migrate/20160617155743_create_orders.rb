@@ -35,5 +35,8 @@ class CreateOrders < ActiveRecord::Migration
 
     add_foreign_key :orders, :users, column: :created_by
     add_foreign_key :orders, :users, column: :updated_by
+
+    # this foreign key adds to mother_accounts table
+    add_foreign_key :mother_accounts, :orders, column: :order_id
   end
 end

@@ -27,10 +27,18 @@ class Api::V1::OrdersController < ApplicationController
 
       # begin
       if @thispara2.save
-        render json: combine_request(@thispara, @thispara2).as_json, status: :ok
+        # create account record
+        if (AccountService.new().create_mother_ac(@thispara2.agent_id, @thispara2.id, @thispara2.orderAmount, @thispara2.exchangeRate, @thispara2.orderDate))
+          # render json: { message: "Success" }, status: :ok
+          render json: combine_request(@thispara, @thispara2).as_json, status: :ok
+        else # rollback code here
+          rollback(Order, @thispara2.id)
+          rollback(Receiver, @thispara.id)
+          render json: { errors2: @mother.errors }, status: :unprocessable_entity
+        end
       else #rescue Exception => exc1
         #roll back
-        rollback(@thispara.id)
+        rollback(Receiver, @thispara.id)
         render json: { errors1: @thispara2.errors }, status: :unprocessable_entity
       end
     else #rescue Exception => exc2
@@ -50,9 +58,20 @@ class Api::V1::OrdersController < ApplicationController
       @thispara2 = Receiver.find(@thispara.receiver_id)
 
       if @thispara2.update_attributes(params_receivers.merge(updated_by: 1, updated_at:Time.now))
-        render json: combine_request(@thispara, @thispara2).as_json, status: :ok
+        if (AccountService.new().nullify_mother_ac(params[:id]))
+          if (AccountService.new().create_mother_ac(@thispara.agent_id, @thispara.id, @thispara.orderAmount, @thispara.exchangeRate, @thispara.orderDate))
+            render json: combine_request(@thispara, @thispara2).as_json, status: :ok
+          else
+            # rollback
+            render json: { message: "Failed" }, status: :unprocessable_entity
+          end
+        else
+          # rollback
+          render json: { message: "Failed" }, status: :unprocessable_entity
+        end
       else
-        render json: @thispara.as_json, status: :ok
+        # rollback
+        render json: { errors: @thispara2.errors }, status: :unprocessable_entity
       end
 
     else
@@ -60,18 +79,30 @@ class Api::V1::OrdersController < ApplicationController
     end
   end
 
-  def destroy
+  def destroy # try to return true false
     @thispara = Order.find(params[:id])
-    @thispara.destroy
+    @thispara2 = Receiver.find(@thispara.receiver_id)
 
-    @thispara = Receiver.find(@thispara.receiver_id)
-    @thispara.destroy
-
-    render json: {status: :ok}
+    if (@thispara.update_attributes(status:2, updated_by:1, updated_at:Time.now))
+      if (@thispara2.update_attributes(status:2, updated_by:1, updated_at:Time.now))
+        if (AccountService.new().nullify_mother_ac(params[:id]))
+          render json: { message: "Success" }, status: :ok
+        else
+          @thispara.update_attributes(status:1, updated_by:nil, updated_at:nil)
+          @thispara2.update_attributes(status:1, updated_by:nil, updated_at:nil)
+        end
+      else
+        @thispara.update_attributes(status:1, updated_by:nil, updated_at:nil)
+        render json: @thispara.errors, status: :unprocessable_entity
+      end
+    else
+      render json: @thispara.errors, status: :unprocessable_entity
+    end
   end
 
-  def rollback(receiver_id)
-    @thispara = Receiver.find(receiver_id)
+  # put into common controller
+  def rollback(model, record_id)
+    @thispara = model.find(record_id)
     @thispara.destroy
   end
 

@@ -516,3 +516,84 @@ Agent.create(
     guid: SecureRandom.uuid,
     created_by: 1
 )
+
+# tempory
+
+Agent.create(
+    customId: 'AG0001',
+    main_agent_id: 1,
+    name: 'John Targarian',
+    contact: '0111234568',
+    country_id: 56,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
+
+Agent.create(
+    customId: 'AG0002',
+    main_agent_id: 1,
+    name: 'Sansa Stark',
+    contact: '0111234569',
+    country_id: 36,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
+
+Agent.create(
+    customId: 'AG0003',
+    main_agent_id: 1,
+    name: 'Tiffany Alvord',
+    contact: '0111234570',
+    country_id: 115,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
+
+Agent.create(
+    customId: 'AG0004',
+    main_agent_id: 1,
+    name: 'Jayanath Balasubramaniam',
+    contact: '0111234571',
+    country_id: 125,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
+
+
+
+ReceivingAgent.create(
+    main_agent_id: 1,
+    customId: 'RA0001',
+    name: 'Shivanesan Arafath',
+    contact: '0111234577',
+    country_id: 115,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
+
+ReceivingAgent.create(
+    main_agent_id: 1,
+    customId: 'RA0002',
+    name: 'Misba Ul Haq',
+    contact: '0111234578',
+    country_id: 15,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)
+
+ReceivingAgent.create(
+    main_agent_id: 1,
+    customId: 'RA0003',
+    name: 'Andrew Symonds',
+    contact: '0111234579',
+    country_id: 13,
+
+    guid: SecureRandom.uuid,
+    created_by: 1
+)

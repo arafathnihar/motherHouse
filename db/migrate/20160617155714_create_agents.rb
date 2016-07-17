@@ -24,5 +24,8 @@ class CreateAgents < ActiveRecord::Migration
 
     add_foreign_key :agents, :users, column: :created_by
     add_foreign_key :agents, :users, column: :updated_by
+
+    # this foreign key adds to mother_accounts table
+    add_foreign_key :mother_accounts, :agents, column: :agent_id
   end
 end
