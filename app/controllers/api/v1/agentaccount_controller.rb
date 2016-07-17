@@ -4,13 +4,13 @@ class Api::V1::AgentaccountController < ApplicationController
   respond_to :json
 
   def index
-    @thispara = AgentAccount.where(isNullified: false).where('date >= ?', params[:fromDate]).where('date <= ?', params[:toDate])
+    @thispara = AgentAccount.where('date >= ?', params[:fromDate]).where('date <= ?', params[:toDate])
 
     render json: @thispara.as_json(include: [:mother_account, :agent]), status: :ok
   end
 
   def agent_index
-    @agentFilter = AgentAccount.where({agent_id: params[:id], isNullified: false}).where('date >= ?', params[:fromDate]).where('date <= ?', params[:toDate])
+    @agentFilter = AgentAccount.where({agent_id: params[:id]}).where('date >= ?', params[:fromDate]).where('date <= ?', params[:toDate])
 
     render json: @agentFilter.as_json(include: [:mother_account, :agent]), status: :ok
   end
