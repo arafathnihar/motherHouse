@@ -61,7 +61,7 @@ class AccountService
     end
   end
 
-  def create_mother_ac(id_agent, id_order, var_order_amount, var_exchange_rate)
+  def create_mother_ac(id_agent, id_order, var_order_amount, var_exchange_rate, order_date)
     @lastMotherAc = MotherAccount.order(:id).last()
     @lastAgentAc = AgentAccount.where(agent_id: id_agent).order(:id).last()
     @lastMostAgentAc = AgentAccount.order(:id).last()
@@ -70,7 +70,7 @@ class AccountService
     mother_account_params = {
         main_agent_id:1, agent_id:id_agent, order_id:id_order, drAmount:var_order_amount*var_exchange_rate, crAmount:nil,
         cumulation:@lastMotherAc != nil ? @lastMotherAc.cumulation+var_order_amount*var_exchange_rate : var_order_amount*var_exchange_rate,
-        date:DateTime.now, nullify_id:nil, isNullified:false, guid:SecureRandom.uuid, created_by:1
+        date:order_date != nil ? order_date : DateTime.now, nullify_id:nil, isNullified:false, guid:SecureRandom.uuid, created_by:1
     }
     @mother = MotherAccount.new(mother_account_params)
 
@@ -80,7 +80,7 @@ class AccountService
           agent_id:id_agent, mother_ac_id:@mother.id, drAmount:nil, crAmount:var_order_amount*var_exchange_rate,
           agent_cumulation:@lastAgentAc != nil ? @lastAgentAc.agent_cumulation+var_order_amount*var_exchange_rate : var_order_amount*var_exchange_rate,
           cumulation:@lastMostAgentAc != nil ? @lastMostAgentAc.cumulation+var_order_amount*var_exchange_rate : var_order_amount*var_exchange_rate,
-          date:DateTime.now, nullify_id:nil, isNullified:false, guid:SecureRandom.uuid, created_by:1
+          date:order_date != nil ? order_date : DateTime.now, nullify_id:nil, isNullified:false, guid:SecureRandom.uuid, created_by:1
       }
       @agent = AgentAccount.new(agent_account_params)
 
@@ -103,7 +103,7 @@ class AccountService
     mother_account_params = {
         main_agent_id:1, agent_id:viewData[:agent_id], drAmount:nil, crAmount:viewData[:amount],
         cumulation:@lastMotherAc != nil ? @lastMotherAc.cumulation-viewData[:amount] : viewData[:amount]*(-1),
-        date:DateTime.now, nullify_id:nil, isNullified:false, guid:SecureRandom.uuid, created_by:1
+        date:viewData[:date] != nil ? viewData[:date] : DateTime.now, nullify_id:nil, isNullified:false, guid:SecureRandom.uuid, created_by:1
     }
     @mother = MotherAccount.new(mother_account_params)
 
@@ -113,7 +113,7 @@ class AccountService
           agent_id:viewData[:agent_id], mother_ac_id:@mother.id, drAmount:viewData[:amount], crAmount:nil,
           agent_cumulation:@lastAgentAc != nil ? @lastAgentAc.agent_cumulation-viewData[:amount] : viewData[:amount]*(-1),
           cumulation:@lastMostAgentAc != nil ? @lastMostAgentAc.cumulation-viewData[:amount] : viewData[:amount]*(-1),
-          date:DateTime.now, nullify_id:nil, isNullified:false, isPaid:paid_by_agent, collector:viewData[:collector_name], guid:SecureRandom.uuid, created_by:1
+          date:viewData[:date] != nil ? viewData[:date] : DateTime.now, nullify_id:nil, isNullified:false, isPaid:paid_by_agent, collector:viewData[:collector_name], guid:SecureRandom.uuid, created_by:1
       }
       @agent = AgentAccount.new(agent_account_params)
 

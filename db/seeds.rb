@@ -522,7 +522,7 @@ Agent.create(
 Agent.create(
     customId: 'AG0001',
     main_agent_id: 1,
-    name: 'Honda Hornet',
+    name: 'John Targarian',
     contact: '0111234568',
     country_id: 56,
 
@@ -533,7 +533,7 @@ Agent.create(
 Agent.create(
     customId: 'AG0002',
     main_agent_id: 1,
-    name: 'Honda Hornet',
+    name: 'Sansa Stark',
     contact: '0111234569',
     country_id: 36,
 
@@ -544,7 +544,7 @@ Agent.create(
 Agent.create(
     customId: 'AG0003',
     main_agent_id: 1,
-    name: 'Honda Hornet',
+    name: 'Tiffany Alvord',
     contact: '0111234570',
     country_id: 115,
 

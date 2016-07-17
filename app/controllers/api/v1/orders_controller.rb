@@ -28,7 +28,7 @@ class Api::V1::OrdersController < ApplicationController
       # begin
       if @thispara2.save
         # create account record
-        if (AccountService.new().create_mother_ac(@thispara2.agent_id, @thispara2.id, @thispara2.orderAmount, @thispara2.exchangeRate))
+        if (AccountService.new().create_mother_ac(@thispara2.agent_id, @thispara2.id, @thispara2.orderAmount, @thispara2.exchangeRate, @thispara2.orderDate))
           # render json: { message: "Success" }, status: :ok
           render json: combine_request(@thispara, @thispara2).as_json, status: :ok
         else # rollback code here
@@ -59,7 +59,7 @@ class Api::V1::OrdersController < ApplicationController
 
       if @thispara2.update_attributes(params_receivers.merge(updated_by: 1, updated_at:Time.now))
         if (AccountService.new().nullify_mother_ac(params[:id]))
-          if (AccountService.new().create_mother_ac(@thispara.agent_id, @thispara.id, @thispara.orderAmount, @thispara.exchangeRate))
+          if (AccountService.new().create_mother_ac(@thispara.agent_id, @thispara.id, @thispara.orderAmount, @thispara.exchangeRate, @thispara.orderDate))
             render json: combine_request(@thispara, @thispara2).as_json, status: :ok
           else
             # rollback
