@@ -7,9 +7,9 @@ Rails.application.routes.draw do
       resources :orders
       resources :receiving_agents
 
-      match '/agentaccount/:fromDate/:toDate' => 'agentaccount#index', via: :get
-      match '/agentaccount/:id/:fromDate/:toDate' => 'agentaccount#agent_index', via: :get
-      get '/agentaccount/payments/:id', to: 'agentaccount#payments'
+      get '/agentaccount/:fromDate/:toDate', to: 'agentaccount#index'
+      get '/agentaccount/:id/:fromDate/:toDate', to: 'agentaccount#agent_index'
+      get '/agentaccount/:id/:id/:id/:id', to: 'agentaccount#payments'
       get '/agentaccount/:id', to: 'agentaccount#show'
       post '/agentaccount', to: 'agentaccount#create'
       put '/agentaccount/:id', to: 'agentaccount#update'
