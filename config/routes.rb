@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
       get '/agentaccount', to: 'agentaccount#index'
       post '/agentaccount', to: 'agentaccount#create'
+      put '/agentaccount/:id', to: 'agentaccount#update'
       delete '/agentaccount/:id', to: 'agentaccount#nullify'
 
       get '/motheraccount', to: 'motheraccount#index'
