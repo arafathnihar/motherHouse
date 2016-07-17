@@ -9,8 +9,8 @@ Rails.application.routes.draw do
 
       match '/agentaccount/:fromDate/:toDate' => 'agentaccount#index', via: :get
       match '/agentaccount/:id/:fromDate/:toDate' => 'agentaccount#agent_index', via: :get
-      get '/agentaccount/:id', to: 'agentaccount#payments'
-      match '/agentaccount/:agentId/:id' => 'agentaccount#show', via: :get
+      get '/agentaccount/payments/:id', to: 'agentaccount#payments'
+      get '/agentaccount/:id', to: 'agentaccount#show'
       post '/agentaccount', to: 'agentaccount#create'
       put '/agentaccount/:id', to: 'agentaccount#update'
       delete '/agentaccount/:id', to: 'agentaccount#nullify'
