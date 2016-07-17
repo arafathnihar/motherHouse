@@ -75,7 +75,6 @@ myApp.factory('ApiService', function (WebService, UtilityService) {
             return WebService.callWebService(requestObject);
         },
         addAgentPayment: function (payment) {
-            debugger;
             var addAgentPaymentRequestObject = UtilityService.createRequestObject('POST', '/api/v1/agentaccount', payment);
             return WebService.callWebService(addAgentPaymentRequestObject);
 
@@ -85,10 +84,14 @@ myApp.factory('ApiService', function (WebService, UtilityService) {
             return WebService.callWebService(requestObject);
         },
         getAgentPaymentById: function (paymentId) {
-            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + paymentId);
+            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + paymentId + '/' + paymentId + '/' + paymentId + '/' + paymentId);
             return WebService.callWebService(requestObject);
         },
-        getAgentPaymentListById: function (agentId) {
+        deleteAgentPaymenById: function (paymentId) {
+            var requestObject = UtilityService.createRequestObject('DELETE', '/api/v1/agentaccount/' + paymentId);
+            return WebService.callWebService(requestObject);
+        },
+        getAgentPaymentListByAgentId: function (agentId) {
             var agentPaymentListReqestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + agentId);
             return WebService.callWebService(agentPaymentListReqestObject);
         },

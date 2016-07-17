@@ -331,7 +331,7 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
         agent_id: '',
         amount: 0,
         date: '',
-        collector: '',
+        collector_name: '',
         "main_agent_id": "1"
     };
 
@@ -375,25 +375,24 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
 
     if ($state.params.paymentId) {
         vm.title = "Edit Payments";
+        console.log($state.params.paymentId);
         var request = ApiService.getAgentPaymentById($state.params.paymentId);
         request.then(function (data) {
-            var payment = data;
-            vm.aPayment.id = payment.id;
-            vm.aPayment.agent_id = payment.agent_id;
-            vm.aPayment.amount = payment.amount;
-            vm.aPayment.collector = payment.collector;
+            vm.aPayment.id = data.id;
+            vm.aPayment.agent_id = data.agent_id;
+            vm.aPayment.amount = data.drAmount;
+            vm.aPayment.collector_name = data.collector;
         });
         vm.addAgentPayment = function () {
             var request = ApiService.updateAgentPayment(vm.aPayment.id, vm.aPayment);
             request.then(function () {
                 ngToast.dismiss();
-                $state.go('');
+                $state.go('agentPaymentList');
             });
         }
     } else {
         vm.title = "Add Agent Payment";
         vm.addAgentPayment = function () {
-            debugger;
             var request = ApiService.addAgentPayment(vm.aPayment);
 
             request.then(function () {
@@ -403,7 +402,6 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
     }
 
 });
-
 
 myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $state,ngToast) {
     var vm = this;
@@ -421,6 +419,7 @@ myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $s
     }
 
     vm.edit = function (paymentId) {
+        debugger;
         ngToast.dismiss();
         $state.go('addAgentPayment', {'paymentId': paymentId});
     };
@@ -430,14 +429,18 @@ myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $s
         $state.go('addAgentPayment');
     };
 
-
-    vm.loadPaymentlist = function () {
-        console.log(vm.payment.agent_id);
-        var payments = ApiService.getAgentPaymentListById(vm.payment.agent_id);
+    vm.loadPaymentList = function () {
+        var payments = ApiService.getAgentPaymentListByAgentId(vm.payment.agent_id);
         payments.then(function (data) {
-            console.log(data);
-            // vm.payment.paymentList = data;
-            // vm.tableParams = new NgTableParams({count: vm.data.length}, {counts: [], data: vm.data});
+            vm.payment.paymentList = data;
+            vm.tableParams = new NgTableParams({count: data.length}, {counts: [], data: data});
+        });
+    };
+
+    vm.delete = function (paymentId) {
+        var request = ApiService.deleteAgentPaymenById(paymentId);
+        request.then(function () {
+            vm.loadPaymentList();
         });
     };
 });
