@@ -170,7 +170,7 @@ MainAgent.create(
     customId: 'MH0001',
     name: 'Mother House',
     contact: '0111234567',
-    country_id: 145,
+    country_id: 45,
 
     guid: SecureRandom.uuid,
     created_by: 1
@@ -214,7 +214,7 @@ Agent.create(
     main_agent_id: 1,
     name: 'Tiffany Alvord',
     contact: '0111234570',
-    country_id: 115,
+    country_id: 11,
 
     guid: SecureRandom.uuid,
     created_by: 1
@@ -225,7 +225,7 @@ Agent.create(
     main_agent_id: 1,
     name: 'Jayanath Balasubramaniam',
     contact: '0111234571',
-    country_id: 125,
+    country_id: 25,
 
     guid: SecureRandom.uuid,
     created_by: 1
@@ -238,7 +238,7 @@ ReceivingAgent.create(
     customId: 'RA0001',
     name: 'Daynaris Targarian',
     contact: '0111234577',
-    country_id: 115,
+    country_id: 13,
 
     guid: SecureRandom.uuid,
     created_by: 1
@@ -249,7 +249,7 @@ ReceivingAgent.create(
     customId: 'RA0002',
     name: 'Misba Ul Haq',
     contact: '0111234578',
-    country_id: 15,
+    country_id: 63,
 
     guid: SecureRandom.uuid,
     created_by: 1
@@ -260,7 +260,7 @@ ReceivingAgent.create(
     customId: 'RA0003',
     name: 'Andrew Symonds',
     contact: '0111234579',
-    country_id: 13,
+    country_id: 5,
 
     guid: SecureRandom.uuid,
     created_by: 1
