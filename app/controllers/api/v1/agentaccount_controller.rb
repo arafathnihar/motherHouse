@@ -29,6 +29,11 @@ class Api::V1::AgentaccountController < ApplicationController
     end
   end
 
+  def show
+    @thispara = AgentAccount.where(isNullified: false).find(params[:id])
+    render json: @thispara.as_json(include: [:mother_account, :agent]), status: :ok
+  end
+
   def update
     # if @thispara.update_attributes(this_params.merge(updated_by: 1, updated_at: Time.now))
       if AccountService.new().nullify_agent_ac(params[:id])
