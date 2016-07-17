@@ -4,7 +4,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   respond_to :json
 
   def index
-    @receivingAgents = ReceivingAgent.all
+    @receivingAgents = ReceivingAgent.where(status: 1)
     
     render json: @receivingAgents.as_json(include: :country), status: :ok
   end
@@ -24,6 +24,7 @@ class Api::V1::ReceivingAgentsController < ApplicationController
   end
 
   def show
+    @receivingAgent = ReceivingAgent.where(status: 1).find(params[:id])
     render json: @receivingAgent.as_json, status: :ok
   end
 
@@ -37,8 +38,8 @@ class Api::V1::ReceivingAgentsController < ApplicationController
 
   def destroy
     @receivingAgent = ReceivingAgent.find(params[:id])
-    @receivingAgent.destroy
-    render json: {status: :ok}
+    @receivingAgent.update_attributes(status:2, updated_by:1, updated_at:Time.now)
+    render json: { message: "Success" }, status: :ok
   end
 
   def get_receiving_agent

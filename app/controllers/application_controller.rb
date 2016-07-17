@@ -23,6 +23,11 @@ class ApplicationController < ActionController::Base
     return letters.upcase + number_string
   end
 
+  def rollback(model, record_id)
+    @thispara = model.find(record_id)
+    @thispara.destroy
+  end
+
   # protected
   # def authenticate
   #   authenticate_or_request_with_http_token do |token, options|

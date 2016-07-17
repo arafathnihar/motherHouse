@@ -4,15 +4,9 @@ class Api::V1::MotheraccountController < ApplicationController
   respond_to :json
 
   def index
-    @thispara = MotherAccount.all
+    @thispara = MotherAccount.where(status: 1)
 
     render json: @thispara.as_json(include: [:main_agent, :agent]), status: :ok
-  end
-
-  # put into common controller
-  def rollback(model, record_id)
-    @thispara = model.find(record_id)
-    @thispara.destroy
   end
 
   private

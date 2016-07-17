@@ -4,25 +4,25 @@ class Api::V1::AgentaccountController < ApplicationController
   respond_to :json
 
   def index
-    @thispara = AgentAccount.where('date >= ?', params[:fromDate]).where('date <= ?', params[:toDate])
+    @thispara = AgentAccount.where(isNullified: false).where('date >= ?', params[:fromDate]).where('date <= ?', params[:toDate])
 
     render json: @thispara.as_json(include: [:mother_account, :agent]), status: :ok
   end
 
   def agent_index
-    @agentFilter = AgentAccount.where(agent_id: params[:id]).where('date >= ?', params[:fromDate]).where('date <= ?', params[:toDate])
+    @agentFilter = AgentAccount.where({agent_id: params[:id], isNullified: false}).where('date >= ?', params[:fromDate]).where('date <= ?', params[:toDate])
 
     render json: @agentFilter.as_json(include: [:mother_account, :agent]), status: :ok
   end
 
   def payments
-    @agentPayments = AgentAccount.where({id: params[:id], isPaid: true})
+    @agentPayments = AgentAccount.where({agent_id: params[:id], isPaid: true, isNullified: false})
 
     render json: @agentPayments.as_json(include: [:mother_account, :agent]), status: :ok
   end
 
   def create
-    if (AccountService.new().create_agent_ac(this_params, true))
+    if AccountService.new().create_agent_ac(this_params, true)
       render json: { message: "Success" }, status: :ok
     else
       render json: { message: "Failed" }, status: :unprocessable_entity
@@ -31,8 +31,8 @@ class Api::V1::AgentaccountController < ApplicationController
 
   def update
     # if @thispara.update_attributes(this_params.merge(updated_by: 1, updated_at: Time.now))
-      if (AccountService.new().nullify_agent_ac(params[:id]))
-        if (AccountService.new().create_agent_ac(this_params, true))
+      if AccountService.new().nullify_agent_ac(params[:id])
+        if AccountService.new().create_agent_ac(this_params, true)
           render json: { message: "Success" }, status: :ok
         else
           # rollback
@@ -48,17 +48,11 @@ class Api::V1::AgentaccountController < ApplicationController
   end
 
   def nullify
-    if ( AccountService.new().nullify_agent_ac(params[:id]) )
+    if AccountService.new().nullify_agent_ac(params[:id])
       render json: { message: "Success" }, status: :ok
     else
       render json: { message: "Failed" }, status: :unprocessable_entity
     end
-  end
-
-  # put into common controller
-  def rollback(model, record_id)
-    @thispara = model.find(record_id)
-    @thispara.destroy
   end
 
   private

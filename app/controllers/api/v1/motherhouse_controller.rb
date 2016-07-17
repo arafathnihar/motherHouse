@@ -7,7 +7,7 @@ class Api::V1::MotherhouseController < ApplicationController
   # respond_to :html, :json
 
   def index
-    @thispara = MainAgent.all
+    @thispara = MainAgent.where(status: 1)
 
     render json: @thispara.as_json(include: :country), status: :ok
   end
@@ -27,6 +27,7 @@ class Api::V1::MotherhouseController < ApplicationController
   end
 
   def show
+    @thispara = MainAgent.where(status: 1).find(params[:id])
     render json: @thispara.as_json, status: :ok
   end
 
@@ -40,8 +41,8 @@ class Api::V1::MotherhouseController < ApplicationController
 
   def destroy
     @thispara = MainAgent.find(params[:id])
-    @thispara.destroy
-    render json: {status: :ok}
+    @thispara.update_attributes(status:2, updated_by:1, updated_at:Time.now)
+    render json: { message: "Success" }, status: :ok
   end
 
   private

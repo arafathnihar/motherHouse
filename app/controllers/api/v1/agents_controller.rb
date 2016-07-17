@@ -4,14 +4,7 @@ class Api::V1::AgentsController < ApplicationController
   respond_to :html, :json
 
   def index
-    @thispara = Agent.all
-
-    # @data = @thispara.as_json(include: :country)
-
-    # @arr = []
-    # @thispara.each do |record|
-    #   @arr.push(record.customId => record.as_json(include: :country))
-    # end
+    @thispara = Agent.where(status: 1)
 
     render json: @thispara.as_json(include: :country), status: :ok
   end
@@ -31,6 +24,7 @@ class Api::V1::AgentsController < ApplicationController
   end
 
   def show
+    @thispara = Agent.where(status: 1).find(params[:id])
     render json: @thispara.as_json, status: :ok
   end
 
@@ -44,8 +38,8 @@ class Api::V1::AgentsController < ApplicationController
 
   def destroy
     @thispara = Agent.find(params[:id])
-    @thispara.destroy
-    render json: {status: :ok}
+    @thispara.update_attributes(status:2, updated_by:1, updated_at:Time.now)
+    render json: { message: "Success" }, status: :ok
   end
 
   private

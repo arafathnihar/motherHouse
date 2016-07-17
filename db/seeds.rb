@@ -9,7 +9,7 @@
 # Add admin user
 User.create(
     customId: 'MH0001',
-    name: 'Shivanesan Arafath',
+    name: 'Admin User',
     contact: '0111234567',
 
     username: 'shiva',
@@ -500,7 +500,7 @@ Currency.create([
 
 MainAgent.create(
     customId: 'MH0001',
-    name: 'Shivanesan Arafath',
+    name: 'Mother House',
     contact: '0111234567',
     country_id: 145,
 
@@ -568,7 +568,7 @@ Agent.create(
 ReceivingAgent.create(
     main_agent_id: 1,
     customId: 'RA0001',
-    name: 'Shivanesan Arafath',
+    name: 'Daynaris Targarian',
     contact: '0111234577',
     country_id: 115,
 
