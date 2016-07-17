@@ -56,6 +56,11 @@ class Api::V1::AgentaccountController < ApplicationController
     end
   end
 
+  def get_agentaccount
+    @thispara = AgentAccount.find(params[:id])
+    render json: {status: :not_found} unless @thispara
+  end
+
   def this_params
     params.fetch(:requestdata, {}).permit(:agent_id, :amount, :date, :collector_name)
   end

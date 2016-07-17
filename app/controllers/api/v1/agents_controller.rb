@@ -42,6 +42,11 @@ class Api::V1::AgentsController < ApplicationController
     render json: { message: "Success" }, status: :ok
   end
 
+  def get_agent
+    @thispara = Agent.find(params[:id])
+    render json: {status: :not_found} unless @thispara
+  end
+
   def this_params
     params.fetch(:requestdata, {}).permit(:customId, :main_agent_id, :name, :contact, :country_id)
   end
