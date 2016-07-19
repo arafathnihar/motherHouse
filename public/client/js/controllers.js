@@ -289,7 +289,6 @@ myApp.controller('orderListCtrl', function (ApiService, NgTableParams, $state,ng
     };
 
     vm.edit = function (orderId) {
-        console.log(orderId);
         ngToast.dismiss();
         $state.go('addOrder', {'orderId': orderId});
     };
@@ -326,7 +325,6 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
 
     if ($state.params.paymentId) {
         vm.title = "Edit Payments";
-        console.log($state.params.paymentId);
         var request = ApiService.getAgentPaymentById($state.params.paymentId);
         request.then(function (data) {
             vm.aPayment.id = data.id;
@@ -370,7 +368,6 @@ myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $s
     }
 
     vm.edit = function (paymentId) {
-        debugger;
         ngToast.dismiss();
         $state.go('addAgentPayment', {'paymentId': paymentId});
     };

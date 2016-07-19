@@ -15,14 +15,16 @@
             <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="false">
 
                 <colgroup>
+                    <col width="5%" />
+                    <col width="10%" />
+                    <col width="5%" />
+                    <col width="5%" />
                     <col width="10%" />
                     <col width="10%" />
-                    <col width="15%" />
-                    <col width="15%" />
                     <col width="10%" />
-                    <col width="5%"  />
                     <col width="10%" />
-                    <col width="5%"  />
+                    <col width="5%" />
+                    <col width="10%" />
                     <col width="10%" />
                     <col width="10%" />
                 </colgroup>
@@ -48,6 +50,7 @@
                     <td title="'Recipiant Bank'">
                         {{order.receiver.bankName}}
                     </td>
+                    <td title="'Account Number'">
                         {{order.receiver.bankAcNo}}
                     </td>
                     <td title="'Amount'" filter="{ orderAmount: 'text'}">
