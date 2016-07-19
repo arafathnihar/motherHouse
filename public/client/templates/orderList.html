@@ -39,26 +39,31 @@
                     <td title="'Receiving Agent Number'">
                         {{order.receiving_agent.customId}}
                     </td>
-                    <!--<td title="'Recipiant Detalis'">-->
-                        <!--{{order.receiver.name}}-->
-                        <!--{{order.receiver.contact}}-->
-                        <!--{{order.receiver.bankName}}-->
-                        <!--{{order.receiver.branchName}}-->
-                    <!--</td>-->
+                    <td title="'Recipiant Name'">
+                        {{order.receiver.name}}
+                    </td>
+                    <td title="'Recipiant Contact'">
+                        {{order.receiver.contact}}
+                    </td>
+                    <td title="'Recipiant Bank'">
+                        {{order.receiver.bankName}}
+                    </td>
+                        {{order.receiver.bankAcNo}}
+                    </td>
                     <td title="'Amount'" filter="{ orderAmount: 'text'}">
                         {{order.orderAmount | number}}
                     </td>
-                    <td title="'Ordered Currency'">
-                        {{order.order_currency.code}}
-                    </td>
+                    <!--<td title="'Ordered Currency'">-->
+                        <!--{{order.order_currency.code}}-->
+                    <!--</td>-->
                     <td title="'Exchange Rate'" filter="{ exchangeRate: 'text'}">
-                        {{order.exchangeRate | number}}
+                        {{order.order_currency.code}} {{order.exchangeRate | number}}
                     </td>
-                    <td title="'Supply Currency'">
-                        {{order.supply_currency.code}}
-                    </td>
+                    <!--<td title="'Supply Currency'">-->
+                        <!--{{order.supply_currency.code}}-->
+                    <!--</td>-->
                     <td title="'Supply Amount'">
-                        {{order.orderAmount * order.exchangeRate | number}}
+                        {{order.supply_currency.code}} {{order.orderAmount * order.exchangeRate | number}}
                     </td>
                     <td>
                         <button class="btn btn-default btn-sm" ng-click="vm.edit(order.id)"><span class="glyphicon glyphicon-pencil"></span></button>
