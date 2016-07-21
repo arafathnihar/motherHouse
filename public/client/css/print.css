@@ -1,0 +1,7 @@
+@media print
+{
+    #btn, #thActn, #tdActn
+    {
+        display: none !important;
+    }
+}

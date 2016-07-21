@@ -2,7 +2,7 @@ var myApp = angular.module('motherHouse', ['ds.clock', 'ui.bootstrap', 'ui.route
 
 myApp.config(function ($stateProvider, $urlRouterProvider, ngToastProvider) {
 
-    $urlRouterProvider.otherwise("/addOrder");
+    $urlRouterProvider.otherwise("/addOrder/");
     $stateProvider
         .state('addAgent', {
             url: "/addAgent/:agentId",

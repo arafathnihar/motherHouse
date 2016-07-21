@@ -7,5 +7,4 @@ class Receiver < ActiveRecord::Base
 
   validates_numericality_of :contact, :allow_blank => true, :message => "phone number format is invalid"
   validates_length_of :contact, :minimum => 5, :maximum => 15,  :allow_blank => true,  :message => "phone number lenght should be within 10-15 digits (inclusive)"
-
 end

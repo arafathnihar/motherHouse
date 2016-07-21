@@ -5,70 +5,62 @@
 </style>
 <toast></toast>
 <div class="row">
-
     <div class="col-md-12">
         <div class="panel" ng-controller="orderListCtrl as vm">
-
-            <button type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create order</button>
-            </br>
-            </br>
+            <button id="btn" type="button" class="btn btn-success" ng-click="vm.addNewAgent()">Create order</button>
+            </br></br>
             <table ng-table="vm.tableParams" class="table table-bordered table-striped" show-filter="false">
-
-                <colgroup>
-                    <col width="5%" />
-                    <col width="10%" />
-                    <col width="5%" />
-                    <col width="5%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="5%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                </colgroup>
+                <thead>
+                <tr>
+                    <th width="5%">Order Number</th>
+                    <th width="10%">Order Date</th>
+                    <th width="5%">Agent Number</th>
+                    <th width="5%">Receiving Agent Number</th>
+                    <th width="10%">Recipient Name</th>
+                    <th width="10%">Recipient Contact Number</th>
+                    <th width="10%">Recipient Bank</th>
+                    <th width="10%">Recipient Account Number</th>
+                    <th width="5%">Amount</th>
+                    <th width="10%">Exchange Rate</th>
+                    <th width="10%">Supply Amount</th>
+                    <th width="10%" id="thActn"></th>
+                </tr>
+                </thead>
                 <tr ng-repeat="order in $data">
-                    <td title="'Order Number'" filter="{ customId: 'text'}">
+                    <td filter="{ customId: 'text'}">
                         {{order.customId}}
                     </td>
-                    <td title="'Order Date'" filter="{ orderDate: 'text'}">
+                    <td filter="{ orderDate: 'text'}">
                         {{order.orderDate | date: 'yyyy-MM-dd'}}
                     </td>
-                    <td title="'Agent Number'">
+                    <td>
                         {{order.agent.customId}}
                     </td>
-                    <td title="'Receiving Agent Number'">
+                    <td>
                         {{order.receiving_agent.customId}}
                     </td>
-                    <td title="'Recipiant Name'">
+                    <td>
                         {{order.receiver.name}}
                     </td>
-                    <td title="'Recipiant Contact'">
+                    <td>
                         {{order.receiver.contact}}
                     </td>
-                    <td title="'Recipiant Bank'">
+                    <td>
                         {{order.receiver.bankName}}
                     </td>
-                    <td title="'Account Number'">
+                    <td>
                         {{order.receiver.bankAcNo}}
                     </td>
-                    <td title="'Amount'" filter="{ orderAmount: 'text'}">
+                    <td filter="{ orderAmount: 'text'}">
                         {{order.orderAmount | number}}
                     </td>
-                    <!--<td title="'Ordered Currency'">-->
-                        <!--{{order.order_currency.code}}-->
-                    <!--</td>-->
-                    <td title="'Exchange Rate'" filter="{ exchangeRate: 'text'}">
+                    <td filter="{ exchangeRate: 'text'}">
                         {{order.order_currency.code}} {{order.exchangeRate | number}}
                     </td>
-                    <!--<td title="'Supply Currency'">-->
-                        <!--{{order.supply_currency.code}}-->
-                    <!--</td>-->
-                    <td title="'Supply Amount'">
+                    <td>
                         {{order.supply_currency.code}} {{order.orderAmount * order.exchangeRate | number}}
                     </td>
-                    <td>
+                    <td id="tdActn">
                         <button class="btn btn-default btn-sm" ng-click="vm.edit(order.id)"><span class="glyphicon glyphicon-pencil"></span></button>
                         <button class="btn btn-danger btn-sm" ng-click="vm.delete(order.id)"><span class="glyphicon glyphicon-trash"></span></button>
                     </td>
