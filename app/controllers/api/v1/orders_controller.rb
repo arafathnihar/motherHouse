@@ -35,15 +35,15 @@ class Api::V1::OrdersController < ApplicationController
         rescue Exception => exc1 # rollback code here
           rollback(Order, @thispara2.id)
           rollback(Receiver, @thispara.id)
-          render json: { errors2: @mother.errors }, status: :unprocessable_entity
+          render json: { errors: @mother.errors }, status: :unprocessable_entity
         end
       rescue Exception => exc3
         #roll back
         rollback(Receiver, @thispara.id)
-        render json: { errors1: @thispara2.errors }, status: :unprocessable_entity
+        render json: { errors: @thispara2.errors }, status: :unprocessable_entity
       end
     rescue Exception => exc2
-      render json: { errors2: @thispara.errors }, status: :unprocessable_entity
+      render json: { errors: @thispara.errors }, status: :unprocessable_entity
     end
   end
 

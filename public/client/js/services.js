@@ -3,46 +3,44 @@ var myApp = angular.module('motherHouseServices', []);
 myApp.factory('ApiService', function (WebService, UtilityService) {
     return {
         getCountries: function () {
-            var countryReqestObject = UtilityService.createRequestObject('GET', '/commons/countries/');
-            return WebService.callWebService(countryReqestObject);
+            var requestObject = UtilityService.createRequestObject('GET', '/commons/countries/');
+            return WebService.callWebService(requestObject);
         },
         getAgentList: function () {
-            var agentListReqestObject = UtilityService.createRequestObject('GET', '/api/v1/agents');
-            return WebService.callWebService(agentListReqestObject);
+            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/agents');
+            return WebService.callWebService(requestObject);
         },
         getCurrencies: function () {
-            var currencyReqestObject = UtilityService.createRequestObject('GET', '/commons/currencies/');
-            return WebService.callWebService(currencyReqestObject);
+            var requestObject = UtilityService.createRequestObject('GET', '/commons/currencies/');
+            return WebService.callWebService(requestObject);
         },
         getReceivingAgentList: function () {
-            var receivingAgentListReqestObject = UtilityService.createRequestObject('GET', '/api/v1/receiving_agents');
-            return WebService.callWebService(receivingAgentListReqestObject);
+            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/receiving_agents');
+            return WebService.callWebService(requestObject);
         },
         getOrderList: function () {
-            var orderListReqestObject = UtilityService.createRequestObject('GET', '/api/v1/orders');
-            return WebService.callWebService(orderListReqestObject);
+            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/orders');
+            return WebService.callWebService(requestObject);
         },
-        getMainAccountsByDate: function (fromDate , toDate) {
-            var mainAccountsReqestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + fromDate +'/'+ toDate);
-            // console.log(mainAccountsReqestObject);
-            return WebService.callWebService(mainAccountsReqestObject);
+        getMainAccountsByDate: function (fromDate, toDate) {
+            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + fromDate + '/' + toDate);
+            return WebService.callWebService(requestObject);
         },
-        getAgentAccountsByDate: function (agentId,fromDate,toDate) {
-            var mainAccountsReqestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' +agentId+'/'+ fromDate +'/'+ toDate);
-            // console.log(mainAccountsReqestObject);
-            return WebService.callWebService(mainAccountsReqestObject);
+        getAgentAccountsByDate: function (agentId, fromDate, toDate) {
+            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + agentId + '/' + fromDate + '/' + toDate);
+            return WebService.callWebService(requestObject);
         },
         getAgentById: function (agentId) {
             var agentRequestObject = UtilityService.createRequestObject('GET', '/api/v1/agents/' + agentId);
             return WebService.callWebService(agentRequestObject);
         },
         updateAgent: function (agentId, agent) {
-            var updateAgentRequestObject = UtilityService.createRequestObject('PUT', '/api/v1/agents/' + agentId, agent);
-            return WebService.callWebService(updateAgentRequestObject);
+            var requestObject = UtilityService.createRequestObject('PUT', '/api/v1/agents/' + agentId, agent);
+            return WebService.callWebService(requestObject);
         },
         addAgent: function (agent) {
-            var addAgentRequestObject = UtilityService.createRequestObject('POST', '/api/v1/agents/', agent);
-            return WebService.callWebService(addAgentRequestObject);
+            var requestObject = UtilityService.createRequestObject('POST', '/api/v1/agents/', agent);
+            return WebService.callWebService(requestObject);
         },
         getReceivingAgentById: function (receivingAgentId) {
             var requestObject = UtilityService.createRequestObject('GET', '/api/v1/receiving_agents/' + receivingAgentId);
@@ -65,8 +63,8 @@ myApp.factory('ApiService', function (WebService, UtilityService) {
             return WebService.callWebService(requestObject);
         },
         addOrder: function (order) {
-            var addOrderRequestObject = UtilityService.createRequestObject('POST', '/api/v1/orders/', order);
-            return WebService.callWebService(addOrderRequestObject);
+            var requestObject = UtilityService.createRequestObject('POST', '/api/v1/orders/', order);
+            return WebService.callWebService(requestObject);
         },
         deleteAgent: function (agentId) {
             var requestObject = UtilityService.createRequestObject('DELETE', '/api/v1/agents/' + agentId);
@@ -81,9 +79,8 @@ myApp.factory('ApiService', function (WebService, UtilityService) {
             return WebService.callWebService(requestObject);
         },
         addAgentPayment: function (payment) {
-            var addAgentPaymentRequestObject = UtilityService.createRequestObject('POST', '/api/v1/agentaccount', payment);
-            return WebService.callWebService(addAgentPaymentRequestObject);
-
+            var requestObject = UtilityService.createRequestObject('POST', '/api/v1/agentaccount', payment);
+            return WebService.callWebService(requestObject);
         },
         updateAgentPayment: function (paymentId, payment) {
             var requestObject = UtilityService.createRequestObject('PUT', '/api/v1/agentaccount/' + paymentId, payment);
@@ -93,32 +90,46 @@ myApp.factory('ApiService', function (WebService, UtilityService) {
             var requestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + paymentId + '/' + paymentId + '/' + paymentId + '/' + paymentId);
             return WebService.callWebService(requestObject);
         },
-        deleteAgentPaymenById: function (paymentId) {
+        deleteAgentPaymentById: function (paymentId) {
             var requestObject = UtilityService.createRequestObject('DELETE', '/api/v1/agentaccount/' + paymentId);
             return WebService.callWebService(requestObject);
         },
         getAgentPaymentListByAgentId: function (agentId) {
-            var agentPaymentListReqestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + agentId);
-            return WebService.callWebService(agentPaymentListReqestObject);
-        },
+            var requestObject = UtilityService.createRequestObject('GET', '/api/v1/agentaccount/' + agentId);
+            return WebService.callWebService(requestObject);
+        }
     }
 });
 
 myApp.factory('WebService', function ($http, blockUI, UtilityService) {
     return {
-        callWebService: function (reqestObject) {
-            return $http(reqestObject).then(function (data) {
+        callWebService: function (requestObject) {
+            return $http(requestObject).then(function (data) {
                 blockUI.stop();
-                if (reqestObject.method == 'POST')
+                if (requestObject.method == 'POST')
                     UtilityService.toastMessage('success', 'Success fully created', 3000);
-                if (reqestObject.method == 'PUT')
+                if (requestObject.method == 'PUT')
                     UtilityService.toastMessage('success', 'Success fully updated', 3000);
-                if (reqestObject.method == 'DELETE')
+                if (requestObject.method == 'DELETE')
                     UtilityService.toastMessage('success', 'Success fully deleted', 3000);
                 return data.data;
             }, function (error) {
                 blockUI.stop();
-                UtilityService.toastMessage('danger', 'An Internal error occurred !!!', 3000);
+                var messagesObject = error.data.errors;
+                console.log(messagesObject);
+                for (var key in messagesObject) {
+                    // skip loop if the property is from prototype
+                    if (!messagesObject.hasOwnProperty(key))
+                        continue;
+                    var obj = messagesObject[key];
+                    for (var prop in obj) {
+                        // skip loop if the property is from prototype
+                        if(!obj.hasOwnProperty(prop))
+                            continue;
+                        // your code
+                        UtilityService.toastMessage('danger', obj[prop], 4000);
+                    }
+                }
                 return null;
             });
         }
@@ -188,6 +199,5 @@ myApp.factory('UtilityService', function (ngToast, blockUI) {
             };
             return obj;
         }
-
     }
 });

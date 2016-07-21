@@ -6,14 +6,17 @@ var ordersList;
 var countries;
 var currencies;
 
-myApp.controller('AddAgentCtrl', function (ApiService, $state, UtilityService,ngToast) {
+myApp.controller('AddAgentCtrl', function (ApiService, $state, UtilityService, ngToast) {
+
     var vm = this;
+
     vm.agent = {
         customId: "",
         name: "",
         contact: "",
         country_id: ""
     };
+
     if (!countries) {
         var countryRequest = ApiService.getCountries();
         countryRequest.then(function (data) {
@@ -23,6 +26,7 @@ myApp.controller('AddAgentCtrl', function (ApiService, $state, UtilityService,ng
     } else {
         vm.countries = countries;
     }
+
     if ($state.params.agentId) {
         vm.title = "Edit Agent";
         var agentRequest = ApiService.getAgentById($state.params.agentId);
@@ -35,8 +39,12 @@ myApp.controller('AddAgentCtrl', function (ApiService, $state, UtilityService,ng
             vm.agent.country_id = agent.country_id;
         });
         vm.addAgent = function () {
-            ApiService.updateAgent(vm.agent.id, vm.agent);
-        };
+            var request = ApiService.updateAgent(vm.agent.id, vm.agent);
+            request.then(function () {
+                ngToast.dismiss();
+                $state.go('agentList');
+            });
+        }
     } else {
         vm.title = "Add New Agent";
         vm.addAgent = function () {
@@ -50,8 +58,10 @@ myApp.controller('AddAgentCtrl', function (ApiService, $state, UtilityService,ng
 
 });
 
-myApp.controller('AddReceivingAgentCtrl', function (ApiService, $state, UtilityService,ngToast) {
+myApp.controller('AddReceivingAgentCtrl', function (ApiService, $state, UtilityService, ngToast) {
+
     var vm = this;
+
     if (!countries) {
         var countryRequest = ApiService.getCountries();
         countryRequest.then(function (data) {
@@ -61,6 +71,7 @@ myApp.controller('AddReceivingAgentCtrl', function (ApiService, $state, UtilityS
     } else {
         vm.countries = countries;
     }
+
     vm.receivingagent = {
         customId: '',
         name: '',
@@ -90,16 +101,19 @@ myApp.controller('AddReceivingAgentCtrl', function (ApiService, $state, UtilityS
         vm.title = "Add New Receiving Agent";
         vm.addReceivingAgent = function () {
             var request = ApiService.addReceivingAgent(vm.receivingagent);
-
-            request.then(function () {
-                vm.receivingagent = UtilityService.clearForm(vm.receivingagent);
-            })
+            request.then(function (data) {
+                if (data)
+                    vm.receivingagent = UtilityService.clearForm(vm.receivingagent);
+            });
         }
     }
+
 });
 
-myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ngToast) {
+myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService, ngToast) {
+
     var vm = this;
+
     vm.order = {
         customId: '',
         agent_id: '',
@@ -117,6 +131,7 @@ myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ng
         branchName: '',
         bankAcNo: ''
     };
+
     vm.order = UtilityService.datepickerConf(vm.order);
     vm.order.orderDate = new Date();
 
@@ -128,6 +143,7 @@ myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ng
             vm.agents = data;
         });
     }
+
     if (receivingAgentList) {
         vm.receivingAgents = receivingAgentList;
     } else {
@@ -136,6 +152,7 @@ myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ng
             vm.receivingAgents = data;
         });
     }
+
     if (!currencies) {
         var countryRequest = ApiService.getCurrencies();
         countryRequest.then(function (data) {
@@ -145,6 +162,7 @@ myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ng
     } else {
         vm.currencies = currencies;
     }
+
     if (!countries) {
         countryRequest = ApiService.getCountries();
         countryRequest.then(function (data) {
@@ -186,17 +204,19 @@ myApp.controller('AddOrderCtrl', function (ApiService, $state, UtilityService,ng
         vm.title = "Add New Order";
         vm.addOrder = function () {
             var addOrderRequest = ApiService.addOrder(vm.order);
-
             addOrderRequest.then(function (data) {
                 if(data)
                     vm.order = UtilityService.clearForm(vm.order);
             })
         }
     }
+
 });
 
-myApp.controller('agentListCtrl', function (ApiService, NgTableParams, $state,ngToast) {
+myApp.controller('agentListCtrl', function (ApiService, NgTableParams, $state, ngToast) {
+
     var vm = this;
+
     if (!countries) {
         var countryRequest = ApiService.getCountries();
         countryRequest.then(function (data) {
@@ -206,20 +226,17 @@ myApp.controller('agentListCtrl', function (ApiService, NgTableParams, $state,ng
     } else {
         vm.countries = countries;
     }
-    var loadAgents = function () {
 
+    var loadAgents = function () {
         var agents = ApiService.getAgentList();
         agents.then(function (data) {
             agentList = data;
             vm.data = agentList;
             vm.tableParams = new NgTableParams({count: vm.data.length}, {counts: [], data: vm.data});
-            agentList = data;
-            vm.data = agentList;
-            vm.tableParams = new NgTableParams({count: vm.data.length}, {counts: [], data: vm.data});
-        });
+         });
     };
-
     loadAgents();
+
     vm.delete = function (agentId) {
         var request = ApiService.deleteAgent(agentId);
         request.then(function () {
@@ -236,10 +253,13 @@ myApp.controller('agentListCtrl', function (ApiService, NgTableParams, $state,ng
         ngToast.dismiss();
         $state.go('addAgent');
     };
+
 });
 
-myApp.controller('receivingAgentListCtrl', function (ApiService, NgTableParams, $state,ngToast) {
+myApp.controller('receivingAgentListCtrl', function (ApiService, NgTableParams, $state, ngToast) {
+
     var vm = this;
+
     var loadReceivingAgents = function () {
         var receivingAgents = ApiService.getReceivingAgentList();
         receivingAgents.then(function (data) {
@@ -248,8 +268,8 @@ myApp.controller('receivingAgentListCtrl', function (ApiService, NgTableParams, 
             vm.tableParams = new NgTableParams({count: vm.data.length}, {counts: [], data: vm.data});
         });
     };
-
     loadReceivingAgents();
+
     vm.delete = function (receiving_agent_id) {
         var request = ApiService.deleteReceivingAgent(receiving_agent_id);
         request.then(function () {
@@ -266,9 +286,11 @@ myApp.controller('receivingAgentListCtrl', function (ApiService, NgTableParams, 
         ngToast.dismiss();
         $state.go('addReceivingAgent');
     }
+
 });
 
-myApp.controller('orderListCtrl', function (ApiService, NgTableParams, $state,ngToast) {
+myApp.controller('orderListCtrl', function (ApiService, NgTableParams, $state, ngToast) {
+
     var vm = this;
 
     var loadOrders = function () {
@@ -279,8 +301,8 @@ myApp.controller('orderListCtrl', function (ApiService, NgTableParams, $state,ng
             vm.tableParams = new NgTableParams({count: vm.data.length}, {counts: [], data: vm.data});
         });
     };
-
     loadOrders();
+
     vm.delete = function (orderId) {
         var request = ApiService.deleteOrder(orderId);
         request.then(function () {
@@ -297,10 +319,13 @@ myApp.controller('orderListCtrl', function (ApiService, NgTableParams, $state,ng
         ngToast.dismiss();
         $state.go('addOrder');
     }
+
 });
 
-myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilityService,ngToast) {
+myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilityService, ngToast) {
+
     var vm = this;
+
     vm.aPayment = {
         agent_id: '',
         amount: 0,
@@ -309,9 +334,7 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
         "main_agent_id": "1"
     };
 
-    vm.aPayment = {};
     vm.aPayment = UtilityService.datepickerConf(vm.aPayment);
-    vm.aPayment.today();
     vm.aPayment.date = new Date();
 
     if (agentList) {
@@ -343,21 +366,24 @@ myApp.controller('AddAgentPaymentCtrl', function (ApiService, $state, UtilitySer
         vm.title = "Add Agent Payment";
         vm.addAgentPayment = function () {
             var request = ApiService.addAgentPayment(vm.aPayment);
-
             request.then(function () {
-                vm.aPayment = UtilityService.clearForm(vm.aPayment);
-            })
+                if(data)
+                    vm.aPayment = UtilityService.clearForm(vm.aPayment);
+            });
         }
     }
 
 });
 
-myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $state,ngToast) {
+myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $state, ngToast) {
+
     var vm = this;
+
     vm.payment = {
         agent_id:"",
         paymentList:""
     }
+
     if (agentList) {
         vm.agents = agentList;
     } else {
@@ -386,23 +412,25 @@ myApp.controller('AgentPaymentListCtrl', function (ApiService, NgTableParams, $s
     };
 
     vm.delete = function (paymentId) {
-        var request = ApiService.deleteAgentPaymenById(paymentId);
+        var request = ApiService.deleteAgentPaymentById(paymentId);
         request.then(function () {
             vm.loadPaymentList();
         });
     };
+
 });
 
-myApp.controller('MainAccountsCtrl', function (ApiService, NgTableParams,UtilityService) {
+myApp.controller('MainAccountsCtrl', function (ApiService, NgTableParams, UtilityService) {
+
     var vm = this;
-    vm.test = 'test';
 
     vm.filter = {
         from: {},
         to: {}
     };
+
     vm.updateAccoutsList = function () {
-        var mainAccounts = ApiService.getMainAccountsByDate(UtilityService.yyyymmdd(vm.filter.from.date),UtilityService.yyyymmdd(vm.filter.to.date));
+        var mainAccounts = ApiService.getMainAccountsByDate(UtilityService.yyyymmdd(vm.filter.from.date), UtilityService.yyyymmdd(vm.filter.to.date));
         vm.tableParams = new NgTableParams({}, {
             counts: [], getData: function () {
                 return mainAccounts.then(function (data) {
@@ -413,17 +441,22 @@ myApp.controller('MainAccountsCtrl', function (ApiService, NgTableParams,Utility
             }
         });
     };
+
     vm.filter.from = UtilityService.datepickerConf(vm.filter.from);
     vm.filter.to = UtilityService.datepickerConf(vm.filter.to);
+
 });
 
-myApp.controller('AgentAccountsCtrl', function(ApiService,UtilityService, NgTableParams) {
+myApp.controller('AgentAccountsCtrl', function(ApiService, UtilityService, NgTableParams) {
+
     var vm = this;
+
     vm.filter = {
         agentId:'',
         from:{},
         to:{}
     };
+
     if (agentList) {
         vm.agents = agentList;
     } else {
@@ -432,8 +465,9 @@ myApp.controller('AgentAccountsCtrl', function(ApiService,UtilityService, NgTabl
             vm.agents = data;
         });
     }
+
     vm.updateAccoutsList = function () {
-        var agentAccounts = ApiService.getAgentAccountsByDate(vm.filter.agentId,UtilityService.yyyymmdd(vm.filter.from.date),UtilityService.yyyymmdd(vm.filter.to.date));
+        var agentAccounts = ApiService.getAgentAccountsByDate(vm.filter.agentId, UtilityService.yyyymmdd(vm.filter.from.date), UtilityService.yyyymmdd(vm.filter.to.date));
         vm.tableParams  = new NgTableParams({}, { counts: [], getData: function(){
             return agentAccounts.then(function(data){
                 agentAccounts = data;
@@ -442,6 +476,8 @@ myApp.controller('AgentAccountsCtrl', function(ApiService,UtilityService, NgTabl
             });
         }});
     };
+
     vm.filter.from = UtilityService.datepickerConf(vm.filter.from);
     vm.filter.to = UtilityService.datepickerConf(vm.filter.to);
+
 });
